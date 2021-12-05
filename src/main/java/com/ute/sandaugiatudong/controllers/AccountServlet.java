@@ -1,5 +1,7 @@
 package com.ute.sandaugiatudong.controllers;
 
+import com.ute.sandaugiatudong.utils.ServletUtils;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -13,14 +15,17 @@ public class AccountServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         {
             String path = request.getPathInfo();
-            if (path == null || path.equals("/")) {
-                path = "Index";
-            }
-            switch (path) {
-                case "Index" :
-//                ServletUtils.forward("/views/vwHome/Index.jsp",request,response);
-                    break;
 
+            switch (path) {
+                case "/Register" :
+                    ServletUtils.forward("/views/vwAccount/Register.jsp",request,response);
+                    break;
+                case "/Login" :
+                    ServletUtils.forward("/views/vwAccount/Login.jsp",request,response);
+                    break;
+                case "/Profile" :
+                    ServletUtils.forward("/views/vwAccount/Profile.jsp",request,response);
+                    break;
                 default:
                     //ServletUtils.forward("/views/404.jsp",request,response);
                     break;
@@ -30,6 +35,23 @@ public class AccountServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String path = request.getPathInfo();
+        switch (path){
+
+            //post Register
+            case "/Register":
+                registerUser(request,response);
+                break;
+
+            //post Login
+            case "/Login":
+                break;
+            default:
+                //ServletUtils.forward("/views/404.jsp",request,response);
+                break;
+        }
+    }
+    protected void registerUser(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
     }
 }
