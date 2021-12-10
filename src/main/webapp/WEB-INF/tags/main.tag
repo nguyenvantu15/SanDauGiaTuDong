@@ -1,6 +1,5 @@
 <%@ tag pageEncoding="utf-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-
 <jsp:useBean id="danhmucWithDetails" scope="request" type="java.util.List<com.ute.sandaugiatudong.beans.danhmuc>"/>
 <jsp:useBean id="loaiWithDetails" scope="request" type="java.util.List<com.ute.sandaugiatudong.beans.loai>"/>
 <!DOCTYPE html>

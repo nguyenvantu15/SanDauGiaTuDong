@@ -42,5 +42,8 @@
     <orderEntry type="library" name="Maven: org.sql2o:sql2o:1.6.0" level="project" />
     <orderEntry type="library" name="Maven: at.favre.lib:bcrypt:0.9.0" level="project" />
     <orderEntry type="library" name="Maven: at.favre.lib:bytes:1.3.0" level="project" />
+    <orderEntry type="library" name="bootstrap" level="application" />
+    <orderEntry type="library" name="font-awesome" level="application" />
+    <orderEntry type="library" name="jquery-3.6.0" level="application" />
   </component>
 </module>
