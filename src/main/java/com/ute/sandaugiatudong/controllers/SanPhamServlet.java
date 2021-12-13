@@ -1,7 +1,9 @@
 package com.ute.sandaugiatudong.controllers;
 
 import com.ute.sandaugiatudong.beans.loai;
+import com.ute.sandaugiatudong.beans.sanpham;
 import com.ute.sandaugiatudong.models.danhmucModels;
+import com.ute.sandaugiatudong.models.sanphamModels;
 import com.ute.sandaugiatudong.utils.ServletUtils;
 
 import javax.servlet.ServletException;
@@ -17,16 +19,15 @@ public class SanPhamServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String path = request.getPathInfo();
+
         switch (path) {
-            case "/DanhMuc":
-                int danhmucID = Integer.parseInt(request.getParameter("id"));
-                List<loai> list = danhmucModels.findByDanhMucID(danhmucID);
+            case "/Danhmuc":
+                int spID = Integer.parseInt(request.getParameter("id"));
+                List<sanpham> list = sanphamModels.findByDanhMuc(spID);
+                request.setAttribute("sanpham", list);
+                ServletUtils.forward("/views/vwSanPham/DanhMuc.jsp", request, response);
 
-                //sdff
-                request.setAttribute("products", list);
-                ServletUtils.forward("/views/vwProduct/ByCat.jsp", request, response);
                 break;
-
             case "/Loai":
                 int proID = Integer.parseInt(request.getParameter("id"));
                 //Product product = ProductModels.findById(proID);

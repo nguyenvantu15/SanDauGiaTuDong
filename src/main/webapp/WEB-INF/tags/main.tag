@@ -15,8 +15,6 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-
-
     <style>
         .navbar{
             background-color: black;
@@ -157,7 +155,7 @@
         <c:forEach items="${danhmucWithDetails}" var="c">
 
             <li class="dropdown-danhmuc">
-                <a href="#" class="dropbtn-danhmuc">
+                <a href="${pageContext.request.contextPath}/SanPham/Danhmuc?id=${c.id}" class="dropbtn-danhmuc">
                     <div>
 <%--                        <i class="fa fa-microchip fanav" aria-hidden="true"></i>--%>
                         <span class="textDrop">${c.ten}</span>
@@ -167,7 +165,7 @@
                 <div class="dropdown-content-danhmuc">
                     <c:forEach items="${loaiWithDetails}" var="d">
                         <c:if test="${d.idDanhMuc == c.id}">
-                            <a href="#">${d.ten}</a>
+                            <a href="">${}</a>
                         </c:if>
                     </c:forEach>
 
