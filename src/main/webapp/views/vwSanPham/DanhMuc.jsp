@@ -19,7 +19,7 @@
             <c:forEach items="${sanpham}" var="c">
                 <div class="col-sm-auto col-item p-0">
                     <div class="card h-100">
-                        <img src="${pageContext.request.contextPath}/public/imgs/${c.id}/1.jpg" class="card-img-top">
+                        <img src="${pageContext.request.contextPath}/public/imgs/${c.id}/1.jpg" alt="${c.ten}" title="${c.ten}" class="card-img-top">
                         <div class="card-body">
                             <h6 class="card-title">${c.ten}</h6>
                             <h5 class="card-title text-danger">
