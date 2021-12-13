@@ -8,7 +8,7 @@ import java.util.List;
 
 public class loaiModels {
     public static List<loai> findAll() {
-        final String query = "select * from loai";
+        final String query = "select * from sandaugia.loai";
 
         try (Connection con = DbUtils.getConnection()) {
             return con.createQuery(query).executeAndFetch(loai.class);

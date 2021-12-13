@@ -24,19 +24,15 @@ public class SanPhamServlet extends HttpServlet {
             case "/Danhmuc":
                 int spID = Integer.parseInt(request.getParameter("id"));
                 List<sanpham> list = sanphamModels.findByDanhMuc(spID);
-                request.setAttribute("sanpham", list);
+                request.setAttribute("spDanhMuc", list);
                 ServletUtils.forward("/views/vwSanPham/DanhMuc.jsp", request, response);
 
                 break;
             case "/Loai":
-                int proID = Integer.parseInt(request.getParameter("id"));
-                //Product product = ProductModels.findById(proID);
-//                if (product==null) {
-//                    ServletUtils.redirect("/Home", request, response);
-//                } else {
-//                    //request.setAttribute("product", product);
-//                    ServletUtils.forward("/views/vwProduct/Detail.jsp", request, response);
-//                }
+                int sp = Integer.parseInt(request.getParameter("id"));
+                List<sanpham> list1 = sanphamModels.findByLoai(sp);
+                request.setAttribute("spLoai", list1);
+                ServletUtils.forward("/views/vwSanPham/Loai.jsp", request, response);
 
                 break;
 

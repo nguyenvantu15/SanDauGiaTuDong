@@ -165,7 +165,7 @@
                 <div class="dropdown-content-danhmuc">
                     <c:forEach items="${loaiWithDetails}" var="d">
                         <c:if test="${d.idDanhMuc == c.id}">
-                            <a href="">${d.ten}</a>
+                            <a href="${pageContext.request.contextPath}/SanPham/Loai?id=${d.id}">${d.ten}</a>
                         </c:if>
                     </c:forEach>
 

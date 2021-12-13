@@ -26,7 +26,7 @@ public class sanphamModels {
     }
 
     public static List<sanpham> findByLoai(int idLoai) {
-        final String query = "select * from sandaugia.sanpham where idLoai = :idDLoai ";
+        final String query = "select * from sandaugia.sanpham where idLoai = :idLoai ";
 
         try (Connection con = DbUtils.getConnection()) {
             return con.createQuery(query).addParameter("idLoai", idLoai).executeAndFetch(sanpham.class);

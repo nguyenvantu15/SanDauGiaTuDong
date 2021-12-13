@@ -3,7 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
-<jsp:useBean id="spDanhMuc" scope="request" type="java.util.List<com.ute.sandaugiatudong.beans.sanpham>"/>
+<jsp:useBean id="spLoai" scope="request" type="java.util.List<com.ute.sandaugiatudong.beans.sanpham>"/>
 
 <t:main>
     <jsp:attribute name="css">
@@ -20,10 +20,10 @@
 
     <jsp:body>
         <div>
-            <h4>Danh Mục</h4>
+            <h4>Loai</h4>
         </div>
         <div class="row m-0">
-            <c:forEach items="${spDanhMuc}" var="c">
+            <c:forEach items="${spLoai}" var="c">
                 <div class="col-sm-auto col-item p-0">
                     <div class="card h-100">
                         <img src="${pageContext.request.contextPath}/public/imgs/${c.id}/1.jpg" alt="${c.ten}" title="${c.ten}" class="card-img-top">
