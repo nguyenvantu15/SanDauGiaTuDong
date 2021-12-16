@@ -26,8 +26,16 @@
                        alert("Tên đăng nhập không đúng hoặc đã tồn tại !!!");
                        return;
                     }
+
+                    $.getJSON('${pageContext.request.contextPath}/Account/IsAvailable?user=' + userName, function (data) {
+                        if (data === true) {
+                            $('#frmRegister').off('submit').submit();
+                        } else {
+                            alert('Tài khoản đã tồn tại.');
+                        }
+                    });
                     // hành vi submit đầu tiên bị chặn lại sau nó kiểm tra rồi gỡ hàm này ra
-                    $('#frmRegister').off('submit').submit();
+                   // $('#frmRegister').off('submit').submit();
                 });
 
 <%--                css cho ô input ngày sinh--%>
