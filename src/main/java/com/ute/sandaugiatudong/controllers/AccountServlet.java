@@ -63,7 +63,8 @@ public class AccountServlet extends HttpServlet {
 
         String username = request.getParameter("username");
 
-        String rawpawd = request.getParameter("rawpwd");
+        String rawpawd = request.getParameter("rawpwd"); //lấy mật khẩu người dùng nhập
+        //Hash mật khẩu để lưu vào database
         String bcryptHashString = BCrypt.withDefaults().hashToString(12, rawpawd.toCharArray());
 
         String name = request.getParameter("name");
