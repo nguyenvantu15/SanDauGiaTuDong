@@ -69,6 +69,9 @@ public class AccountServlet extends HttpServlet {
             case "/Login":
                 loginUser(request,response);
                 break;
+            case "/Logout":
+                logout(request, response);
+                break;
             default:
                 //ServletUtils.forward("/views/404.jsp",request,response);
                 break;
@@ -92,7 +95,8 @@ public class AccountServlet extends HttpServlet {
         LocalDate ngaysinh = LocalDate.parse(dob, df);
 
         String phone = request.getParameter("phone");
-        int permission = 0;
+
+        int permission = 1;
 
         User u = new User(0,permission,username,bcryptHashString,email,phone,name,ngaysinh);
         UserModels.add(u);
@@ -112,7 +116,7 @@ public class AccountServlet extends HttpServlet {
                 // session là biến dữ liệu dùng chung cho tất cả request của một phiên làm việc
                 HttpSession session = request.getSession();
                 //
-                session.setAttribute("auth", 0);
+                session.setAttribute("auth", 1);
                 session.setAttribute("authUser", user);
 
                 String url = (String) (session.getAttribute("retUrl"));
@@ -132,6 +136,15 @@ public class AccountServlet extends HttpServlet {
 
             ServletUtils.forward("/views/vwAccount/Login.jsp", request, response);
         }
+    }
 
+    private void logout(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        session.setAttribute("auth", 0);
+        session.setAttribute("authUser", new User());
+        String url = request.getHeader("referer");
+        if (url == null)
+            url = "/Home";
+        ServletUtils.redirect(url, request, response);
     }
 }
