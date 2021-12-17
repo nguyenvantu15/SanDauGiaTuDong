@@ -118,8 +118,8 @@
             color: #fcd001;
         }
     </style>
-    <%--    Lỗ css--%>
-    <jsp:invoke fragment="css"/>
+    <%--    Lỗ css --%>
+    <jsp:invoke fragment = "css"/>
 </head>
 <body>
 <div class="nav-tren">
@@ -152,6 +152,7 @@
                     <li class="nav-item">
                         <a class="nav-link" href="${pageContext.request.contextPath}/Account/Login">Đăng Nhập</a>
                     </li>
+
                 </c:when>
                 <c:otherwise>
                     <form id="frmLogout" action="${pageContext.request.contextPath}/Account/Logout" method="post"></form>
