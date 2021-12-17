@@ -121,7 +121,7 @@
 <body>
 <div class="nav-tren">
     <nav class="navbar navbar-expand-sm">
-        <a class="navbar-brand" href="#">
+        <a class="navbar-brand" href="${pageContext.request.contextPath}/Home/">
             <i class="fa fa-home fa-2x" aria-hidden="true"></i>
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
@@ -142,10 +142,10 @@
         </div>
         <ul class="navbar-nav mr-0">
             <li class="nav-item ">
-                <a class="nav-link" href="">Đăng Ký</a>
+                <a class="nav-link" href="${pageContext.request.contextPath}/Account/Register">Đăng Ký</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="">Đăng Nhập</a>
+                <a class="nav-link" href="${pageContext.request.contextPath}/Account/Login">Đăng Nhập</a>
             </li>
         </ul>
     </nav>

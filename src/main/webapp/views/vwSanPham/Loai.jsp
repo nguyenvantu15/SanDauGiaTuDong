@@ -12,7 +12,7 @@
                 width: 20%;
             }
             .card-img-top{
-                height: 35vh;
+                height: 30vh;
                 object-fit: contain;
             }
         </style>

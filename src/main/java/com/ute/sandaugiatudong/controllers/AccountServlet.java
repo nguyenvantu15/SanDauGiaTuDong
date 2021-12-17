@@ -1,7 +1,7 @@
 package com.ute.sandaugiatudong.controllers;
 
 import at.favre.lib.crypto.bcrypt.BCrypt;
-import com.ute.sandaugiatudong.beans.nguoiDung;
+import com.ute.sandaugiatudong.beans.nguoidung;
 import com.ute.sandaugiatudong.models.nguoiDungModels;
 import com.ute.sandaugiatudong.utils.ServletUtils;
 
@@ -10,6 +10,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -27,7 +28,7 @@ public class AccountServlet extends HttpServlet {
                     break;
 
                 case "/Login":
-                    ServletUtils.forward("/views/vwAccount/Login.jsp", request, response);
+                    ServletUtils.forward("/views/vwAccount/DangNhap.jsp", request, response);
                     break;
                 case "/Profile":
                     ServletUtils.forward("/views/vwAccount/Profile.jsp", request, response);
@@ -77,13 +78,44 @@ public class AccountServlet extends HttpServlet {
         String phone = request.getParameter("phone");
         int permission = 0;
 
-        nguoiDung u = new nguoiDung(0,permission,username,bcryptHashString,email,phone,name,ngaysinh);
+        nguoidung u = new nguoidung(0,permission,username,bcryptHashString,email,phone,name,ngaysinh);
         nguoiDungModels.add(u);
 
         ServletUtils.forward("/views/vwAccount/Register.jsp",request,response);
 
     }
     private void loginUser(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        String username = request.getParameter("username");
+        String password = request.getParameter("password");
+
+        nguoidung user = nguoiDungModels.findByUsername(username);
+        if (user != null) {
+            BCrypt.Result result = BCrypt.verifyer().verify(password.toCharArray(), user.getPassword());
+            if (result.verified) {
+                // session là biến dữ liệu dùng chung cho tất cả request của một phiên làm việc
+                HttpSession session = request.getSession();
+                //
+                session.setAttribute("auth", 0);
+                session.setAttribute("authUser", user);
+
+                String url = (String) (session.getAttribute("retUrl"));
+                if (url == null)
+                    url = "/Home";
+
+                ServletUtils.redirect(url, request, response);
+            } else {
+                request.setAttribute("hasError", true);
+                request.setAttribute("errorMessage", "Invalid login");
+
+                ServletUtils.forward("/views/vwAccount/Login.jsp", request, response);
+            }
+        } else {
+            request.setAttribute("hasError", true);
+            request.setAttribute("errorMessage", "Invalid login");
+
+            ServletUtils.forward("/views/vwAccount/Login.jsp", request, response);
+        }
 
     }
 }
