@@ -1,7 +1,5 @@
 package com.ute.sandaugiatudong.models;
 
-import com.ute.sandaugiatudong.beans.loai;
-import com.ute.sandaugiatudong.beans.sanpham;
 import com.ute.sandaugiatudong.utils.DbUtils;
 import org.sql2o.Connection;
 

@@ -1,7 +1,6 @@
 package com.ute.sandaugiatudong.controllers;
 
 import at.favre.lib.crypto.bcrypt.BCrypt;
-import com.ute.sandaugiatudong.beans.nguoidung;
 import com.ute.sandaugiatudong.models.nguoiDungModels;
 import com.ute.sandaugiatudong.utils.ServletUtils;
 

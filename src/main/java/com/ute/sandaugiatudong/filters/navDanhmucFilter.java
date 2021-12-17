@@ -1,7 +1,5 @@
 package com.ute.sandaugiatudong.filters;
 
-import com.ute.sandaugiatudong.beans.danhmuc;
-import com.ute.sandaugiatudong.beans.loai;
 import com.ute.sandaugiatudong.models.danhmucModels;
 import com.ute.sandaugiatudong.models.loaiModels;
 

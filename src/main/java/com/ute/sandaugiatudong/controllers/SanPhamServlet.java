@@ -1,8 +1,5 @@
 package com.ute.sandaugiatudong.controllers;
 
-import com.ute.sandaugiatudong.beans.loai;
-import com.ute.sandaugiatudong.beans.sanpham;
-import com.ute.sandaugiatudong.models.danhmucModels;
 import com.ute.sandaugiatudong.models.sanphamModels;
 import com.ute.sandaugiatudong.utils.ServletUtils;
 
