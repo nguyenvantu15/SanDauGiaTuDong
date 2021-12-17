@@ -1,15 +1,15 @@
 package com.ute.sandaugiatudong.models;
 
-import com.ute.sandaugiatudong.beans.nguoiDung;
+import com.ute.sandaugiatudong.beans.User;
 import com.ute.sandaugiatudong.utils.DbUtils;
 import org.sql2o.Connection;
 
 import java.util.List;
 
-public class nguoiDungModels {
-    public static void add(nguoiDung u)
+public class UserModels {
+    public static void add(User u)
     {
-        String insertSQL = "INSERT INTO user (username, password, email, phone, permission, name, dob) VALUES (:username,:password,:email,:phone,:permission,:name,:dob)";
+        String insertSQL = "INSERT INTO sandaugia.user (username, password, email, phone, permission, name, dob) VALUES (:username,:password,:email,:phone,:permission,:name,:dob)";
         try (Connection con = DbUtils.getConnection()){
             con.createQuery(insertSQL)
                     .addParameter("username",u.getUsername())
@@ -23,12 +23,12 @@ public class nguoiDungModels {
         }
     }
 
-    public static nguoiDung findByUserName(String username){
-        final String query = "select * from user where username = :username";
+    public static User findByUserName(String username){
+        final String query = "select * from sandaugia.user where username = :username";
         try (Connection con = DbUtils.getConnection()) {
-            List<nguoiDung> list = con.createQuery(query)
+            List<User> list = con.createQuery(query)
                     .addParameter("username", username)
-                    .executeAndFetch(nguoiDung.class);
+                    .executeAndFetch(User.class);
 
             if (list.size() == 0) {
                 return null;

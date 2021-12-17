@@ -1,7 +1,8 @@
 package com.ute.sandaugiatudong.controllers;
 
 import at.favre.lib.crypto.bcrypt.BCrypt;
-import com.ute.sandaugiatudong.models.nguoiDungModels;
+import com.ute.sandaugiatudong.beans.User;
+import com.ute.sandaugiatudong.models.UserModels;
 import com.ute.sandaugiatudong.utils.ServletUtils;
 
 import javax.servlet.ServletException;
@@ -28,7 +29,7 @@ public class AccountServlet extends HttpServlet {
                     break;
 
                 case "/Login":
-                    ServletUtils.forward("/views/vwAccount/DangNhap.jsp", request, response);
+                    ServletUtils.forward("/views/vwAccount/Login.jsp", request, response);
                     break;
                 case "/Profile":
                     ServletUtils.forward("/views/vwAccount/Profile.jsp", request, response);
@@ -37,7 +38,7 @@ public class AccountServlet extends HttpServlet {
                 case "/IsAvailable":
                     String username = request.getParameter("username");
                     //truyen username vao ham tim
-                    nguoiDung user = nguoiDungModels.findByUserName(username);
+                    User user = UserModels.findByUserName(username);
                     boolean isAvailable = (user == null);// user = null thi tim k thay => true
 
                     PrintWriter out = response.getWriter();
@@ -93,8 +94,8 @@ public class AccountServlet extends HttpServlet {
         String phone = request.getParameter("phone");
         int permission = 0;
 
-        nguoidung u = new nguoidung(0,permission,username,bcryptHashString,email,phone,name,ngaysinh);
-        nguoiDungModels.add(u);
+        User u = new User(0,permission,username,bcryptHashString,email,phone,name,ngaysinh);
+        UserModels.add(u);
 
         ServletUtils.forward("/views/vwAccount/Register.jsp",request,response);
 
@@ -104,7 +105,7 @@ public class AccountServlet extends HttpServlet {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
 
-        nguoidung user = nguoiDungModels.findByUsername(username);
+        User user = UserModels.findByUserName(username);
         if (user != null) {
             BCrypt.Result result = BCrypt.verifyer().verify(password.toCharArray(), user.getPassword());
             if (result.verified) {

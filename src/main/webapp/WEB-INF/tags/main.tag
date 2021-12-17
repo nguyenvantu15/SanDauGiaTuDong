@@ -5,8 +5,8 @@
 <%@ attribute name="js" fragment="true" required="false" %>
 
 
-<jsp:useBean id="danhmucWithDetails" scope="request" type="java.util.List<com.ute.sandaugiatudong.beans.danhmuc>"/>
-<jsp:useBean id="loaiWithDetails" scope="request" type="java.util.List<com.ute.sandaugiatudong.beans.loai>"/>
+<jsp:useBean id="CategoryWithDetails" scope="request" type="java.util.List<com.ute.sandaugiatudong.beans.Product>"/>
+<jsp:useBean id="TypeWithDetails" scope="request" type="java.util.List<com.ute.sandaugiatudong.beans.Type>"/>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -152,20 +152,20 @@
 </div>
 <div class="nav-duoi">
     <ul class="danhmuc">
-        <c:forEach items="${danhmucWithDetails}" var="c">
+        <c:forEach items="${CategoryWithDetails}" var="c">
 
             <li class="dropdown-danhmuc">
-                <a href="${pageContext.request.contextPath}/SanPham/Danhmuc?id=${c.id}" class="dropbtn-danhmuc">
+                <a href="${pageContext.request.contextPath}/Product/Category?id=${c.id}" class="dropbtn-danhmuc">
                     <div>
 <%--                        <i class="fa fa-microchip fanav" aria-hidden="true"></i>--%>
-                        <span class="textDrop">${c.ten}</span>
+                        <span class="textDrop">${c.name}</span>
                     </div>
                     <i class="fa fa-caret-down"></i>
                 </a>
                 <div class="dropdown-content-danhmuc">
-                    <c:forEach items="${loaiWithDetails}" var="d">
-                        <c:if test="${d.idDanhMuc == c.id}">
-                            <a href="${pageContext.request.contextPath}/SanPham/Loai?id=${d.id}">${d.ten}</a>
+                    <c:forEach items="${TypeWithDetails}" var="d">
+                        <c:if test="${d.idCat == c.id}">
+                            <a href="${pageContext.request.contextPath}/Product/Type?id=${d.id}">${d.name}</a>
                         </c:if>
                     </c:forEach>
 
