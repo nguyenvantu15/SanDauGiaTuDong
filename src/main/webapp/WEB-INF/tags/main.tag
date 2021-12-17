@@ -16,15 +16,21 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
     <style>
+        body{
+            font-size: 1.2rem;
+            box-sizing: border-box;
+            margin: 0;
+        }
         .navbar{
-            background-color: black;
+            background-color:#222838;
             width: 80%;
             margin: auto;
-            height: 2.7em !important;
+            height: 4rem !important;
         }
         .nav-tren{
-            background-color: black;
-            height: 2.7em !important;
+            background-color: #222838;
+            height: 4rem !important;
+            align-items: center;
         }
         .nav-link{
             color: white;
@@ -33,12 +39,14 @@
             border-radius: 10px;
         }
         .nav-duoi{
-            background-color: #fcd001;
+            height: 3rem;
+            background-color: #d99f3f;
         }
         .danhmuc{
             align-items: center;
             margin: auto;
             display: flex;
+            height: 100%;
             width: 80%;
             justify-content: space-between;
             padding: 0;

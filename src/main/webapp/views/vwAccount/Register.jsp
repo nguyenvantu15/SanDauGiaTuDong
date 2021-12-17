@@ -6,9 +6,26 @@
 <%--            link css bang datetime--%>
             <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css" integrity="sha512-f0tzWhCwVFS3WeYaofoLWkTP62ObhewQ1EZn65oSYDZUg1+CyywGKkWzm8BxaJj5HGKI72PnMH9jYyIFz+GH7g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
             <style>
+                body{
+                    background: #1A233A;
+                }
                 .form-register{
                     width: 800px;
                     margin: auto;
+                    background-color: #272e48;
+                    color: white;
+                }
+                .form-control {
+                    border: 1px solid #596280;
+                    -webkit-border-radius: 2px;
+                    -moz-border-radius: 2px;
+                    border-radius: 2px;
+                    font-size: 1.2rem;
+                    background: #1A233A;
+                    color: #bcd0f7;
+                }
+                .btn{
+                    font-size: 1.2rem;
                 }
             </style>
         </jsp:attribute>
@@ -53,7 +70,7 @@
     <jsp:body>
         <form action="" method="post" id="frmRegister">
             <div class="card mt-5 form-register" >
-                    <div class="m-auto"><h3>Đăng kí</h3></div>
+                    <div class="m-auto"><h2>Đăng kí</h2></div>
                 <div class="card-body">
                     <h5>Tài khoản</h5>
                     <div class="form-group">
