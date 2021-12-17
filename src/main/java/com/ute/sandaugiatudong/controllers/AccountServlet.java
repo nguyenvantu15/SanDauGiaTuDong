@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
@@ -32,6 +33,20 @@ public class AccountServlet extends HttpServlet {
                     break;
                 case "/Profile":
                     ServletUtils.forward("/views/vwAccount/Profile.jsp", request, response);
+                    break;
+
+                case "/IsAvailable":
+                    String username = request.getParameter("username");
+                    //truyen username vao ham tim
+                    nguoiDung user = nguoiDungModels.findByUserName(username);
+                    boolean isAvailable = (user == null);// user = null thi tim k thay => true
+
+                    PrintWriter out = response.getWriter();
+                    response.setContentType("application/json");
+                    response.setCharacterEncoding("utf-8");
+
+                    out.print(isAvailable);
+                    out.flush();
                     break;
                 default:
                     //ServletUtils.forward("/views/404.jsp",request,response);
@@ -64,7 +79,8 @@ public class AccountServlet extends HttpServlet {
 
         String username = request.getParameter("username");
 
-        String rawpawd = request.getParameter("rawpwd");
+        String rawpawd = request.getParameter("rawpwd"); //lấy mật khẩu người dùng nhập
+        //Hash mật khẩu để lưu vào database
         String bcryptHashString = BCrypt.withDefaults().hashToString(12, rawpawd.toCharArray());
 
         String name = request.getParameter("name");
