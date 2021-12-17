@@ -104,26 +104,26 @@ public class AccountServlet extends HttpServlet {
         ServletUtils.forward("/views/vwAccount/Register.jsp",request,response);
 
     }
-    private void loginUser(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    private void loginUser (HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
+        String username = request.getParameter( "username");
+        String password = request.getParameter( "password");
 
         User user = UserModels.findByUserName(username);
         if (user != null) {
-            BCrypt.Result result = BCrypt.verifyer().verify(password.toCharArray(), user.getPassword());
-            if (result.verified) {
+            BCrypt.Result result  = BCrypt.verifyer().verify(password.toCharArray(), user.getPassword());
+            if ( result.verified ) {
                 // session là biến dữ liệu dùng chung cho tất cả request của một phiên làm việc
-                HttpSession session = request.getSession();
-                //
-                session.setAttribute("auth", 1);
-                session.setAttribute("authUser", user);
+                HttpSession session = request.getSession() ;
+
+                session.setAttribute("auth",1);// Xác đinh đăng nhập rồi hay chưa
+                session.setAttribute("authUser",user);
 
                 String url = (String) (session.getAttribute("retUrl"));
                 if (url == null)
                     url = "/Home";
 
-                ServletUtils.redirect(url, request, response);
+                ServletUtils.redirect(url,request,response);
             } else {
                 request.setAttribute("hasError", true);
                 request.setAttribute("errorMessage", "Invalid login");
@@ -134,6 +134,7 @@ public class AccountServlet extends HttpServlet {
             request.setAttribute("hasError", true);
             request.setAttribute("errorMessage", "Invalid login");
 
+
             ServletUtils.forward("/views/vwAccount/Login.jsp", request, response);
         }
     }
@@ -142,6 +143,8 @@ public class AccountServlet extends HttpServlet {
         HttpSession session = request.getSession();
         session.setAttribute("auth", 0);
         session.setAttribute("authUser", new User());
+
+        //Quay trở lại vị trí lúc đầu
         String url = request.getHeader("referer");
         if (url == null)
             url = "/Home";

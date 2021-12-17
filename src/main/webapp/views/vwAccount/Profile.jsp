@@ -1,10 +1,7 @@
-<
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
-<head>
-    <title>Login</title>
-</head>
-<body>
-    <p>Hello Truyen day</p>
-</body>
-</html>
+<%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
+<t:main>
+    <jsp:body>
+        Lấy thông tin người dùng bằng secction
+    </jsp:body>
+</t:main>
