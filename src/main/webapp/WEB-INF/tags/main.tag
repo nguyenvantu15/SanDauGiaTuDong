@@ -114,6 +114,9 @@
         {
             margin: auto;
         }
+        .fa-home{
+            color: #fcd001;
+        }
     </style>
     <%--    Lỗ css--%>
     <jsp:invoke fragment="css"/>
@@ -158,7 +161,7 @@
                             </a>
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                                 <c:if test="${auth ==2}">
-                                    <a class="dropdown-item" href="${pageContext.request.contextPath}/Account/Profile">
+                                    <a class="dropdown-item" href="${pageContext.request.contextPath}/Product/Add">
                                         <i class="fa fa-plus" aria-hidden="true"></i>
                                         Thêm sản phẩm
                                     </a>
