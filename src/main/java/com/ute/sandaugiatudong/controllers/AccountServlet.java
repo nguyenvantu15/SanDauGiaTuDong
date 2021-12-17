@@ -116,7 +116,7 @@ public class AccountServlet extends HttpServlet {
                 // session là biến dữ liệu dùng chung cho tất cả request của một phiên làm việc
                 HttpSession session = request.getSession();
                 //
-                session.setAttribute("auth", 1);
+                session.setAttribute("auth", user.getPermission());
                 session.setAttribute("authUser", user);
 
                 String url = (String) (session.getAttribute("retUrl"));

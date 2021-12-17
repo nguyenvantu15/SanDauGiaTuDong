@@ -24,16 +24,16 @@ public class ProductServlet extends HttpServlet {
                 List<Product> list = ProductModels.findByCat(ProID);
                 request.setAttribute("ProductByCategory", list);
                 ServletUtils.forward("/views/vwProduct/Category.jsp", request, response);
-
                 break;
             case "/Type":
                 int sp = Integer.parseInt(request.getParameter("id"));
                 List<Product> list1 = ProductModels.findByType(sp);
                 request.setAttribute("ProductByType", list1);
                 ServletUtils.forward("/views/vwProduct/Type.jsp", request, response);
+                break;
+            case "/Add":
 
                 break;
-
             default:
                 //ServletUtils.forward("/views/404.jsp", request, response);
                 break;
