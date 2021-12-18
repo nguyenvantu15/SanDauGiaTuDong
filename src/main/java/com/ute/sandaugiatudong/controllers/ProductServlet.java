@@ -1,7 +1,7 @@
 package com.ute.sandaugiatudong.controllers;
 
-import com.ute.sandaugiatudong.beans.Category;
 import com.ute.sandaugiatudong.beans.Product;
+import com.ute.sandaugiatudong.beans.Category;
 import com.ute.sandaugiatudong.models.CategoryModels;
 import com.ute.sandaugiatudong.models.ProductModels;
 import com.ute.sandaugiatudong.utils.ServletUtils;
@@ -22,6 +22,7 @@ public class ProductServlet extends HttpServlet {
             case "/Category":
                 int ProID = Integer.parseInt(request.getParameter("id"));
                 List<Product> list = ProductModels.findByCat(ProID);
+
                 request.setAttribute("ProductByCategory", list);
                 ServletUtils.forward("/views/vwProduct/Category.jsp", request, response);
                 break;

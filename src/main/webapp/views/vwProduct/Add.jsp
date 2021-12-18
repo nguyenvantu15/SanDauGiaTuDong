@@ -13,12 +13,19 @@
     </jsp:attribute>
 
     <jsp:attribute name="js">
+
         <script src="https://cdn.tiny.cloud/1/5nmlpb2qma707p8n50ohwl9uai2afuehks9mqypol4rj4wf6/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js" integrity="sha512-AIOTidJAcHBH2G/oZv9viEGXRqDNmfdPVPYOYKGy3fti0xIplnlgMHUGfuNRzC6FkzIo0iIxgFnr9RikFxK+sw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
         <script src="https://cdn.jsdelivr.net/gh/kartik-v/bootstrap-fileinput@5.2.5/js/fileinput.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.2.5/themes/fa/theme.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.2.5/js/locales/vi.min.js"></script>
         <script>
 
-            $("#ingsPro").fileinput();
+            $("#imgsPro").fileinput({
+                theme: 'fa',
+                language: 'vi',
+                allowedFileExtensions: ['jpg', 'png']
+            });
 
 
             tinymce.init({
@@ -78,10 +85,19 @@
                 <label for="txtFullDes">Mô tả sản phẩm</label>
                 <textarea id="txtFullDes" name="fullDes"></textarea>
             </div>
-
             <div class="form-group">
-                <input id="ingsPro" name="ingsPro" type="file"  data-browse-on-zone-click="true">
+
             </div>
+            <div class="form-group">
+                <label for="imgsPro">Thêm ảnh ( 4 ảnh) </label>
+                <input id="imgsPro" name="imgsPro" type="file"  data-browse-on-zone-click="true" multiple
+                       data-show-upload="false" data-show-caption="true">
+            </div>
+
+            <button type="submit" class="btn btn-primary mb-5">
+                <i class="fa fa-save" aria-hidden="true"></i>
+                Đăng kí
+            </button>
         </form>
     </jsp:body>
 </t:main>
