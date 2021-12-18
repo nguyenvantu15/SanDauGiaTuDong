@@ -49,7 +49,7 @@ public class AccountServlet extends HttpServlet {
                     out.flush();
                     break;
                 default:
-                    //ServletUtils.forward("/views/404.jsp",request,response);
+                    ServletUtils.forward("/views/404.jsp",request,response);
                     break;
             }
         }
@@ -73,7 +73,7 @@ public class AccountServlet extends HttpServlet {
                 logout(request, response);
                 break;
             default:
-                //ServletUtils.forward("/views/404.jsp",request,response);
+                ServletUtils.forward("/views/404.jsp",request,response);
                 break;
         }
     }

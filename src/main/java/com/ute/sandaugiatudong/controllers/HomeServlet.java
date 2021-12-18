@@ -15,15 +15,15 @@ public class HomeServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String path = request.getPathInfo();
         if (path == null || path.equals("/")) {
-            path = "Index";
+            path = "/Index";
         }
         switch (path) {
-            case "Index" :
+            case "/Index" :
                 ServletUtils.forward("/views/vwHome/Index.jsp",request,response);
                 break;
 
             default:
-                //ServletUtils.forward("/views/404.jsp",request,response);
+                ServletUtils.forward("/views/404.jsp",request,response);
                 break;
         }
     }
