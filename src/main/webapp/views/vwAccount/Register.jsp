@@ -38,16 +38,31 @@
                 $('#frmRegister').on('submit', function(e){
                     e.preventDefault();
                     const userName = $('#txtUserName').val();
-                    if(userName.length === 0)
+                    const passWord = $('#txtPassWord').val();
+                    const rePass= $('#txtConfirm').val();
+                    const name = $('#txtName').val();
+                    const doB = $('#txtDoB').val();
+                    const phone = $('#txtPhone').val();
+                    const email = $('#txtEmail').val();
+
+                    // const  checkRepass = checkRepass(passWord.trim(), rePass.trim());
+                    if(userName.length === 0 || passWord.length === 0 || rePass.length === 0
+                    || name.length === 0 || doB.length === 0 || phone.length ===0 || email.length === 0)
                     {
-                       alert("Tên đăng nhập không đúng hoặc đã tồn tại !!!");
+                       alert("Thông tin người dùng chưa đầy đủ !!! \n Mời nhập lại !!!!");
                        return;
+                    }
+                    if(passWord.trim() !== rePass.trim())
+                    {
+                        alert("Mật khẩu không trùng khớp !!!");
+                            return;
                     }
 
                     $.getJSON('${pageContext.request.contextPath}/Account/IsAvailable?user=' + userName, function (data) {
                         if (data === true) {
                             $('#frmRegister').off('submit').submit();
-                        } else {
+                        }
+                        else {
                             alert('Tài khoản đã tồn tại.');
                         }
                     });

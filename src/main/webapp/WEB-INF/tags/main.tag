@@ -25,6 +25,7 @@
             background-color:#222838;
             width: 80%;
             margin: auto;
+            padding: 0;
             height: 4rem !important;
         }
         .nav-tren{
@@ -32,14 +33,26 @@
             height: 4rem !important;
             align-items: center;
         }
+
+        .form-inline{
+            flex: 1;
+        }
+        .btn_search{
+            font-size: 1.1rem;
+            margin-left: 5px;
+        }
         .nav-link{
             color: white;
+            margin-left: 10px;
         }
         .form-control-sm{
-            border-radius: 10px;
+            border-radius: 5px;
+            font-size: 1.1rem;
+            width: 50%;
+            outline: none;
         }
         .nav-duoi{
-            height: 3rem;
+            height: 2.5rem;
             background-color: #d99f3f;
         }
         .danhmuc{
@@ -55,19 +68,23 @@
         .dropbtn-danhmuc {
             background-color: transparent;
             color: black;
+            font-weight: 600;
             border: none;
             width: 100%;
+            height: 100%;
+            line-height: 2.5rem;
             display: flex;
             justify-content: space-between;
             padding-right: 10px;
             padding-left: 10px;
         }
         .dropdown-danhmuc :hover{
-            color: black;
+            color: #5e9de1;
         }
         .dropdown-danhmuc {
             position: relative;
             width: 25%;
+            height: 100%;
             display: inline-block;
             align-items: stretch;
 
@@ -76,6 +93,7 @@
         .dropdown-content-danhmuc {
             display: none;
             position: absolute;
+            width: 100%;
             background-color: #f1f1f1;
             min-width: 160px;
             box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
@@ -147,7 +165,7 @@
             </ul>
             <form class="form-inline my-2 my-lg-0">
                 <input class="form-control-sm mr-sm-2 " type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success btn-sm" type="submit">Search</button>
+                <button class="btn btn-outline-success btn_search btn-sm" type="submit">Search</button>
             </form>
 
         </div>
