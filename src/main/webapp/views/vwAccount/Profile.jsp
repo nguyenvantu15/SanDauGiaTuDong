@@ -114,8 +114,8 @@
                                 </div>
                                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                                     <div class="form-group">
-                                        <label for="website">Website URL</label>
-                                        <input type="url" class="form-control" id="website" placeholder="Website url">
+                                        <label for="permission">Permission</label>
+                                        <input type="text" class="form-control" id="permission" value="${authUser.permission}" style="background: #1A233A" disabled>
                                     </div>
                                 </div>
                             </div>
