@@ -8,8 +8,15 @@
 <t:main>
     <jsp:attribute name="css">
         <style>
+            .row{
+                margin-left: -6px;
+                margin-right: -6px;
+            }
             .col-item{
-                width: 20%;
+                width: 19%;
+                margin-left: 6px;
+                margin-right: 6px;
+                margin-bottom: 12px;
             }
             .card-img-top{
                 height: 30vh;
@@ -22,7 +29,7 @@
         <div>
             <h4>Danh Mục</h4>
         </div>
-        <div class="row m-0">
+        <div class="row">
             <c:forEach items="${ProductByCategory}" var="c">
                 <div class="col-sm-auto col-item p-0">
                     <div class="card h-100">
@@ -35,7 +42,7 @@
                             <p class="card-text">kkkk</p>
                         </div>
                         <div class="card-footer text-muted">
-                            <a class="btn btn-sm btn-outline-primary" href=""
+                            <a class="btn btn-sm btn-outline-primary" href="${pageContext.request.contextPath}/Product/Detail?id=${c.id}"
                                role="button">
                                 <i class="fa fa-eye" aria-hidden="true"></i>
                                 Detail

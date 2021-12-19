@@ -35,7 +35,7 @@
                             <p class="card-text">kkkk</p>
                         </div>
                         <div class="card-footer text-muted">
-                            <a class="btn btn-sm btn-outline-primary" href=""
+                            <a class="btn btn-sm btn-outline-primary" href="${pageContext.request.contextPath}/Product/Detail?id=${c.id}"
                                role="button">
                                 <i class="fa fa-eye" aria-hidden="true"></i>
                                 Detail
