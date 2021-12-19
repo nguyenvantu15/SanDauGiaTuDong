@@ -1,5 +1,6 @@
 package com.ute.sandaugiatudong.models;
 
+import com.ute.sandaugiatudong.beans.Product;
 import com.ute.sandaugiatudong.beans.Type;
 import com.ute.sandaugiatudong.utils.DbUtils;
 import org.sql2o.Connection;
@@ -12,6 +13,39 @@ public class TypeModels {
 
         try (Connection con = DbUtils.getConnection()) {
             return con.createQuery(query).executeAndFetch(Type.class);
+        }
+    }
+
+    public static Type findByName(String name) {
+        final String query = "select * from sandaugia.type where name= :name";
+
+        try (Connection con = DbUtils.getConnection()) {
+            List<Type> list = con.createQuery(query)
+                    .addParameter("name", name)
+                    .executeAndFetch(Type.class);
+
+
+            if ( list.size() == 0 ){
+                return null;
+            }
+
+            return list.get(0);
+        }
+    }
+    public static Type findCatIdByTypeId(int id) {
+        final String query = "select * from sandaugia.type where id= :id";
+
+        try (Connection con = DbUtils.getConnection()) {
+            List<Type> list = con.createQuery(query)
+                    .addParameter("id", id)
+                    .executeAndFetch(Type.class);
+
+
+            if ( list.size() == 0 ){
+                return null;
+            }
+
+            return list.get(0);
         }
     }
 }

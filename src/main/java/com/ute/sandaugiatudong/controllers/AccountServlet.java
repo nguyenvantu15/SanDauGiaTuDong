@@ -118,7 +118,6 @@ public class AccountServlet extends HttpServlet {
                 //
                 session.setAttribute("auth", user.getPermission());
                 session.setAttribute("authUser", user);
-
                 String url = (String) (session.getAttribute("retUrl"));
                 if (url == null)
                     url = "/Home";
