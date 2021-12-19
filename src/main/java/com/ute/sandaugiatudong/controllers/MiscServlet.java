@@ -15,7 +15,6 @@ public class MiscServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String path = request.getPathInfo();
-
         switch (path) {
             case "/Add":
                 ServletUtils.forward("/views/vwMisc/Add.jsp", request, response);
@@ -31,6 +30,16 @@ public class MiscServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String path = request.getPathInfo();
+        switch (path) {
+            case "/Add":
 
+                break;
+            case "/Edit":
+                break;
+            default:
+                ServletUtils.forward("/views/404.jsp", request, response);
+                break;
+        }
     }
 }
