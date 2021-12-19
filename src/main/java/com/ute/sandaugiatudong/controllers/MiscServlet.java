@@ -19,6 +19,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @WebServlet(name = "MiscServlet", value = "/Misc/*")
+@MultipartConfig(maxFileSize = 16177215)
 public class MiscServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -54,7 +55,6 @@ public class MiscServlet extends HttpServlet {
     private void addProduct(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         String name = request.getParameter("name");
-
         String txtprice = request.getParameter("price");
         int price = Integer.parseInt(txtprice);
 
