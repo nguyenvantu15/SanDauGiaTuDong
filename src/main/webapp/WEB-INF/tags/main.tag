@@ -188,7 +188,7 @@
                             </a>
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                                 <c:if test="${auth ==2}">
-                                    <a class="dropdown-item" href="${pageContext.request.contextPath}/Product/Add">
+                                    <a class="dropdown-item" href="${pageContext.request.contextPath}/Misc/Add">
                                         <i class="fa fa-plus" aria-hidden="true"></i>
                                         Thêm sản phẩm
                                     </a>

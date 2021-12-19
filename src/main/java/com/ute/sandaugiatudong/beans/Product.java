@@ -7,6 +7,7 @@ public class Product {
     private LocalDate timeStart;
     private LocalDate timeEnd;
     private String name;
+    private String tinyDes,fullDes;
 
     public int getId() {
         return id;
@@ -48,7 +49,15 @@ public class Product {
         return name;
     }
 
-    public Product(int id, int price, int idUserSell, int mark, int idUserCur, int idCat, int idType, LocalDate timeStart, LocalDate timeEnd, String name) {
+    public String getTinyDes() {
+        return tinyDes;
+    }
+
+    public String getFullDes() {
+        return fullDes;
+    }
+
+    public Product(int id, int price, int idUserSell, int mark, int idUserCur, int idCat, int idType, LocalDate timeStart, LocalDate timeEnd, String name, String tinyDes, String fullDes) {
         this.id = id;
         this.price = price;
         this.idUserSell = idUserSell;
@@ -59,6 +68,8 @@ public class Product {
         this.timeStart = timeStart;
         this.timeEnd = timeEnd;
         this.name = name;
+        this.tinyDes = tinyDes;
+        this.fullDes = fullDes;
     }
 
     public Product() {
