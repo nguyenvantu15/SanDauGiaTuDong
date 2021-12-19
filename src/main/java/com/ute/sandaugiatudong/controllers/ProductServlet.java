@@ -32,6 +32,16 @@ public class ProductServlet extends HttpServlet {
                 request.setAttribute("ProductByType", list1);
                 ServletUtils.forward("/views/vwProduct/Type.jsp", request, response);
                 break;
+            case "/Detail":
+                int proId = Integer.parseInt(request.getParameter("id"));
+                Product product = ProductModels.findById(proId);
+                if (product == null) {
+                    ServletUtils.redirect("/Home", request, response);
+                } else {
+                    request.setAttribute("product", product);
+                    ServletUtils.forward("/views/vwProduct/Detail.jsp", request, response);
+                }
+                break;
             default:
                 ServletUtils.forward("/views/404.jsp", request, response);
                 break;
