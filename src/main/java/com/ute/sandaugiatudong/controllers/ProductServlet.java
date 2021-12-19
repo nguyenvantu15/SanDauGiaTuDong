@@ -33,7 +33,7 @@ public class ProductServlet extends HttpServlet {
                 ServletUtils.forward("/views/vwProduct/Type.jsp", request, response);
                 break;
             default:
-                //ServletUtils.forward("/views/404.jsp", request, response);
+                ServletUtils.forward("/views/404.jsp", request, response);
                 break;
         }
     }

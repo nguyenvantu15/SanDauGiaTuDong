@@ -18,13 +18,13 @@ public class MiscServlet extends HttpServlet {
 
         switch (path) {
             case "/Add":
-                ServletUtils.forward("/views/vwProduct/Add.jsp", request, response);
+                ServletUtils.forward("/views/vwMisc/Add.jsp", request, response);
 
                 break;
             case "/Edit":
                 break;
             default:
-                //ServletUtils.forward("/views/404.jsp", request, response);
+                ServletUtils.forward("/views/404.jsp", request, response);
                 break;
         }
     }
