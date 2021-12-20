@@ -68,4 +68,15 @@ public class ProductModels {
             return list.get(0);
         }
     }
+
+    public static int findMaxId(){
+        final String query = "SELECT * FROM product ORDER BY id DESC LIMIT 1";
+
+        try (Connection con = DbUtils.getConnection()) {
+            List<Product> list = con.createQuery(query)
+                    .executeAndFetch(Product.class);
+            return list.get(0).getId();
+
+        }
+    }
 }
