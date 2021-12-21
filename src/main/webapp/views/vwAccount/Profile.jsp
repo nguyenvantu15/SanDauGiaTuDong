@@ -1,8 +1,11 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
+
+
 <t:main>
 
     <jsp:attribute name="css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css" integrity="sha512-f0tzWhCwVFS3WeYaofoLWkTP62ObhewQ1EZn65oSYDZUg1+CyywGKkWzm8BxaJj5HGKI72PnMH9jYyIFz+GH7g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
             <style>
                 body{
                     margin: 0;
@@ -61,12 +64,16 @@
                 .btn{
                     font-size: 1.1rem;
                 }
+                .mg-top{
+                    margin-top: 30px;
+                    margin-bottom: 30px;
+                }
 
             </style>
         </jsp:attribute>
 
-    <jsp:attribute name="js">
 
+    <jsp:attribute name="js">
     </jsp:attribute>
 
     <jsp:body>
@@ -80,36 +87,34 @@
                                     <div class="user-avatar">
                                         <img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="Maxwell Admin">
                                     </div>
-                                    <h5 class="user-name">${authUser.username}</h5>
+                                    <h5 class="user-name" >${authUser.username}</h5>
                                     <h6 class="user-email">${authUser.email}</h6>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+
                 <div class="col-xl-9 col-lg-9 col-md-12 col-sm-12 col-12">
                     <div class="card h-100">
                         <div class="card-body">
                             <div class="row gutters">
-                                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                                    <h4 class="mb-3 text-primary">Personal Details</h4>
-                                </div>
                                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                                     <div class="form-group">
-                                        <label for="fullName">Full Name</label>
-                                        <input type="text" class="form-control" id="fullName" value="${authUser.name}">
+                                        <label for="Name">Full Name</label>
+                                        <input type="text" class="form-control" id="Name"value="${authUser.name}" style="background: #1A233A" disabled>
                                     </div>
                                 </div>
                                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                                     <div class="form-group">
-                                        <label for="eMail">Email</label>
-                                        <input type="email" class="form-control" id="eMail" value="${authUser.email}">
+                                        <label for="Email">Email</label>
+                                        <input type="email" class="form-control" id ="Email" value="${authUser.email}" style="background: #1A233A" disabled >
                                     </div>
                                 </div>
                                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                                     <div class="form-group">
-                                        <label for="phone">Phone</label>
-                                        <input type="text" class="form-control" id="phone" value="${authUser.phone}">
+                                        <label for="Phone">Phone</label>
+                                        <input type="text" class="form-control" id ="Phone"  value="${authUser.phone}" style="background: #1A233A" disabled >
                                     </div>
                                 </div>
                                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
@@ -123,15 +128,18 @@
                             <div class="row gutters">
                                 <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                                     <div class="text-right">
-                                        <button type="button" id="submitCant" name="submit" class="btn btn-secondary">Cancel</button>
-                                        <button type="button" id="submitUpdate" name="submit" class="btn btn-primary">Update</button>
+                                        <a href="${pageContext.request.contextPath}/Account/Update?id=${authUser.id}">
+                                            <button type="button" id="submitUpdate" name="submit" class="btn btn-primary">Update</button>
+                                        </a>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+
                 </div>
+
             </div>
-        </div>
+
     </jsp:body>
 </t:main>

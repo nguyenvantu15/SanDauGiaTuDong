@@ -50,6 +50,16 @@ public class User {
         this.dob = dob;
     }
 
+    public User(int id, String email, String name, String phone, LocalDate dob,String password) {
+        this.id = id;
+        this.email = email;
+        this.name = name;
+        this.phone = phone;
+        this.dob = dob;
+        this.password = password;
+    }
+
     public User() {
     }
+
 }

@@ -22,6 +22,10 @@
                 height: 30vh;
                 object-fit: contain;
             }
+            .card_hover:hover{
+                transform:translateY(-1px);
+                box-shadow:  0 2px 10px 4px rgba(0,0,0,0.5);;
+            }
         </style>
     </jsp:attribute>
 
@@ -31,7 +35,7 @@
         </div>
         <div class="row">
             <c:forEach items="${ProductByCategory}" var="c">
-                <div class="col-sm-auto col-item p-0">
+                <div class="col-sm-auto col-item p-0 card_hover">
                     <div class="card h-100">
                         <img src="${pageContext.request.contextPath}/public/imgs/${c.id}/1.jpg" alt="${c.name}" title="${c.name}" class="card-img-top">
                         <div class="card-body">

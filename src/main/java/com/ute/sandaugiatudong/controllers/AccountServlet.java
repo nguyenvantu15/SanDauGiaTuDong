@@ -32,7 +32,26 @@ public class AccountServlet extends HttpServlet {
                     ServletUtils.forward("/views/vwAccount/Login.jsp", request, response);
                     break;
                 case "/Profile":
+
                     ServletUtils.forward("/views/vwAccount/Profile.jsp", request, response);
+                    break;
+
+                case "/Update":
+
+                    int id = -1;
+                    try {
+                        id = Integer.parseInt(request.getParameter("id"));
+                    }catch (NumberFormatException e){
+
+                    }
+                    User u = UserModels.findById(id);
+                    if (u!=null) {
+                        request.setAttribute("userFind",u); //Gui thong tin ra ngoai
+                        ServletUtils.forward("/views/vwAccount/Update.jsp", request, response);
+                    }
+                    else {
+                       ServletUtils.redirect("/Account/Profile",request,response);
+                    }
                     break;
 
                 case "/IsAvailable":
@@ -48,6 +67,7 @@ public class AccountServlet extends HttpServlet {
                     out.print(isAvailable);
                     out.flush();
                     break;
+
                 default:
                     ServletUtils.forward("/views/404.jsp",request,response);
                     break;
@@ -69,9 +89,15 @@ public class AccountServlet extends HttpServlet {
             case "/Login":
                 loginUser(request,response);
                 break;
+
             case "/Logout":
                 logout(request, response);
                 break;
+
+            case "/Update":
+                updatePro(request, response);
+                break;
+
             default:
                 ServletUtils.forward("/views/404.jsp",request,response);
                 break;
@@ -104,6 +130,50 @@ public class AccountServlet extends HttpServlet {
         ServletUtils.forward("/views/vwAccount/Register.jsp",request,response);
 
     }
+
+    private void updatePro(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        //Lay du lieu tren view xuong
+        int id =Integer.parseInt( request.getParameter("id"));
+        String name = request.getParameter("name");
+        String email = request.getParameter("email");
+        String phone = request.getParameter("phone");
+
+        //format dob de lua vao database
+        String ngaySinh = request.getParameter("dob");
+        DateTimeFormatter df = DateTimeFormatter.ofPattern("d/M/yyyy");
+        LocalDate dob = LocalDate.parse(ngaySinh, df);
+
+        //So sanh mat khau cu
+        User user = UserModels.findById(id);
+        String password = request.getParameter("oldpass");
+        BCrypt.Result result = BCrypt.verifyer().verify(password.toCharArray(), user.getPassword());
+
+        //Thay doi mat khau
+        String newpass = request.getParameter("newpass");
+        //Hash mật khẩu để lưu vào database
+        String bcryptHashString = BCrypt.withDefaults().hashToString(12, newpass.toCharArray());
+
+
+        HttpSession session = request.getSession();
+        if (result.verified) {
+
+            User u = new User(id,email,name,phone,dob,bcryptHashString);
+            UserModels.update(u);
+
+            //Dang suat account sau khi chinh sua
+            session.setAttribute("auth", 0);
+            session.setAttribute("authUser", new User());
+            ServletUtils.redirect("/Account/Login", request, response);
+
+        } else {
+
+            request.setAttribute("hasError", true);
+            request.setAttribute("errorMessage", "Invalid login");
+            ServletUtils.redirect(String.format("/Account/Update?id=" + id), request, response);
+        }
+
+    }
+
     private void loginUser(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         String username = request.getParameter("username");
