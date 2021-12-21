@@ -24,7 +24,6 @@ public class HomeServlet extends HttpServlet {
             case "/Index" :
                 List<Product> top5Price = ProductModels.findTop5Price();
                 request.setAttribute("top5Price", top5Price);
-                System.out.println(top5Price.get(0).getId());
                 ServletUtils.forward("/views/vwHome/Index.jsp",request,response);
                 break;
 

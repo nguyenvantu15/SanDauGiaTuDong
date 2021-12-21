@@ -41,10 +41,19 @@
                                 <i class="fa fa-eye" aria-hidden="true"></i>
                                 Detail
                             </a>
-                            <a class="btn btn-outline-success" href="#" role="button">
-                                <i class="fa fa-cart-plus" aria-hidden="true"></i>
-                                Add to cart
-                            </a>
+                            <c:if test="${auth > 0}">
+                                <a class="btn btn-sm btn-outline-success" href="${pageContext.request.contextPath}/Behavior/watchlist?id=${c.id}"
+                                   role="button">
+                                    <i class="fa fa-plus" aria-hidden="true"></i>
+                                    Add
+                                </a>
+                                <a class="btn btn-sm btn-outline-danger" href="${pageContext.request.contextPath}/Behavior/Auction?id=${c.id}"
+                                   role="button">
+                                    <i class="fa fa-cart-plus" aria-hidden="true"></i>
+                                    Đấu giá
+                                </a>
+                            </c:if>
+
                         </div>
                     </div>
                 </div>
