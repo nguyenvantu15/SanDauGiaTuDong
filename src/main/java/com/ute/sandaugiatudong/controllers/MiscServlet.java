@@ -43,6 +43,7 @@ public class MiscServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String path = request.getPathInfo();
+        request.setCharacterEncoding("UTF-8");
         switch (path){
             case "/Add":
                 addProduct(request,response);
