@@ -1,6 +1,7 @@
 package com.ute.sandaugiatudong.models;
 
 import com.ute.sandaugiatudong.beans.Product;
+import com.ute.sandaugiatudong.beans.User;
 import com.ute.sandaugiatudong.utils.DbUtils;
 import org.sql2o.Connection;
 
@@ -12,6 +13,26 @@ public class ProductModels {
 
         try (Connection con = DbUtils.getConnection()) {
             return con.createQuery(query).executeAndFetch(Product.class);
+        }
+    }
+
+    public static void add(Product p)
+    {
+        String insertSQL = "INSERT INTO product (name, price, idUserSell, mark, timeStart, timeEnd, idUserCur, idCat, idType, tinyDes, fullDes) VALUES (:name,:price,:idusersell,:mark,:timestart,:timeend,:idusercur,:idcat,:idtype,:tinydes,:fulldes)";
+        try (Connection con = DbUtils.getConnection()){
+            con.createQuery(insertSQL)
+                    .addParameter("name",p.getName())
+                    .addParameter("price",p.getPrice())
+                    .addParameter("idusersell",p.getIdUserSell())
+                    .addParameter("mark",p.getMark())
+                    .addParameter("timestart", p.getTimeStart())
+                    .addParameter("timeend",p.getTimeEnd())
+                    .addParameter("idusercur",p.getIdUserCur())
+                    .addParameter("idcat",p.getIdCat())
+                    .addParameter("idtype",p.getIdType())
+                    .addParameter("tinydes",p.getTinyDes())
+                    .addParameter("fulldes",p.getFullDes())
+                    .executeUpdate();
         }
     }
 
@@ -45,6 +66,25 @@ public class ProductModels {
             }
 
             return list.get(0);
+        }
+    }
+
+    public static int findMaxId(){
+        final String query = "SELECT * FROM product ORDER BY id DESC LIMIT 1";
+
+        try (Connection con = DbUtils.getConnection()) {
+            List<Product> list = con.createQuery(query)
+                    .executeAndFetch(Product.class);
+            return list.get(0).getId();
+
+        }
+    }
+
+    public static List<Product> findTop5Price() {
+        final String query = "SELECT * FROM sandaugia.product ORDER BY price DESC LIMIT 5";
+
+        try (Connection con = DbUtils.getConnection()) {
+            return con.createQuery(query).executeAndFetch(Product.class);
         }
     }
 }

@@ -1,6 +1,7 @@
 package com.ute.sandaugiatudong.models;
 
 import com.ute.sandaugiatudong.beans.Category;
+import com.ute.sandaugiatudong.beans.Type;
 import com.ute.sandaugiatudong.utils.DbUtils;
 import org.sql2o.Connection;
 
@@ -21,4 +22,6 @@ public class CategoryModels {
             return con.createQuery(query).addParameter("idD", id).executeAndFetch(Category.class);
         }
     }
+
+
 }

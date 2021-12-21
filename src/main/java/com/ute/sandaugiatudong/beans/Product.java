@@ -1,11 +1,12 @@
 package com.ute.sandaugiatudong.beans;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class Product {
     private int id,price,idUserSell,mark,idUserCur,idCat,idType;
-    private LocalDate timeStart;
-    private LocalDate timeEnd;
+    private LocalDateTime timeStart;
+    private LocalDateTime timeEnd;
     private String name;
     private String tinyDes,fullDes;
 
@@ -37,11 +38,11 @@ public class Product {
         return idType;
     }
 
-    public LocalDate getTimeStart() {
+    public LocalDateTime getTimeStart() {
         return timeStart;
     }
 
-    public LocalDate getTimeEnd() {
+    public LocalDateTime getTimeEnd() {
         return timeEnd;
     }
 
@@ -57,7 +58,7 @@ public class Product {
         return fullDes;
     }
 
-    public Product(int id, int price, int idUserSell, int mark, int idUserCur, int idCat, int idType, LocalDate timeStart, LocalDate timeEnd, String name, String tinyDes, String fullDes) {
+    public Product(int id, int price, int idUserSell, int mark, int idUserCur, int idCat, int idType, LocalDateTime timeStart, LocalDateTime timeEnd, String name, String tinyDes, String fullDes) {
         this.id = id;
         this.price = price;
         this.idUserSell = idUserSell;

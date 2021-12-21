@@ -1,5 +1,7 @@
 package com.ute.sandaugiatudong.controllers;
 
+import com.ute.sandaugiatudong.beans.Product;
+import com.ute.sandaugiatudong.models.ProductModels;
 import com.ute.sandaugiatudong.utils.ServletUtils;
 
 import javax.servlet.ServletException;
@@ -8,6 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.List;
 
 @WebServlet(name = "HomeServlet", value = "/Home/*")
 public class HomeServlet extends HttpServlet {
@@ -19,6 +22,8 @@ public class HomeServlet extends HttpServlet {
         }
         switch (path) {
             case "/Index" :
+                List<Product> top5Price = ProductModels.findTop5Price();
+                request.setAttribute("top5Price", top5Price);
                 ServletUtils.forward("/views/vwHome/Index.jsp",request,response);
                 break;
 

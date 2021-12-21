@@ -13,7 +13,6 @@
     </jsp:attribute>
 
     <jsp:attribute name="js">
-
         <script src="https://cdn.tiny.cloud/1/5nmlpb2qma707p8n50ohwl9uai2afuehks9mqypol4rj4wf6/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js" integrity="sha512-AIOTidJAcHBH2G/oZv9viEGXRqDNmfdPVPYOYKGy3fti0xIplnlgMHUGfuNRzC6FkzIo0iIxgFnr9RikFxK+sw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
         <script src="https://cdn.jsdelivr.net/gh/kartik-v/bootstrap-fileinput@5.2.5/js/fileinput.min.js"></script>
@@ -67,11 +66,16 @@
             </div>
             <div class="form-group">
                 <label for="txtProType">Loại</label>
-                <select class="form-control" id="txtProType">
+                <select class="form-control" id="txtProType" name="ProType">
                     <c:forEach items="${TypeWithDetails}" var="c">
-                        <option>${c.name}</option>
+                        <option>${c.id}.${c.name}</option>
                     </c:forEach>
                 </select>
+            </div>
+
+            <div class="form-group">
+                <label for="txtTinyDes">Mô tả ngắn</label>
+                <input type="text" class="form-control" id="txtTinyDes" placeholder="" name="tinyDes">
             </div>
             <div class="form-group">
                 <label for="txtTimeStart">Ngày bắt đầu đấu giá</label>
