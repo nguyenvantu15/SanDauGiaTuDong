@@ -32,7 +32,8 @@
                             <h5 class="card-title text-danger">
                                 <fmt:formatNumber value="${c.price}" type="number" />
                             </h5>
-                            <p class="card-text">kkkk</p>
+                            <p class="card-text">ID người bán: ${c.idUserSell} </p>
+                            <p class="card-text">ID người đặt giá cao nhất: ${c.idUserCur}</p>
                         </div>
                         <div class="card-footer text-muted">
                             <a class="btn btn-sm btn-outline-primary" href="${pageContext.request.contextPath}/Product/Detail?id=${c.id}"

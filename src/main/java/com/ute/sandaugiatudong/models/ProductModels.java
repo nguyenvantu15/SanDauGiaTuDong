@@ -79,4 +79,12 @@ public class ProductModels {
 
         }
     }
+
+    public static List<Product> findTop5Price() {
+        final String query = "SELECT * FROM sandaugia.product ORDER BY price DESC LIMIT 5";
+
+        try (Connection con = DbUtils.getConnection()) {
+            return con.createQuery(query).executeAndFetch(Product.class);
+        }
+    }
 }
