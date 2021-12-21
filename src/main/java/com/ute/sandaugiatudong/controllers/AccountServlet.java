@@ -105,6 +105,7 @@ public class AccountServlet extends HttpServlet {
     }
 
     private void registerUser(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.setCharacterEncoding("UTF-8");
 
         String username = request.getParameter("username");
 
@@ -133,6 +134,8 @@ public class AccountServlet extends HttpServlet {
 
     private void updatePro(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         //Lay du lieu tren view xuong
+        request.setCharacterEncoding("UTF-8");
+
         int id =Integer.parseInt( request.getParameter("id"));
         String name = request.getParameter("name");
         String email = request.getParameter("email");
