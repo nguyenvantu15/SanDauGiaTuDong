@@ -27,7 +27,9 @@ public class BehaviorServlet extends HttpServlet {
             case "/watchlist":
                 watchlist(request, response);
                 break;
-
+            case "viewwatchlist":
+                int i=0;
+                break;
             default:
                 ServletUtils.forward("/views/404.jsp", request, response);
                 break;
