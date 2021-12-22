@@ -63,7 +63,7 @@
                                 Đấu giá
                             </a>
                             <a class="btn btn-sm btn-outline-secondary"
-                               href="${pageContext.request.contextPath}/Behavior/Auction?id=${c.id}"
+                               href="${pageContext.request.contextPath}/Behavior/DeleteWatchitem?id=${c.id}"
                                role="button">
                                 <i class="fa fa-trash" aria-hidden="true"></i>
                                 xóa

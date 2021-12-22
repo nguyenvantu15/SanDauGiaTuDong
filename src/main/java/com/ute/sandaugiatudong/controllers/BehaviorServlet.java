@@ -42,7 +42,12 @@ public class BehaviorServlet extends HttpServlet {
                 break;
             case "/DeleteWatchitem":
                 int ProID = Integer.parseInt(request.getParameter("id"));
-
+                HttpSession session1 = request.getSession();
+                User u1 = (User) session1.getAttribute("authUser");
+                WatchListModels.delete(u1.getId(),ProID);
+                String url = request.getHeader("referer");
+                if (url == null) url = "/Home";
+                ServletUtils.redirect(url, request, response);
                 break;
             default:
                 ServletUtils.forward("/views/404.jsp", request, response);
