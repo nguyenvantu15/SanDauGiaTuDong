@@ -16,9 +16,24 @@ public class UserModels {
                     .addParameter("password",u.getPassword())
                     .addParameter("email",u.getEmail())
                     .addParameter("phone",u.getPhone())
+                    .addParameter("name",u.getName())
+                    .addParameter("permission", u.getPermission())
+                    .addParameter("dob",u.getDob())
+                    .executeUpdate();
+        }
+    }
+
+    public static void addRegisterSeller(User u)
+    {
+        String insertSQL = "INSERT INTO sandaugia.registerseller (id,username, email, phone,permission, name) VALUES (:id,:username,:email,:phone,:permission,:name)";
+        try (Connection con = DbUtils.getConnection()){
+            con.createQuery(insertSQL)
+                    .addParameter("id",u.getId())
+                    .addParameter("username",u.getUsername())
+                    .addParameter("email",u.getEmail())
+                    .addParameter("phone",u.getPhone())
                     .addParameter("permission", u.getPermission())
                     .addParameter("name",u.getName())
-                    .addParameter("dob",u.getDob())
                     .executeUpdate();
         }
     }
