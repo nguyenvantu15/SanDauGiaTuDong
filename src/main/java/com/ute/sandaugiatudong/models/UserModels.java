@@ -51,20 +51,20 @@ public class UserModels {
                     .executeUpdate();
         }
     }
-public static User findById(int id){
-    final String query = "select * from sandaugia.user where id = :id";
-    try (Connection con = DbUtils.getConnection()) {
-        List<User> list = con.createQuery(query)
-                .addParameter("id", id)
-                .executeAndFetch(User.class);
+    public static User findById(int id){
+        final String query = "select * from sandaugia.user where id = :id";
+        try (Connection con = DbUtils.getConnection()) {
+            List<User> list = con.createQuery(query)
+                    .addParameter("id", id)
+                    .executeAndFetch(User.class);
 
-        if (list.size() == 0) {
-            return null;
+            if (list.size() == 0) {
+                return null;
+            }
+
+            return list.get(0);
         }
-
-        return list.get(0);
     }
-}
 
 
     public static User findByUserName(String username){

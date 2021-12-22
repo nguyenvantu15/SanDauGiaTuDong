@@ -1,7 +1,10 @@
 package com.ute.sandaugiatudong.controllers;
 
 import at.favre.lib.crypto.bcrypt.BCrypt;
+import com.ute.sandaugiatudong.beans.Product;
 import com.ute.sandaugiatudong.beans.User;
+import com.ute.sandaugiatudong.models.ProductModels;
+import com.ute.sandaugiatudong.models.RegisterSellerModels;
 import com.ute.sandaugiatudong.models.UserModels;
 import com.ute.sandaugiatudong.utils.ServletUtils;
 
@@ -15,6 +18,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 @WebServlet(name = "AccountServlet", value = "/Account/*")
 public class AccountServlet extends HttpServlet {
@@ -52,6 +56,13 @@ public class AccountServlet extends HttpServlet {
                     else {
                        ServletUtils.redirect("/Account/Profile",request,response);
                     }
+                    break;
+
+                case "/RegisterSeller":
+                    List<User> list = RegisterSellerModels.listRegisterUser();
+
+                    request.setAttribute("ListRegisterSeller", list);
+                    ServletUtils.forward("/views/vwAccount/RegisterSeller.jsp", request, response);
                     break;
 
                 case "/IsAvailable":
@@ -122,6 +133,51 @@ public class AccountServlet extends HttpServlet {
         UserModels.addRegisterSeller(u);
 
         ServletUtils.forward("/views/vwAccount/Profile.jsp",request,response);
+
+    }
+
+    private void updateSeller(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        //Lay du lieu tren view xuong
+        request.setCharacterEncoding("UTF-8");
+
+        int id =Integer.parseInt( request.getParameter("id"));
+        String name = request.getParameter("name");
+        String email = request.getParameter("email");
+        String phone = request.getParameter("phone");
+
+        //format dob de lua vao database
+        String ngaySinh = request.getParameter("dob");
+        DateTimeFormatter df = DateTimeFormatter.ofPattern("d/M/yyyy");
+        LocalDate dob = LocalDate.parse(ngaySinh, df);
+
+        //So sanh mat khau cu
+        User user = UserModels.findById(id);
+        String password = request.getParameter("oldpass");
+        BCrypt.Result result = BCrypt.verifyer().verify(password.toCharArray(), user.getPassword());
+
+        //Thay doi mat khau
+        String newpass = request.getParameter("newpass");
+        //Hash mật khẩu để lưu vào database
+        String bcryptHashString = BCrypt.withDefaults().hashToString(12, newpass.toCharArray());
+
+
+        HttpSession session = request.getSession();
+        if (result.verified) {
+
+            User u = new User(id,email,name,phone,dob,bcryptHashString);
+            UserModels.update(u);
+
+            //Dang suat account sau khi chinh sua
+            session.setAttribute("auth", 0);
+            session.setAttribute("authUser", new User());
+            ServletUtils.redirect("/Account/Login", request, response);
+
+        } else {
+
+            request.setAttribute("hasError", true);
+            request.setAttribute("errorMessage", "Invalid login");
+            ServletUtils.redirect(String.format("/Account/Update?id=" + id), request, response);
+        }
 
     }
 

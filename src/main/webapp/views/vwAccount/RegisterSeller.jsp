@@ -1,23 +1,25 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
-<%--<jsp:useBean id="category" scope="request" type="com.ute.ecwebapp.beans.Category"/>--%>
-<jsp:useBean id="categories" scope="request" type="java.util.List<com.ute.ecwebapp.beans.Category>"/>
+<jsp:useBean id="ListRegisterSeller" scope="request" type="java.util.List<com.ute.sandaugiatudong.beans.User>"/>
+
 
 <t:main>
     <jsp:body>
         <div class="card">
-            <h4 class="card-header d-flex justify-content-between">
-                Categories
-                <a class="btn btn-outline-success" href="${pageContext.request.contextPath}/Admin/Category/Add" role="button">
-                    <i class="fa fa-plus" aria-hidden="true"></i>
-                    Add Category
-                </a>
-            </h4>
+<%--            <h4 class="card-header d-flex justify-content-between">--%>
+<%--                Categories--%>
+<%--                <a class="btn btn-outline-success" href="${pageContext.request.contextPath}/Admin/Category/Add" role="button">--%>
+<%--                    <i class="fa fa-plus" aria-hidden="true"></i>--%>
+<%--                    Add Category--%>
+<%--                </a>--%>
+<%--            </h4>--%>
             <c:choose>
-                <c:when test="${categories.size() == 0}">
+                <c:when test="${ListRegisterSeller.size() == 0}">
                     <div class="card-body">
                         <p class="card-text">Không có dữ liệu.</p>
                     </div>
@@ -27,22 +29,37 @@
                         <table class="table table-hover">
                             <thead>
                             <tr>
-                                <th>#</th>
-                                <th>Category</th>
+                                <th style="font-size: 1.4rem; color: royalblue ; width: 10%">#</th>
+                                <th style="font-size: 1.4rem; color: royalblue  ; width: 20%">Danh sách xin nâng cấp seller</th>
                                 <th>&nbsp;</th>
+                            </tr>
+                            <tr>
+                                <th name="id">ID</th>
+                                <th>Username</th>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Phone</th>
+                                <th>Permission</th>
                             </tr>
                             </thead>
                             <tbody>
-                            <c:forEach items="${categories}" var="c">
+                            <c:forEach items="${ListRegisterSeller}" var="s">
+                                <form action="" method="post" id="frmSeller">
                                 <tr>
-                                    <td>${c.catID}</td>
-                                    <td>${c.catName}</td>
+
+                                    <td><input type="text" value="${s.id}" style="width: 100%; border: none" disabled></td>
+                                    <td>${s.username}</td>
+                                    <td>${s.name}</td>
+                                    <td>${s.email}</td>
+                                    <td>${s.phone}</td>
+                                    <td>${s.permission}</td>
                                     <td class="text-right">
-                                        <a class="btn btn-sm btn-outline-primary" href="${pageContext.request.contextPath}/Admin/Category/Edit?id=${c.catID}" role="button">
-                                            <i class="fa fa-pencil" aria-hidden="true"></i>
+                                        <a class="btn btn-sm btn-outline-success" href="${pageContext.request.contextPath}/Account/RegisterSeller" role="button">
+                                            <i class="fa fa-check" aria-hidden="true"></i>
                                         </a>
                                     </td>
                                 </tr>
+                                </form>
                             </c:forEach>
                             </tbody>
                         </table>
