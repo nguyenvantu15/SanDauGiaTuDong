@@ -30,7 +30,7 @@ public class BehaviorServlet extends HttpServlet {
 
                 watchlist(request, response);
                 break;
-            case "viewwatchlist":
+            case "/viewwatchlist":
 
                 HttpSession session = request.getSession();
                 User u = (User) session.getAttribute("authUser");
@@ -38,7 +38,7 @@ public class BehaviorServlet extends HttpServlet {
 
                 request.setAttribute("WatchListByUser", list);
 
-                ServletUtils.forward("/views/vwAccount/WatchList.jsp", request, response);
+                ServletUtils.forward("/views/vwAccount/Login.jsp", request, response);
                 break;
             default:
                 ServletUtils.forward("/views/404.jsp", request, response);
