@@ -1,7 +1,9 @@
 package com.ute.sandaugiatudong.controllers;
 
+import com.ute.sandaugiatudong.beans.Product;
 import com.ute.sandaugiatudong.beans.User;
 import com.ute.sandaugiatudong.beans.WatchList;
+import com.ute.sandaugiatudong.models.ProductModels;
 import com.ute.sandaugiatudong.models.UserModels;
 import com.ute.sandaugiatudong.models.WatchListModels;
 import com.ute.sandaugiatudong.utils.ServletUtils;
@@ -25,10 +27,18 @@ public class BehaviorServlet extends HttpServlet {
                 break;
 
             case "/watchlist":
+
                 watchlist(request, response);
                 break;
             case "viewwatchlist":
-                int i=0;
+
+                HttpSession session = request.getSession();
+                User u = (User) session.getAttribute("authUser");
+                List<WatchList> list = WatchListModels.findByIdUser(u.getId());
+
+                request.setAttribute("WatchListByUser", list);
+
+                ServletUtils.forward("/views/vwAccount/WatchList.jsp", request, response);
                 break;
             default:
                 ServletUtils.forward("/views/404.jsp", request, response);
