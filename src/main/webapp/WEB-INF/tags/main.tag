@@ -190,6 +190,11 @@
                                 <c:if test="${auth ==2}">
                                     <a class="dropdown-item" href="${pageContext.request.contextPath}/Misc/Add">
                                         <i class="fa fa-plus" aria-hidden="true"></i>
+                                        Sản phẩm của bạn
+                                    </a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="${pageContext.request.contextPath}/Misc/Add">
+                                        <i class="fa fa-plus" aria-hidden="true"></i>
                                         Thêm sản phẩm
                                     </a>
                                     <div class="dropdown-divider"></div>
