@@ -10,184 +10,236 @@
 
 <t:main>
     <jsp:attribute name="css">
+
         <style>
+            @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap');
 
-            /*****************globals*************/
-            body {
-                font-family: 'open sans';
-                overflow-x: hidden; }
-
-            img {
-                max-width: 100%; }
-
-            .preview {
-                display: -webkit-box;
-                display: -webkit-flex;
-                display: -ms-flexbox;
-                display: flex;
-                -webkit-box-orient: vertical;
-                -webkit-box-direction: normal;
-                -webkit-flex-direction: column;
-                -ms-flex-direction: column;
-                flex-direction: column;
-                min-height: 550px;
-            }
-            @media screen and (max-width: 996px) {
-                .preview {
-                    margin-bottom: 20px; } }
-
-            .preview-pic {
-                -webkit-box-flex: 1;
-                -webkit-flex-grow: 1;
-                -ms-flex-positive: 1;
-                flex-grow: 1; }
-
-            .preview-thumbnail.nav-tabs {
-                border: none;
-                margin-top: 15px;
-                justify-content: space-between;
-                flex:1;
-            }
-            .preview-thumbnail.nav-tabs li {
-                width: 30%;
-                margin-right: 2.5%; }
-            .preview-thumbnail.nav-tabs li img {
-                max-width: 100%;
-                display: block; }
-            .preview-thumbnail.nav-tabs li a {
+            *{
                 padding: 0;
-                margin: 0; }
-            .preview-thumbnail.nav-tabs li:last-of-type {
-                margin-right: 0; }
-
-            .tab-content {
-                overflow: hidden;
+                margin: 0;
+                box-sizing: border-box;
             }
-            .tab-content img {
+
+            html, body{
+                font-family: 'Roboto', sans-serif;
+                background-color: #1a233a;
+            }
+
+            img{
                 width: 100%;
-                -webkit-animation-name: opacity;
-                animation-name: opacity;
-                -webkit-animation-duration: .3s;
-                animation-duration: .3s; }
-
-            .card {
-                margin-top: 50px;
-                margin-bottom: 50px;
-                background: #eee;
-                padding: 3em;
-                line-height: 1.5em; }
-
-            @media screen and (min-width: 997px) {
-                .wrapper {
-                    display: -webkit-box;
-                    display: -webkit-flex;
-                    display: -ms-flexbox;
-                    display: flex; } }
-
-            .details {
-                display: -webkit-box;
-                display: -webkit-flex;
-                display: -ms-flexbox;
+                display: block;
+            }
+            .container{
+                max-width: 1200px;
+                padding: 0 1rem;
+                margin: 0 auto;
+            }
+            .product-div{
+                margin: 1rem 0;
+                padding: 2rem 0;
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                background-color: #ffffff;
+                border-radius: 3px;
+                column-gap: 10px;
+            }
+            .product-div-left{
+                padding: 20px;
+            }
+            .product-div-right{
+                padding: 20px;
+            }
+            .img-container{
+                height: 400px;
+            }
+            .img-container img{
+                width: 400px;
+                margin: 0 auto;
+                border-radius: 5px;
+            }
+            .hover-container{
                 display: flex;
-                -webkit-box-orient: vertical;
-                -webkit-box-direction: normal;
-                -webkit-flex-direction: column;
-                -ms-flex-direction: column;
-                flex-direction: column; }
-
-
-            .product-title, .price {
-                text-transform: UPPERCASE;
-                font-weight: bold; }
-
-            .checked, .price span {
-                color: #ff9f1a; }
-
-            .product-title, .rating, .product-description, .price, .vote, .sizes {
-                margin-bottom: 15px; }
-
-            .product-title {
-                margin-top: 0; }
-
-            .add-to-cart, .like {
-                background: #ff9f1a;
-                padding: 1.2em 1.5em;
-                border: none;
-                text-transform: UPPERCASE;
-                font-weight: bold;
+                flex-wrap: wrap;
+                align-items: center;
+                justify-content: center;
+                margin-top: 32px;
+            }
+            .hover-container div{
+                border: 2px solid rgba(252, 160, 175, 0.7);
+                padding: 1rem;
+                border-radius: 3px;
+                margin: 0 4px 8px 4px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            .active{
+                border-color: rgb(255, 145, 163)!important;
+            }
+            .hover-container div:hover{
+                border-color: rgb(255, 145, 163);
+            }
+            .hover-container div img{
+                width: 50px;
+                cursor: pointer;
+            }
+            .product-div-right span{
+                display: block;
+            }
+            .product-name{
+                font-size: 26px;
+                margin-bottom: 22px;
+                font-weight: 700;
+                letter-spacing: 1px;
+                opacity: 0.9;
+            }
+            .product-price{
+                font-weight: 700;
+                font-size: 24px;
+                opacity: 0.9;
+                font-weight: 500;
+            }
+            .product-rating{
+                display: flex;
+                align-items: center;
+                margin-top: 12px;
+            }
+            .product-rating span{
+                margin-right: 6px;
+            }
+            .product-description{
+                line-height: 1.6;
+                font-weight: 300;
+                opacity: 0.9;
+                margin-top: 22px;
+            }
+            .btn-groups{
+                margin-top: 22px;
+            }
+            .btn-groups button{
+                display: inline-block;
+                font-size: 16px;
+                font-family: inherit;
+                text-transform: uppercase;
+                padding: 15px 16px;
                 color: #fff;
-                -webkit-transition: background .3s ease;
-                transition: background .3s ease; }
-            .add-to-cart:hover, .like:hover {
-                background: #b36800;
-                color: #fff; }
+                cursor: pointer;
+                transition: all 0.3s ease;
+            }
+            .btn-groups button .fas{
+                margin-right: 8px;
+            }
+            .add-cart-btn{
+                background-color: #FF9F00;
+                border: 2px solid #FF9F00;
+                margin-right: 8px;
+            }
+            .add-cart-btn:hover{
+                background-color: #fff;
+                color: #FF9F00;
+            }
+            .buy-now-btn{
+                background-color: #000;
+                border: 2px solid #000;
+            }
+            .buy-now-btn:hover{
+                background-color: #fff;
+                color: #000;
+            }
 
-            @-webkit-keyframes opacity {
-                0% {
-                    opacity: 0;
-                    -webkit-transform: scale(3);
-                    transform: scale(3); }
-                100% {
-                    opacity: 1;
-                    -webkit-transform: scale(1);
-                    transform: scale(1); } }
+            @media screen and (max-width: 992px){
+                .product-div{
+                    grid-template-columns: 100%;
+                }
+                .product-div-right{
+                    text-align: center;
+                }
+                .product-rating{
+                    justify-content: center;
+                }
+                .product-description{
+                    max-width: 400px;
+                    margin-right: auto;
+                    margin-left: auto;
+                }
+            }
 
-            @keyframes opacity {
-                0% {
-                    opacity: 0;
-                    -webkit-transform: scale(3);
-                    transform: scale(3); }
-                100% {
-                    opacity: 1;
-                    -webkit-transform: scale(1);
-                    transform: scale(1); } }
-
+            @media screen and (max-width: 400px){
+                .btn-groups button{
+                    width: 100%;
+                    margin-bottom: 10px;
+                }
+            }
         </style>
+    </jsp:attribute>
+    <jsp:attribute name="js">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <script>
+
+            const allHoverImages = document.querySelectorAll('.hover-container div img');
+            const imgContainer = document.querySelector('.img-container');
+
+            window.addEventListener('DOMContentLoaded', () => {
+                allHoverImages[0].parentElement.classList.add('active');
+            });
+
+            allHoverImages.forEach((image) => {
+                image.addEventListener('mouseover', () =>{
+                    imgContainer.querySelector('img').src = image.src;
+                    resetActiveImg();
+                    image.parentElement.classList.add('active');
+                });
+            });
+
+            function resetActiveImg(){
+                allHoverImages.forEach((img) => {
+                    img.parentElement.classList.remove('active');
+                });
+            }
+        </script>
     </jsp:attribute>
 
     <jsp:body>
 
-        <div class="container">
-            <div class="card">
-                <div class="container-fluid">
-                    <div class="wrapper row">
-                        <div class="preview col-md-6">
-
-                            <div class="preview-pic tab-content">
-                                <div class="tab-pane active" id="pic-1"><img src="${pageContext.request.contextPath}/public/imgs/${product.id}/1.jpg" /></div>
-                            </div>
-                            <ul class="preview-thumbnail nav nav-tabs">
-                                <li><a data-target="#pic-2" data-toggle="tab"><img src="${pageContext.request.contextPath}/public/imgs/${product.id}/2.jpg" /></a></li>
-                                <li><a data-target="#pic-3" data-toggle="tab"><img src="${pageContext.request.contextPath}/public/imgs/${product.id}/3.jpg" /></a></li>
-                                <li><a data-target="#pic-4" data-toggle="tab"><img src="${pageContext.request.contextPath}/public/imgs/${product.id}/4.jpg" /></a></li>
-                            </ul>
-
+            <div class = "container">
+                <div class = "product-div">
+                    <div class = "product-div-left">
+                        <div class = "img-container">
+                            <img src = "${pageContext.request.contextPath}/public/imgs/${product.id}/1.jpg" alt = "watch">
                         </div>
-                        <div class="details col-md-6">
-                            <h3 class="product-title">${product.name}</h3>
-                            <div class="rating">
-                                <div class="stars">
-                                    <span class="fa fa-star checked"></span>
-                                    <span class="fa fa-star checked"></span>
-                                    <span class="fa fa-star checked"></span>
-                                    <span class="fa fa-star"></span>
-                                    <span class="fa fa-star"></span>
-                                </div>
-                                <span class="review-no">41 reviews</span>
-                            </div>
-                            <p class="product-description">Suspendisse quos? Tempus cras iure temporibus? Eu laudantium cubilia sem sem! Repudiandae et! Massa senectus enim minim sociosqu delectus posuere.</p>
-                            <h4 class="price">current price: <span>
-                                 <fmt:formatNumber value="${product.price}" type="number" />
-                            </span></h4>
-                            <p class="vote"><strong>91%</strong> of buyers enjoyed this product! <strong>(87 votes)</strong></p>
-                            <div class="action">
-                                <button class="add-to-cart btn btn-default" type="button">add to cart</button>
-                                <button class="like btn btn-default" type="button"><span class="fa fa-heart"></span></button>
-                            </div>
+                        <div class = "hover-container">
+                            <div><img src = "${pageContext.request.contextPath}/public/imgs/${product.id}/1.jpg"></div>
+                            <div><img src = "${pageContext.request.contextPath}/public/imgs/${product.id}/2.jpg"></div>
+                            <div><img src = "${pageContext.request.contextPath}/public/imgs/${product.id}/3.jpg"></div>
+                            <div><img src = "${pageContext.request.contextPath}/public/imgs/${product.id}/4.jpg"></div>
+                        </div>
+                    </div>
+                    <div class = "product-div-right">
+                        <span class = "product-name">${product.name}</span>
+                        <span class = "product-price text-danger">Giá hiện tại: ${product.price} vnd</span>
+                        <div class = "product-rating">
+                            <span><i class = "fas fa-star"></i></span>
+                            <span><i class = "fas fa-star"></i></span>
+                            <span><i class = "fas fa-star"></i></span>
+                            <span><i class = "fas fa-star"></i></span>
+                            <span><i class = "fas fa-star-half-alt"></i></span>
+                            <span>(350 ratings)</span>
+                        </div>
+
+                        <div>Thông tin người bán + điểm đánh giá</div>
+                        <div>Thông tin người đặt giá cao nhất hiện tại & điểm đánh giá</div>
+                        <div>Thời điểm đăng</div>
+                        <div>Thời điểm kết thúc</div>
+                        <div>Mô tả chi tiết sản phẩm
+                            <p class = "product-description">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Vitae animi ad minima veritatis dolore. Architecto facere dignissimos voluptate fugit ratione molestias quis quidem exercitationem voluptas.</p>
+                        </div>
+                        <div class = "btn-groups">
+                            <button type = "button" class = "add-cart-btn"><i class = "fas fa-shopping-cart"></i>Ra giá</button>
+                            <button type = "button" class = "buy-now-btn"><i class = "fas fa-wallet"></i>Yêu thích</button>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+
     </jsp:body>
 </t:main>
