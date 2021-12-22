@@ -13,6 +13,7 @@ import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.List;
 
 @WebServlet(name = "BehaviorServlet", value = "/Behavior/*")
@@ -34,11 +35,17 @@ public class BehaviorServlet extends HttpServlet {
 
                 HttpSession session = request.getSession();
                 User u = (User) session.getAttribute("authUser");
-                List<WatchList> list = WatchListModels.findByIdUser(u.getId());
+                List <WatchList> WList = WatchListModels.findByIdUser(u.getId());
+                List <Product> PList = new ArrayList<Product>();
+                for(int i=0;i<WList.size();i++){
+                    WatchList wl= WList.get(i);
+                    Product tmpPro = ProductModels.findById(wl.getIdProduct());
+                    PList.add(tmpPro);
+                }
 
-                request.setAttribute("WatchListByUser", list);
+                request.setAttribute("WatchListByUser", PList);
 
-                ServletUtils.forward("/views/vwAccount/Login.jsp", request, response);
+                ServletUtils.forward("/views/vwAccount/Viewwatchlist.jsp", request, response);
                 break;
             default:
                 ServletUtils.forward("/views/404.jsp", request, response);

@@ -43,6 +43,13 @@ public class ProductModels {
             return con.createQuery(query).addParameter("idCat", idCat).executeAndFetch(Product.class);
         }
     }
+    public static List<Product> findByIdUser(int idCat) {
+        final String query = "select * from sandaugia.product where idCat = :idCat ";
+
+        try (Connection con = DbUtils.getConnection()) {
+            return con.createQuery(query).addParameter("idCat", idCat).executeAndFetch(Product.class);
+        }
+    }
 
     public static List<Product> findByType(int idType) {
         final String query = "select * from sandaugia.product where idType = :idType ";
