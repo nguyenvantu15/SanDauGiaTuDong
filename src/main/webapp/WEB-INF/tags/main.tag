@@ -194,6 +194,13 @@
                                     </a>
                                     <div class="dropdown-divider"></div>
                                 </c:if>
+                                <c:if test="${auth == 1}">
+                                    <a class="dropdown-item" href="${pageContext.request.contextPath}/Behavior/viewwatchlist">
+                                        <i class="fa fa-eye" aria-hidden="true"></i>
+                                        Watch List
+                                    </a>
+                                    <div class="dropdown-divider"></div>
+                                </c:if>
                                 <a class="dropdown-item" href="${pageContext.request.contextPath}/Account/Profile">
                                     <i class="fa fa-user" aria-hidden="true"></i>
                                     Profile

@@ -40,7 +40,7 @@
                                 <i class="fa fa-eye" aria-hidden="true"></i>
                                 Detail
                             </a>
-                            <c:if test="${auth > 0}">
+                            <c:if test="${auth == 1}">
                                 <a class="btn btn-sm btn-outline-success" href="${pageContext.request.contextPath}/Behavior/watchlist?id=${c.id}"
                                    role="button">
                                     <i class="fa fa-plus" aria-hidden="true"></i>

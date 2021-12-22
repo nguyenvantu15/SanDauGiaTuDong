@@ -29,4 +29,15 @@ public class WatchListModels {
                     .executeAndFetch(WatchList.class);
         }
     }
+
+    public static void delete(int iduser, int idProduct)
+    {
+        String insertSQL = "DELETE FROM watchlist WHERE idUser = :iduser AND idProduct = :idproduct";
+        try (Connection con = DbUtils.getConnection()){
+            con.createQuery(insertSQL)
+                    .addParameter("iduser",iduser)
+                    .addParameter("idproduct",idProduct)
+                    .executeUpdate();
+        }
+    }
 }
