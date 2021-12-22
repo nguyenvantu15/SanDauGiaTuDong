@@ -13,4 +13,23 @@ public class RegisterSellerModels {
                     .executeAndFetch(User.class);
         }
     }
+
+    public static void updatePermission(int id, int permission) {
+        String sql = "update sandaugia.user set permission = :permission where id = :id";
+        try (Connection con = DbUtils.getConnection()) {
+            con.createQuery(sql)
+                    .addParameter("id", id)
+                    .addParameter("permission", permission)
+                    .executeUpdate();
+        }
+    }
+
+    public static void deleteRequest(int id) {
+        String sql = "delete from sandaugia.registerseller where id = :id";
+        try (Connection con = DbUtils.getConnection()) {
+            con.createQuery(sql)
+                    .addParameter("id", id)
+                    .executeUpdate();
+        }
+    }
 }

@@ -47,17 +47,19 @@
                                 <form action="" method="post" id="frmSeller">
                                 <tr>
 
-                                    <td><input type="text" value="${s.id}" style="width: 100%; border: none" disabled></td>
+                                    <td><input type="text" name="id" value="${s.id}" style="width: 100%; border: none" disabled></td>
                                     <td>${s.username}</td>
                                     <td>${s.name}</td>
                                     <td>${s.email}</td>
                                     <td>${s.phone}</td>
                                     <td>${s.permission}</td>
+
                                     <td class="text-right">
-                                        <a class="btn btn-sm btn-outline-success" href="${pageContext.request.contextPath}/Account/RegisterSeller" role="button">
+                                        <button type="submit" class="btn btn-outline-success" formaction="${pageContext.request.contextPath}/Account/Accept?id=${s.id}">
                                             <i class="fa fa-check" aria-hidden="true"></i>
-                                        </a>
+                                        </button>
                                     </td>
+
                                 </tr>
                                 </form>
                             </c:forEach>

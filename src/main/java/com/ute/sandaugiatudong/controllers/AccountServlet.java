@@ -113,6 +113,10 @@ public class AccountServlet extends HttpServlet {
                 updatePro(request, response);
                 break;
 
+            case "/Accept":
+                updateSeller(request,response);
+                break;
+
             default:
                 ServletUtils.forward("/views/404.jsp",request,response);
                 break;
@@ -140,44 +144,11 @@ public class AccountServlet extends HttpServlet {
         //Lay du lieu tren view xuong
         request.setCharacterEncoding("UTF-8");
 
-        int id =Integer.parseInt( request.getParameter("id"));
-        String name = request.getParameter("name");
-        String email = request.getParameter("email");
-        String phone = request.getParameter("phone");
-
-        //format dob de lua vao database
-        String ngaySinh = request.getParameter("dob");
-        DateTimeFormatter df = DateTimeFormatter.ofPattern("d/M/yyyy");
-        LocalDate dob = LocalDate.parse(ngaySinh, df);
-
-        //So sanh mat khau cu
-        User user = UserModels.findById(id);
-        String password = request.getParameter("oldpass");
-        BCrypt.Result result = BCrypt.verifyer().verify(password.toCharArray(), user.getPassword());
-
-        //Thay doi mat khau
-        String newpass = request.getParameter("newpass");
-        //Hash mật khẩu để lưu vào database
-        String bcryptHashString = BCrypt.withDefaults().hashToString(12, newpass.toCharArray());
-
-
-        HttpSession session = request.getSession();
-        if (result.verified) {
-
-            User u = new User(id,email,name,phone,dob,bcryptHashString);
-            UserModels.update(u);
-
-            //Dang suat account sau khi chinh sua
-            session.setAttribute("auth", 0);
-            session.setAttribute("authUser", new User());
-            ServletUtils.redirect("/Account/Login", request, response);
-
-        } else {
-
-            request.setAttribute("hasError", true);
-            request.setAttribute("errorMessage", "Invalid login");
-            ServletUtils.redirect(String.format("/Account/Update?id=" + id), request, response);
-        }
+        int id = Integer.parseInt(request.getParameter("id"));
+        int permission = 2;
+        RegisterSellerModels.updatePermission(id,permission);
+        RegisterSellerModels.deleteRequest(id);
+        ServletUtils.redirect("/Account/RegisterSeller", request, response);
 
     }
 
