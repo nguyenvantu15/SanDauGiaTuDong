@@ -12,7 +12,6 @@ import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,15 +23,11 @@ public class BehaviorServlet extends HttpServlet {
 
         switch (path) {
             case "/Auction":
-
                 break;
-
             case "/watchlist":
-
                 watchlist(request, response);
                 break;
             case "/viewwatchlist":
-
                 HttpSession session = request.getSession();
                 User u = (User) session.getAttribute("authUser");
                 List <WatchList> WList = WatchListModels.findByIdUser(u.getId());
@@ -42,10 +37,12 @@ public class BehaviorServlet extends HttpServlet {
                     Product tmpPro = ProductModels.findById(wl.getIdProduct());
                     PList.add(tmpPro);
                 }
-
                 request.setAttribute("WatchListByUser", PList);
-
                 ServletUtils.forward("/views/vwAccount/Viewwatchlist.jsp", request, response);
+                break;
+            case "/DeleteWatchitem":
+                int ProID = Integer.parseInt(request.getParameter("id"));
+
                 break;
             default:
                 ServletUtils.forward("/views/404.jsp", request, response);
