@@ -94,6 +94,10 @@ public class AccountServlet extends HttpServlet {
                 logout(request, response);
                 break;
 
+            case "/Profile":
+                registerSeller(request, response);
+                break;
+
             case "/Update":
                 updatePro(request, response);
                 break;
@@ -102,6 +106,23 @@ public class AccountServlet extends HttpServlet {
                 ServletUtils.forward("/views/404.jsp",request,response);
                 break;
         }
+    }
+    private void registerSeller(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        request.setCharacterEncoding("UTF-8");
+
+        int id = Integer.parseInt(request.getParameter("id"));
+        String username = request.getParameter("username");
+        String name = request.getParameter("name");
+        String email = request.getParameter("email");
+        String phone = request.getParameter("phone");
+        int  permission = Integer.parseInt(request.getParameter("permission"));
+
+        User u = new User(id,permission,username,email,phone,name);
+        UserModels.addRegisterSeller(u);
+
+        ServletUtils.forward("/views/vwAccount/Profile.jsp",request,response);
+
     }
 
     private void registerUser(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

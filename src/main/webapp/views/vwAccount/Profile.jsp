@@ -74,6 +74,18 @@
 
 
     <jsp:attribute name="js">
+        <script>
+            $('#frmRegisterSeller').on('submit', function(e){
+                e.preventDefault();
+                document
+                    .querySelectorAll( "input" )
+                    .forEach( ( input ) => {
+                        input.removeAttribute( "disabled" );
+                    } );
+
+                $('#frmRegisterSeller').off('submit').submit();
+                });
+        </script>
     </jsp:attribute>
 
     <jsp:body>
@@ -96,31 +108,46 @@
                 </div>
 
                 <div class="col-xl-9 col-lg-9 col-md-12 col-sm-12 col-12">
+                    <form action="" method="post" id="frmRegisterSeller"class="card h-100">
                     <div class="card h-100">
                         <div class="card-body">
                             <div class="row gutters">
+
+                                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                    <div class="form-group">
+                                        <label for="id">ID</label>
+                                        <input type="text" class="form-control" id="id" name="id" value="${authUser.id}" style="background: #1A233A" disabled>
+                                    </div>
+                                </div>
+                                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                    <div class="form-group">
+                                        <label for="username">UserName</label>
+                                        <input type="text" class="form-control" id="username" name="username" value="${authUser.username}" style="background: #1A233A" disabled>
+                                    </div>
+                                </div>
+
                                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                                     <div class="form-group">
                                         <label for="Name">Full Name</label>
-                                        <input type="text" class="form-control" id="Name"value="${authUser.name}" style="background: #1A233A" disabled>
+                                        <input type="text" class="form-control" id="Name" name="name" value="${authUser.name}" style="background: #1A233A" disabled >
                                     </div>
                                 </div>
                                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                                     <div class="form-group">
                                         <label for="Email">Email</label>
-                                        <input type="email" class="form-control" id ="Email" value="${authUser.email}" style="background: #1A233A" disabled >
+                                        <input type="email" class="form-control" id ="Email" name="email" value="${authUser.email}" style="background: #1A233A" disabled >
                                     </div>
                                 </div>
                                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                                     <div class="form-group">
                                         <label for="Phone">Phone</label>
-                                        <input type="text" class="form-control" id ="Phone"  value="${authUser.phone}" style="background: #1A233A" disabled >
+                                        <input type="text" class="form-control" id ="Phone" name="phone" value="${authUser.phone}" style="background: #1A233A" disabled >
                                     </div>
                                 </div>
                                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                                     <div class="form-group">
                                         <label for="permission">Permission</label>
-                                        <input type="text" class="form-control" id="permission" value="${authUser.permission}" style="background: #1A233A" disabled>
+                                        <input type="text" class="form-control" id="permission" name="permission" value="${authUser.permission}" style="background: #1A233A" disabled  >
                                     </div>
                                 </div>
                             </div>
@@ -128,15 +155,18 @@
                             <div class="row gutters">
                                 <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                                     <div class="text-right">
+
+                                        <button type="submit" id="submitSeller" name="submitSeller" class="btn btn-warning" >Đăng kí Seller</button>
+
                                         <a href="${pageContext.request.contextPath}/Account/Update?id=${authUser.id}">
-                                            <button type="button" id="submitSeller" name="submit" class="btn btn-primary">Đăng kí Seller</button>
-                                            <button type="button" id="submitUpdate" name="submit" class="btn btn-primary">Update</button>
+                                            <button type="button" id="submitUpdate" name="submit" class="btn btn-primary" >Update</button>
                                         </a>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    </form>
 
                 </div>
 

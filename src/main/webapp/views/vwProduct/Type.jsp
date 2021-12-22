@@ -8,6 +8,9 @@
 <t:main>
     <jsp:attribute name="css">
         <style>
+            body{
+                background: #e5e9f3;
+            }
             .row{
                 margin-left: -6px;
                 margin-right: -6px;
