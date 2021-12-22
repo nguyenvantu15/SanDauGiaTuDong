@@ -129,6 +129,7 @@
                                 <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                                     <div class="text-right">
                                         <a href="${pageContext.request.contextPath}/Account/Update?id=${authUser.id}">
+                                            <button type="button" id="submitSeller" name="submit" class="btn btn-primary">Đăng kí Seller</button>
                                             <button type="button" id="submitUpdate" name="submit" class="btn btn-primary">Update</button>
                                         </a>
                                     </div>
