@@ -36,6 +36,18 @@ public class ProductModels {
         }
     }
 
+    public static int getIdCur(int id){
+        final String query = "SELECT * FROM product WHERE id = :id";
+
+        try (Connection con = DbUtils.getConnection()) {
+            List<Product> list = con.createQuery(query)
+                    .addParameter("id",id)
+                    .executeAndFetch(Product.class);
+            return list.get(0).getIdUserCur();
+
+        }
+    }
+
     public static List<Product> findByCat(int idCat) {
         final String query = "select * from sandaugia.product where idCat = :idCat ";
 
@@ -43,7 +55,16 @@ public class ProductModels {
             return con.createQuery(query).addParameter("idCat", idCat).executeAndFetch(Product.class);
         }
     }
-
+    public static void updatePrice(int id, int price, int idUserCur){
+        String insertSQL = "UPDATE product SET  price = :price, idUserCur = :idusercur WHERE id = :id ";
+        try (Connection con = DbUtils.getConnection()){
+            con.createQuery(insertSQL)
+                    .addParameter("price",price)
+                    .addParameter("idusercur",idUserCur)
+                    .addParameter("id",id)
+                    .executeUpdate();
+        }
+    }
     public static List<Product> findByIdUserSell(int id) {
         final String query = "select * from sandaugia.product where idUserSell = :id";
 
@@ -57,17 +78,6 @@ public class ProductModels {
 
         try (Connection con = DbUtils.getConnection()) {
             return con.createQuery(query).addParameter("idType", idType).executeAndFetch(Product.class);
-        }
-    }
-
-    public static List<Product> findByTypeDetail(int idType, int id) {
-        final String query = "select * from sandaugia.product where idType = :idType and id != :id";
-
-        try (Connection con = DbUtils.getConnection()) {
-            return con.createQuery(query)
-                    .addParameter("idType", idType)
-                    .addParameter("id", id)
-                    .executeAndFetch(Product.class);
         }
     }
 
