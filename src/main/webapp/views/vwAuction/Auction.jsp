@@ -229,10 +229,25 @@
             $('#frmAuction').on('submit', function (e) {
                 e.preventDefault();
                 const maxPrice = $('#txtProPrice').val();
-                if(maxPrice > ${product.price}){
+                const a = 1000000;
+
+                if ( 100000 >= ${product.price}){
+                    diff=10000;
+                } else if(500000 >= ${product.price}){
+                    diff = 20000;
+                }else if (1000000 >= ${product.price}){
+                    diff = 30000;
+                } else if (10000000 >= ${product.price}){
+                    diff = 50000;
+                } else {
+                    diff = 100000;
+                }
+
+
+                if(maxPrice > ( ${product.price} + diff)){
                     $('#frmAuction').off('submit').submit();
                 } else{
-                    alert('vui lòng nhập mức giá lớn hơn giá hiện tại.');
+                    alert('vui lòng nhập mức giá lớn hơn.');
                 }
 
             });
