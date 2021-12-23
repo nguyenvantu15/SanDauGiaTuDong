@@ -1,7 +1,10 @@
 package com.ute.sandaugiatudong.controllers;
 
 import at.favre.lib.crypto.bcrypt.BCrypt;
+import com.ute.sandaugiatudong.beans.Product;
 import com.ute.sandaugiatudong.beans.User;
+import com.ute.sandaugiatudong.models.ProductModels;
+import com.ute.sandaugiatudong.models.RegisterSellerModels;
 import com.ute.sandaugiatudong.models.UserModels;
 import com.ute.sandaugiatudong.utils.ServletUtils;
 
@@ -15,6 +18,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 @WebServlet(name = "AccountServlet", value = "/Account/*")
 public class AccountServlet extends HttpServlet {
@@ -52,6 +56,13 @@ public class AccountServlet extends HttpServlet {
                     else {
                        ServletUtils.redirect("/Account/Profile",request,response);
                     }
+                    break;
+
+                case "/RegisterSeller":
+                    List<User> list = RegisterSellerModels.listRegisterUser();
+
+                    request.setAttribute("ListRegisterSeller", list);
+                    ServletUtils.forward("/views/vwAccount/RegisterSeller.jsp", request, response);
                     break;
 
                 case "/IsAvailable":
@@ -102,11 +113,30 @@ public class AccountServlet extends HttpServlet {
                 updatePro(request, response);
                 break;
 
+            case "/Accept":
+                updateSeller(request,response);
+                break;
+
+            case "/Delete":
+                deleteSellerRe(request,response);
+                break;
+
             default:
                 ServletUtils.forward("/views/404.jsp",request,response);
                 break;
         }
     }
+
+    private void deleteSellerRe(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        //Lay du lieu tren view xuong
+        request.setCharacterEncoding("UTF-8");
+
+        int id = Integer.parseInt(request.getParameter("id"));;
+        RegisterSellerModels.deleteRequest(id);
+        ServletUtils.redirect("/Account/RegisterSeller", request, response);
+
+    }
+
     private void registerSeller(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         request.setCharacterEncoding("UTF-8");
@@ -122,6 +152,18 @@ public class AccountServlet extends HttpServlet {
         UserModels.addRegisterSeller(u);
 
         ServletUtils.forward("/views/vwAccount/Profile.jsp",request,response);
+
+    }
+
+    private void updateSeller(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        //Lay du lieu tren view xuong
+        request.setCharacterEncoding("UTF-8");
+
+        int id = Integer.parseInt(request.getParameter("id"));
+        int permission = 2;
+        RegisterSellerModels.updatePermission(id,permission);
+        RegisterSellerModels.deleteRequest(id);
+        ServletUtils.redirect("/Account/RegisterSeller", request, response);
 
     }
 

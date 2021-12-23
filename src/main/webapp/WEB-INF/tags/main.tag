@@ -209,6 +209,16 @@
                                     </a>
                                     <div class="dropdown-divider"></div>
                                 </c:if>
+
+<%--                                account admin có permission = 3 được xem danh sách chấp nhận seller--%>
+                                <c:if test="${auth == 3}">
+                                    <a class="dropdown-item" href="${pageContext.request.contextPath}/Account/RegisterSeller">
+                                        <i class="fa fa-eye" aria-hidden="true"></i>
+                                        List Access Seller
+                                    </a>
+                                    <div class="dropdown-divider"></div>
+                                </c:if>
+
                                 <a class="dropdown-item" href="${pageContext.request.contextPath}/Account/Profile">
                                     <i class="fa fa-user" aria-hidden="true"></i>
                                     Profile
