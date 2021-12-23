@@ -43,6 +43,7 @@ public class ProductModels {
             return con.createQuery(query).addParameter("idCat", idCat).executeAndFetch(Product.class);
         }
     }
+
     public static List<Product> findByIdUserSell(int id) {
         final String query = "select * from sandaugia.product where idUserSell = :id";
 
@@ -56,6 +57,17 @@ public class ProductModels {
 
         try (Connection con = DbUtils.getConnection()) {
             return con.createQuery(query).addParameter("idType", idType).executeAndFetch(Product.class);
+        }
+    }
+
+    public static List<Product> findByTypeDetail(int idType, int id) {
+        final String query = "select * from sandaugia.product where idType = :idType and id != :id";
+
+        try (Connection con = DbUtils.getConnection()) {
+            return con.createQuery(query)
+                    .addParameter("idType", idType)
+                    .addParameter("id", id)
+                    .executeAndFetch(Product.class);
         }
     }
 

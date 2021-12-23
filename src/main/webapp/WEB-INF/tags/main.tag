@@ -163,8 +163,8 @@
                 <li class="nav-item dropdown">
                 </li>
             </ul>
-            <form class="form-inline my-2 my-lg-0">
-                <input class="form-control-sm mr-sm-2 " type="search" placeholder="Search" aria-label="Search">
+            <form class="form-inline my-2 my-lg-0" id="frmSearch">
+                <input class="form-control-sm mr-sm-2 " type="search" name="txtSearch" placeholder="Search" aria-label="Search">
                 <button class="btn btn-outline-success btn_search btn-sm" type="submit">Search</button>
             </form>
 

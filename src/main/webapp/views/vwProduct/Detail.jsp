@@ -257,8 +257,11 @@
                         <div>Mô tả chi tiết sản phẩm
                             <p class = "product-description">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Vitae animi ad minima veritatis dolore. Architecto facere dignissimos voluptate fugit ratione molestias quis quidem exercitationem voluptas.</p>
                         </div>
+
                         <div class = "btn-groups">
-                            <button type = "button" class = "add-cart-btn"><i class = "fas fa-shopping-cart"></i>Ra giá</button>
+                            <c:if test="${auth != 2 && auth != 3}">
+                                <button type = "button" class = "add-cart-btn"><i class = "fas fa-shopping-cart"></i>Ra giá</button>
+                            </c:if>
                             <button type = "button" class = "buy-now-btn"><i class = "fas fa-heart" style="color: red"></i>Yêu thích</button>
                         </div>
                     </div>
@@ -270,33 +273,35 @@
             <h4 style="color: #ffffff; text-align: center" class="m-5">Sản phẩm cùng loại</h4>
         </div>
         <div class="row justify-content-center m-0">
-            <c:forEach items="${listSameType}" var="c">
-                <div class="col-sm-auto col-item p-0  card_hover">
-                    <div class="card h-100  ">
-                        <img src="${pageContext.request.contextPath}/public/imgs/${c.id}/1.jpg" alt="${c.name}" title="${c.name}" class="card-img-top">
-                        <div class="card-body">
-                            <h6 class="card-title">${c.name}</h6>
-                            <h5 class="card-title text-danger">
-                                <fmt:formatNumber value="${c.price}" type="number" />
-                            </h5>
-                            <p class="card-text">ID người bán: ${c.idUserSell} </p>
-                            <p class="card-text">ID người đặt giá cao nhất: ${c.idUserCur}</p>
-                        </div>
-                        <div class="card-footer text-muted">
-                            <a class="btn btn-sm btn-outline-primary" href="${pageContext.request.contextPath}/Product/Detail?id=${c.id}&idType=${c.idType}"
-                               role="button">
-                                <i class="fa fa-eye" aria-hidden="true"></i>
-                                Detail
-                            </a>
 
+            <c:forEach items="${listSameType}" var="c" begin = "0" end = "4">
+                <c:if test="${c.id != product.id}">
+                    <div class="col-sm-auto col-item p-0  card_hover">
+                        <div class="card h-100  ">
+                            <img src="${pageContext.request.contextPath}/public/imgs/${c.id}/1.jpg" alt="${c.name}" title="${c.name}" class="card-img-top">
+                            <div class="card-body">
+                                <h6 class="card-title">${c.name}</h6>
+                                <h5 class="card-title text-danger">
+                                    <fmt:formatNumber value="${c.price}" type="number" />
+                                </h5>
+                                <p class="card-text">ID người bán: ${c.idUserSell} </p>
+                                <p class="card-text">ID người đặt giá cao nhất: ${c.idUserCur}</p>
+                            </div>
+                            <div class="card-footer text-muted">
+                                <a class="btn btn-sm btn-outline-primary" href="${pageContext.request.contextPath}/Product/Detail?id=${c.id}&idType=${c.idType}"
+                                   role="button">
+                                    <i class="fa fa-eye" aria-hidden="true"></i>
+                                    Detail
+                                </a>
+
+                            </div>
                         </div>
                     </div>
-                </div>
+                </c:if>
             </c:forEach>
 
         </div>
         </div>
-
 
     </jsp:body>
 </t:main>

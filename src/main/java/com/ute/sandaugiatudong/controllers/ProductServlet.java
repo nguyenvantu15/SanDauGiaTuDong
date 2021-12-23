@@ -32,11 +32,19 @@ public class ProductServlet extends HttpServlet {
                 request.setAttribute("ProductByType", list1);
                 ServletUtils.forward("/views/vwProduct/Type.jsp", request, response);
                 break;
+
+//            case "/Search":
+//                String name= request.getParameter("txtSearch");
+//                List<Product> listSearch = ProductModels.findByType(sp);
+//                request.setAttribute("listSearch", listSearch);
+//                ServletUtils.forward("/views/vwProduct/FullTextSearchCate.jsp", request, response);
+//                break;
+
             case "/Detail":
                 int proId = Integer.parseInt(request.getParameter("id"));
                 int idType = Integer.parseInt(request.getParameter("idType"));
 
-                List<Product> listSameType = ProductModels.findByType(idType);
+                List<Product> listSameType = ProductModels.findByTypeDetail(idType,proId);
 
                 Product product = ProductModels.findById(proId);
 
