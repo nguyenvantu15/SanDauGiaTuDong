@@ -117,11 +117,26 @@ public class AccountServlet extends HttpServlet {
                 updateSeller(request,response);
                 break;
 
+            case "/Delete":
+                deleteSellerRe(request,response);
+                break;
+
             default:
                 ServletUtils.forward("/views/404.jsp",request,response);
                 break;
         }
     }
+
+    private void deleteSellerRe(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        //Lay du lieu tren view xuong
+        request.setCharacterEncoding("UTF-8");
+
+        int id = Integer.parseInt(request.getParameter("id"));;
+        RegisterSellerModels.deleteRequest(id);
+        ServletUtils.redirect("/Account/RegisterSeller", request, response);
+
+    }
+
     private void registerSeller(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         request.setCharacterEncoding("UTF-8");

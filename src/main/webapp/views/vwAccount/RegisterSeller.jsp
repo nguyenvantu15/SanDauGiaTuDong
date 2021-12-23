@@ -55,7 +55,12 @@
                                     <td>${s.permission}</td>
 
                                     <td class="text-right">
-                                        <button type="submit" class="btn btn-outline-success" formaction="${pageContext.request.contextPath}/Account/Accept?id=${s.id}">
+                                        <button type="submit" class="btn btn-outline-danger" formaction="${pageContext.request.contextPath}/Account/Delete?id=${s.id}">
+                                            <i class="fa fa-times" aria-hidden="true"></i>
+                                        </button>
+                                    </td>
+                                    <td class="text-right">
+                                        <button type="submit" class="btn btn-outline-success" style="width: 40px" formaction="${pageContext.request.contextPath}/Account/Accept?id=${s.id}">
                                             <i class="fa fa-check" aria-hidden="true"></i>
                                         </button>
                                     </td>
