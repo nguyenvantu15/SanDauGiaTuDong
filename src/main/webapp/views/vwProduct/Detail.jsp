@@ -6,10 +6,12 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
 <jsp:useBean id="product" scope="request" type="com.ute.sandaugiatudong.beans.Product"/>
+<jsp:useBean id="listSameType" scope="request" type="java.util.List<com.ute.sandaugiatudong.beans.Product>"/>
 
 
 <t:main>
     <jsp:attribute name="css">
+
 
         <style>
             @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap');
@@ -170,6 +172,28 @@
                     margin-bottom: 10px;
                 }
             }
+
+        /*    san pham cung loai*/
+            .row{
+                margin-left: -6px;
+                margin-right: -6px;
+                width: 1200px;
+            }
+            .col-item{
+                width: 19%;
+                margin-left: 6px;
+                margin-right: 6px;
+                margin-bottom: 12px;
+            }
+            .card-img-top{
+                height: 30vh;
+                object-fit: contain;
+            }
+            .card_hover:hover{
+                transform:translateY(-1px);
+                box-shadow:  0 2px 10px 4px rgba(0,0,0,0.5);;
+            }
+
         </style>
     </jsp:attribute>
     <jsp:attribute name="js">
@@ -235,12 +259,43 @@
                         </div>
                         <div class = "btn-groups">
                             <button type = "button" class = "add-cart-btn"><i class = "fas fa-shopping-cart"></i>Ra giá</button>
-                            <button type = "button" class = "buy-now-btn"><i class = "fas fa-wallet"></i>Yêu thích</button>
+                            <button type = "button" class = "buy-now-btn"><i class = "fas fa-heart" style="color: red"></i>Yêu thích</button>
                         </div>
                     </div>
                 </div>
             </div>
 
+        <div class = "container p-0">
+        <div>
+            <h4 style="color: #ffffff; text-align: center" class="m-5">Sản phẩm cùng loại</h4>
+        </div>
+        <div class="row justify-content-center m-0">
+            <c:forEach items="${listSameType}" var="c">
+                <div class="col-sm-auto col-item p-0  card_hover">
+                    <div class="card h-100  ">
+                        <img src="${pageContext.request.contextPath}/public/imgs/${c.id}/1.jpg" alt="${c.name}" title="${c.name}" class="card-img-top">
+                        <div class="card-body">
+                            <h6 class="card-title">${c.name}</h6>
+                            <h5 class="card-title text-danger">
+                                <fmt:formatNumber value="${c.price}" type="number" />
+                            </h5>
+                            <p class="card-text">ID người bán: ${c.idUserSell} </p>
+                            <p class="card-text">ID người đặt giá cao nhất: ${c.idUserCur}</p>
+                        </div>
+                        <div class="card-footer text-muted">
+                            <a class="btn btn-sm btn-outline-primary" href="${pageContext.request.contextPath}/Product/Detail?id=${c.id}&idType=${c.idType}"
+                               role="button">
+                                <i class="fa fa-eye" aria-hidden="true"></i>
+                                Detail
+                            </a>
+
+                        </div>
+                    </div>
+                </div>
+            </c:forEach>
+
+        </div>
+        </div>
 
 
     </jsp:body>

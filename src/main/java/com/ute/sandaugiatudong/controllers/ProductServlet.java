@@ -34,11 +34,18 @@ public class ProductServlet extends HttpServlet {
                 break;
             case "/Detail":
                 int proId = Integer.parseInt(request.getParameter("id"));
+                int idType = Integer.parseInt(request.getParameter("idType"));
+
+                List<Product> listSameType = ProductModels.findByType(idType);
+
                 Product product = ProductModels.findById(proId);
+
                 if (product == null) {
                     ServletUtils.redirect("/Home", request, response);
                 } else {
                     request.setAttribute("product", product);
+                    request.setAttribute("listSameType", listSameType);
+
                     ServletUtils.forward("/views/vwProduct/Detail.jsp", request, response);
                 }
                 break;

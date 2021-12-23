@@ -34,7 +34,7 @@
 
     <jsp:body>
         <div>
-            <h4>Loai</h4>
+            <h4>Loại</h4>
         </div>
         <div class="row m-0">
             <c:forEach items="${ProductByType}" var="c">
@@ -50,7 +50,7 @@
                             <p class="card-text">ID người đặt giá cao nhất: ${c.idUserCur}</p>
                         </div>
                         <div class="card-footer text-muted">
-                            <a class="btn btn-sm btn-outline-primary" href="${pageContext.request.contextPath}/Product/Detail?id=${c.id}"
+                            <a class="btn btn-sm btn-outline-primary" href="${pageContext.request.contextPath}/Product/Detail?id=${c.id}&idType=${c.idType}"
                                role="button">
                                 <i class="fa fa-eye" aria-hidden="true"></i>
                                 Detail
