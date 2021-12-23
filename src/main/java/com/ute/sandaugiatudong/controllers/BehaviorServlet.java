@@ -1,11 +1,10 @@
 package com.ute.sandaugiatudong.controllers;
 
+import com.ute.sandaugiatudong.beans.HistoryAuction;
 import com.ute.sandaugiatudong.beans.Product;
 import com.ute.sandaugiatudong.beans.User;
 import com.ute.sandaugiatudong.beans.WatchList;
-import com.ute.sandaugiatudong.models.ProductModels;
-import com.ute.sandaugiatudong.models.UserModels;
-import com.ute.sandaugiatudong.models.WatchListModels;
+import com.ute.sandaugiatudong.models.*;
 import com.ute.sandaugiatudong.utils.ServletUtils;
 
 import javax.servlet.*;
@@ -23,6 +22,14 @@ public class BehaviorServlet extends HttpServlet {
 
         switch (path) {
             case "/Auction":
+                int proId = Integer.parseInt(request.getParameter("id"));
+                Product product = ProductModels.findById(proId);
+                if (product == null) {
+                    ServletUtils.redirect("/Home", request, response);
+                } else {
+                    request.setAttribute("product", product);
+                    ServletUtils.forward("/views/vwAuction/Auction.jsp", request, response);
+                }
                 break;
             case "/watchlist":
                 watchlist(request, response);
@@ -57,9 +64,48 @@ public class BehaviorServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String path = request.getPathInfo();
+
+        switch (path) {
+            case "/Auction":
+                doAuction(request,response);
+                break;
+            case "/watchlist":
+                break;
+            case "/viewwatchlist":
+                break;
+            case "/DeleteWatchitem":
+                break;
+            default:
+                ServletUtils.forward("/views/404.jsp", request, response);
+                break;
+        }
+    }
+    private void doAuction(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        int proId = Integer.parseInt(request.getParameter("id"));
+        String txtMaxUserPrice = request.getParameter("price");
+        int maxUserPrice = Integer.parseInt(txtMaxUserPrice);
+
+        List<HistoryAuction> historyAuctions = HistoryAuctionModels.findByIdProduct(proId);
+
+        int priceMaxBidder=0;
+
+        for (int i = 0; i < historyAuctions.size() ;i++){
+            HistoryAuction tmp= historyAuctions.get(i);
+            if(tmp.getPriceMaxBidder() > priceMaxBidder){
+                priceMaxBidder = tmp.getPriceMaxBidder();
+            }
+        }
+
+
+
+        if(maxUserPrice > priceMaxBidder){
+
+        } else{
+
+        }
 
     }
-
     private void watchlist(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         int idPro = Integer.parseInt(request.getParameter("id"));
         HttpSession session = request.getSession();
