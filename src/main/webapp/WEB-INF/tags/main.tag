@@ -188,11 +188,14 @@
                             </a>
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                                 <c:if test="${auth ==2}">
-                                    <a class="dropdown-item" href="${pageContext.request.contextPath}/Misc/Add">
-                                        <i class="fa fa-plus" aria-hidden="true"></i>
+                                    <a class="dropdown-item" href="${pageContext.request.contextPath}/Manage/Userproduct">
+                                        <i class="fa fa-truck" aria-hidden="true"></i>
                                         Sản phẩm của bạn
                                     </a>
-                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="${pageContext.request.contextPath}/Misc/Add">
+                                        <i class="fa fa-money" aria-hidden="true"></i>
+                                        Sản phẩm đang đấu giá
+                                    </a>
                                     <a class="dropdown-item" href="${pageContext.request.contextPath}/Misc/Add">
                                         <i class="fa fa-plus" aria-hidden="true"></i>
                                         Thêm sản phẩm
