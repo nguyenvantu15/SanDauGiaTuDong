@@ -55,10 +55,10 @@
                         </div>
                         <div class="card-footer text-muted">
                             <a class="btn btn-sm btn-outline-primary"
-                               href="${pageContext.request.contextPath}/Product/Detail?id=${c.id}"
+                               href="${pageContext.request.contextPath}/Misc/Edit?id=${c.id}"
                                role="button">
-                                <i class="fa fa-eye" aria-hidden="true"></i>
-                                Detail
+                                <i class="fa fa-pencil" aria-hidden="true"></i>
+                                Edit
                             </a>
                         </div>
                     </div>

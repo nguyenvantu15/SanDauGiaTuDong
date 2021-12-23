@@ -188,37 +188,44 @@
                             </a>
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                                 <c:if test="${auth ==2}">
+                                    <div class="dropdown-divider"></div>
                                     <a class="dropdown-item" href="${pageContext.request.contextPath}/Manage/Userproduct">
                                         <i class="fa fa-truck" aria-hidden="true"></i>
                                         Sản phẩm của bạn
                                     </a>
+
+                                    <div class="dropdown-divider"></div>
                                     <a class="dropdown-item" href="${pageContext.request.contextPath}/Misc/Add">
                                         <i class="fa fa-money" aria-hidden="true"></i>
                                         Sản phẩm đang đấu giá
                                     </a>
+
+                                    <div class="dropdown-divider"></div>
                                     <a class="dropdown-item" href="${pageContext.request.contextPath}/Misc/Add">
                                         <i class="fa fa-plus" aria-hidden="true"></i>
                                         Thêm sản phẩm
                                     </a>
-                                    <div class="dropdown-divider"></div>
+
                                 </c:if>
+
                                 <c:if test="${auth == 1}">
+                                    <div class="dropdown-divider"></div>
                                     <a class="dropdown-item" href="${pageContext.request.contextPath}/Behavior/viewwatchlist">
                                         <i class="fa fa-eye" aria-hidden="true"></i>
                                         Watch List
                                     </a>
-                                    <div class="dropdown-divider"></div>
                                 </c:if>
 
 <%--                                account admin có permission = 3 được xem danh sách chấp nhận seller--%>
                                 <c:if test="${auth == 3}">
+                                    <div class="dropdown-divider"></div>
                                     <a class="dropdown-item" href="${pageContext.request.contextPath}/Account/RegisterSeller">
                                         <i class="fa fa-eye" aria-hidden="true"></i>
                                         List Access Seller
                                     </a>
-                                    <div class="dropdown-divider"></div>
-                                </c:if>
 
+                                </c:if>
+                                <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="${pageContext.request.contextPath}/Account/Profile">
                                     <i class="fa fa-user" aria-hidden="true"></i>
                                     Profile

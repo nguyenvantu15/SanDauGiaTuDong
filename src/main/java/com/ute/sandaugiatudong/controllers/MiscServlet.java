@@ -33,8 +33,18 @@ public class MiscServlet extends HttpServlet {
 
                 break;
             case "/Edit":
+                HttpSession session = request.getSession();
+                int id = Integer.parseInt(request.getParameter("id"));
 
+                Product p = ProductModels.findById(id);
+                request.setAttribute("ProductEdit", p);
+
+                List <Type> listType = TypeModels.findAll();
+                request.setAttribute("listType", listType);
+
+                ServletUtils.forward("/views/vwMisc/Edit.jsp", request, response);
                 break;
+
             default:
                 ServletUtils.forward("/views/404.jsp", request, response);
                 break;
@@ -49,7 +59,7 @@ public class MiscServlet extends HttpServlet {
             case "/Add":
                 addProduct(request,response);
                 break;
-            case "/Login":
+            case "/Edit":
                 break;
             default:
                 ServletUtils.forward("/views/404.jsp",request,response);
