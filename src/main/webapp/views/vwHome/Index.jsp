@@ -8,12 +8,26 @@
 <t:main>
     <jsp:attribute name="css">
         <style>
+            body{
+                background: #e5e9f3;
+            }
+            .row{
+                margin-left: -6px;
+                margin-right: -6px;
+            }
             .col-item{
-                width: 20%;
+                width: 19%;
+                margin-left: 6px;
+                margin-right: 6px;
+                margin-bottom: 12px;
             }
             .card-img-top{
                 height: 30vh;
                 object-fit: contain;
+            }
+            .card_hover:hover{
+                transform:translateY(-1px);
+                box-shadow:  0 2px 10px 4px rgba(0,0,0,0.5);;
             }
         </style>
     </jsp:attribute>
@@ -23,7 +37,7 @@
         </div>
         <div class="row m-0">
             <c:forEach items="${top5Price}" var="c">
-                <div class="col-sm-auto col-item p-0">
+                <div class="col-sm-auto col-item p-0  card_hover">
                     <div class="card h-100">
                         <img src="${pageContext.request.contextPath}/public/imgs/${c.id}/1.jpg" alt="${c.name}" title="${c.name}" class="card-img-top">
                         <div class="card-body">
