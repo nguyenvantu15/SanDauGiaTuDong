@@ -33,4 +33,9 @@
         <url-pattern>/Account/RegisterSeller</url-pattern>
     </filter-mapping>
 
+    <filter-mapping>
+        <filter-name>AuthSellerFilter</filter-name>
+        <url-pattern>/Misc/Edit</url-pattern>
+    </filter-mapping>
+
 </web-app>

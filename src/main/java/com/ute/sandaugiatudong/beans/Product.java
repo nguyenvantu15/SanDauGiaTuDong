@@ -26,6 +26,18 @@ public class Product {
         this.fullDes = fullDes;
     }
 
+    public Product(int id, int price, int idType, int idCat,LocalDateTime timeStart, LocalDateTime timeEnd, String name, String tinyDes, String fullDes) {
+        this.id = id;
+        this.price = price;
+        this.idType = idType;
+        this.idCat = idCat;
+        this.timeStart = timeStart;
+        this.timeEnd = timeEnd;
+        this.name = name;
+        this.tinyDes = tinyDes;
+        this.fullDes = fullDes;
+    }
+
     public int getId() {
         return id;
     }

@@ -58,7 +58,7 @@
                                href="${pageContext.request.contextPath}/Misc/Edit?id=${c.id}"
                                role="button">
                                 <i class="fa fa-pencil" aria-hidden="true"></i>
-                                Edit
+                                Detail and Edit
                             </a>
                         </div>
                     </div>

@@ -35,6 +35,7 @@
                 toolbar: [
                     'undo redo | bold italic underline strikethrough | numlist bullist | alignleft aligncenter alignright | forecolor backcolor | table link image media'
                 ],
+                entity_encoding: "raw",
             });
 
             $('#txtTimeStart').datetimepicker({

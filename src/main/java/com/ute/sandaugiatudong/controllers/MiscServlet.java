@@ -1,5 +1,6 @@
 package com.ute.sandaugiatudong.controllers;
 
+import com.ute.sandaugiatudong.beans.Category;
 import com.ute.sandaugiatudong.beans.Product;
 import com.ute.sandaugiatudong.beans.Type;
 import com.ute.sandaugiatudong.beans.User;
@@ -39,6 +40,9 @@ public class MiscServlet extends HttpServlet {
                 Product p = ProductModels.findById(id);
                 request.setAttribute("ProductEdit", p);
 
+                List <Category> listCate = ProductModels.findAllCategory();
+                request.setAttribute("listCate", listCate);
+
                 List <Type> listType = TypeModels.findAll();
                 request.setAttribute("listType", listType);
 
@@ -60,11 +64,56 @@ public class MiscServlet extends HttpServlet {
                 addProduct(request,response);
                 break;
             case "/Edit":
+                editProduct(request,response);
                 break;
             default:
                 ServletUtils.forward("/views/404.jsp",request,response);
                 break;
         }
+    }
+
+    private void editProduct(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+
+        int id = Integer.parseInt(request.getParameter("id"));
+        String name = request.getParameter("name");
+        int price =  Integer.parseInt(request.getParameter("price"));
+
+        String listCate =  request.getParameter("listCate");
+        String idCate = listCate.split("\\.")[0];
+        int idC = Integer.parseInt(idCate);
+
+        String ProType =  request.getParameter("ProType");
+        String IdProType = ProType.split("\\.")[0];
+        int idProType = Integer.parseInt(IdProType);
+
+        String TimeStart = request.getParameter("timeStart");
+        DateTimeFormatter df = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+
+        String[] testT1 = TimeStart.split("T",2);
+        String[] testDate1 = testT1[0].split("-",3);
+        String date1 = testDate1[2] + "/" + testDate1[1] + "/" + testDate1[0];
+        String time1 = date1 + " " + testT1[1];
+
+        LocalDateTime timeStart = LocalDateTime.parse(time1, df);
+
+
+        String TimeEnd = request.getParameter("timeEnd");
+        String[] testT = TimeEnd.split("T",2);
+        String[] testDate = testT[0].split("-",3);
+        String date = testDate[2] + "/" + testDate[1] + "/" + testDate[0];
+        String time = date + " " + testT[1];
+
+        LocalDateTime timeEnd = LocalDateTime.parse(time, df);
+
+        String fullDes = request.getParameter("fullDes");
+        String tinyDes = request.getParameter("tinyDes");
+
+        Product p = new Product(id,price,idProType,idC,timeStart,timeEnd,name,tinyDes,fullDes);
+        ProductModels.editProductById(p);
+
+        ServletUtils.redirect("/Misc/Edit?id=" + id,request,response);
+
+
     }
 
     private void addProduct(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

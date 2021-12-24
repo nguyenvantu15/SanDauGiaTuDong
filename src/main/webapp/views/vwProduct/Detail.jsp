@@ -193,6 +193,9 @@
                 transform:translateY(-1px);
                 box-shadow:  0 2px 10px 4px rgba(0,0,0,0.5);;
             }
+            ul{
+                padding-left: 18px;
+            }
 
         </style>
     </jsp:attribute>
@@ -240,6 +243,7 @@
                     </div>
                     <div class = "product-div-right">
                         <span class = "product-name">${product.name}</span>
+                        <p class="card-text"> ${product.tinyDes}</p>
                         <span class = "product-price text-danger">Giá hiện tại: ${product.price} vnd</span>
                         <div class = "product-rating">
                             <span><i class = "fas fa-star"></i></span>
@@ -250,12 +254,15 @@
                             <span>(350 ratings)</span>
                         </div>
 
-                        <div>Thông tin người bán + điểm đánh giá</div>
-                        <div>Thông tin người đặt giá cao nhất hiện tại & điểm đánh giá</div>
+                        <div>ID người bán: ${c.idUserSell}</div>
+                        <div>ID người đặt giá cao nhất: ${c.idUserCur}</div>
                         <div>Thời điểm đăng</div>
                         <div>Thời điểm kết thúc</div>
-                        <div>Mô tả chi tiết sản phẩm
-                            <p class = "product-description">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Vitae animi ad minima veritatis dolore. Architecto facere dignissimos voluptate fugit ratione molestias quis quidem exercitationem voluptas.</p>
+                        <div>
+                            <div style="color: #FF9F00;padding-top: 8px">Chi tiết sản phẩm</div>
+                            <div style="padding-left: 5px">
+                                    ${product.fullDes}
+                            </div>
                         </div>
 
                         <div class = "btn-groups">
