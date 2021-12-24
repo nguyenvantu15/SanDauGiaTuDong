@@ -99,7 +99,7 @@ public class MiscServlet extends HttpServlet {
 
         Type t = TypeModels.findCatIdByTypeId(idProType);
 
-        Product p = new Product(0,price,u.getId(),0,0,t.getIdCat(),idProType,timeStart,timeEnd,name,tinyDes,fullDes);
+        Product p = new Product(0,price,u.getId(),0,0,t.getIdCat(),idProType,0,timeStart,timeEnd,name,tinyDes,fullDes);
 
         ProductModels.add(p);
 

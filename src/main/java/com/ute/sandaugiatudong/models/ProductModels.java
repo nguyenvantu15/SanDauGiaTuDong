@@ -18,11 +18,12 @@ public class ProductModels {
 
     public static void add(Product p)
     {
-        String insertSQL = "INSERT INTO product (name, price, idUserSell, mark, timeStart, timeEnd, idUserCur, idCat, idType, tinyDes, fullDes) VALUES (:name,:price,:idusersell,:mark,:timestart,:timeend,:idusercur,:idcat,:idtype,:tinydes,:fulldes)";
+        String insertSQL = "INSERT INTO product (name, price, countAuction, idUserSell, mark, timeStart, timeEnd, idUserCur, idCat, idType, tinyDes, fullDes) VALUES (:name,:price,:countauction,:idusersell,:mark,:timestart,:timeend,:idusercur,:idcat,:idtype,:tinydes,:fulldes)";
         try (Connection con = DbUtils.getConnection()){
             con.createQuery(insertSQL)
                     .addParameter("name",p.getName())
                     .addParameter("price",p.getPrice())
+                    .addParameter("countauction",p.getCountAuction())
                     .addParameter("idusersell",p.getIdUserSell())
                     .addParameter("mark",p.getMark())
                     .addParameter("timestart", p.getTimeStart())
@@ -55,12 +56,13 @@ public class ProductModels {
             return con.createQuery(query).addParameter("idCat", idCat).executeAndFetch(Product.class);
         }
     }
-    public static void updatePrice(int id, int price, int idUserCur){
-        String insertSQL = "UPDATE product SET  price = :price, idUserCur = :idusercur WHERE id = :id ";
+    public static void updatePrice(int id, int price, int idUserCur, int countAuction){
+        String insertSQL = "UPDATE product SET  price = :price, idUserCur = :idusercur, countAuction = :countAuction WHERE id = :id ";
         try (Connection con = DbUtils.getConnection()){
             con.createQuery(insertSQL)
                     .addParameter("price",price)
                     .addParameter("idusercur",idUserCur)
+                    .addParameter("countAuction",countAuction)
                     .addParameter("id",id)
                     .executeUpdate();
         }

@@ -108,7 +108,7 @@ public class BehaviorServlet extends HttpServlet {
             HistoryAuction rowNew = new HistoryAuction(proId, u.getId(), maxUserPrice, product.getPrice(), u.getId(), timeNow);
             HistoryAuctionModels.add(rowNew);
 
-            ProductModels.updatePrice(proId,product.getPrice(),u.getId());
+            ProductModels.updatePrice(proId, product.getPrice(), u.getId(), product.getCountAuction() + 1);
 
             String url = request.getHeader("referer");
             if (url == null) url = "/Home";
@@ -129,35 +129,35 @@ public class BehaviorServlet extends HttpServlet {
             int priceInPlush;
             if (maxUserPrice > priceMaxBidder) {
                 int diff = maxUserPrice - priceMaxBidder;
-                if (10000000 <= diff ){
+                if (10000000 <= diff) {
                     priceInPlush = 500000;
-                } else if(1000000 <= diff){
+                } else if (1000000 <= diff) {
                     priceInPlush = 100000;
-                } else if(500000 <= diff){
+                } else if (500000 <= diff) {
                     priceInPlush = 50000;
-                } else if (100000<=diff){
+                } else if (100000 <= diff) {
                     priceInPlush = 20000;
                 } else if (10000 <= diff) {
                     priceInPlush = 10000;
                 } else {
                     priceInPlush = 1000;
                 }
-                HistoryAuction rowNew = new HistoryAuction(proId,u.getId(),maxUserPrice,priceMaxBidder+priceInPlush,u.getId(),timeNow);
+                HistoryAuction rowNew = new HistoryAuction(proId, u.getId(), maxUserPrice, priceMaxBidder + priceInPlush, u.getId(), timeNow);
                 System.out.println(String.valueOf(rowNew.getPriceIn()));
 
                 HistoryAuctionModels.add(rowNew);
-                ProductModels.updatePrice(proId,priceMaxBidder+priceInPlush,u.getId());
+                ProductModels.updatePrice(proId, priceMaxBidder + priceInPlush, u.getId(), product.getCountAuction() + 1);
 
                 String url = request.getHeader("referer");
                 if (url == null) url = "/Home";
                 ServletUtils.redirect(url, request, response);
             } else {
                 // tìm hàng có giá vào max
-                int idBidderCur =  ProductModels.getIdCur(proId);
-                HistoryAuction rowNew = new HistoryAuction(proId,u.getId(),maxUserPrice,maxUserPrice,idBidderCur,timeNow);
+                int idBidderCur = ProductModels.getIdCur(proId);
+                HistoryAuction rowNew = new HistoryAuction(proId, u.getId(), maxUserPrice, maxUserPrice, idBidderCur, timeNow);
 
                 HistoryAuctionModels.add(rowNew);
-                ProductModels.updatePrice(proId,maxUserPrice,idBidderCur);
+                ProductModels.updatePrice(proId, maxUserPrice, idBidderCur, product.getCountAuction() + 1);
 
                 String url = request.getHeader("referer");
                 if (url == null) url = "/Home";
