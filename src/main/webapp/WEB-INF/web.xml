@@ -32,4 +32,5 @@
         <filter-name>AuthFilter</filter-name>
         <url-pattern>/Account/RegisterSeller</url-pattern>
     </filter-mapping>
+
 </web-app>
