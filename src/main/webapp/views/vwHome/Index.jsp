@@ -5,6 +5,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
 <jsp:useBean id="top5Price" scope="request" type="java.util.List<com.ute.sandaugiatudong.beans.Product>"/>
+<jsp:useBean id="top5CountAuction" scope="request" type="java.util.List<com.ute.sandaugiatudong.beans.Product>"/>
 <t:main>
     <jsp:attribute name="css">
         <style>
@@ -42,11 +43,57 @@
                         <img src="${pageContext.request.contextPath}/public/imgs/${c.id}/1.jpg" alt="${c.name}" title="${c.name}" class="card-img-top">
                         <div class="card-body">
                             <h6 class="card-title">${c.name}</h6>
-                            <h5 class="card-title text-danger">
+                            <h5 class="card-title text-danger mb-0">
                                 <fmt:formatNumber value="${c.price}" type="number" />
                             </h5>
-                            <p class="card-text">ID người bán: ${c.idUserSell} </p>
-                            <p class="card-text">ID người đặt giá cao nhất: ${c.idUserCur}</p>
+                            <small class="card-text">Người bán: ${c.idUserSell} </small>
+                            <br>
+                            <small class="card-text">Người đặt giá cao nhất: ${c.idUserCur}</small>
+                            <br>
+                            <small class="card-text">Số lượt ra giá: ${c.countAuction}</small>
+                        </div>
+                        <div class="card-footer text-muted">
+                            <a class="btn btn-sm btn-outline-primary" href="${pageContext.request.contextPath}/Product/Detail?id=${c.id}&idType=${c.idType}"
+                               role="button">
+                                <i class="fa fa-eye" aria-hidden="true"></i>
+                                Detail
+                            </a>
+                            <c:if test="${auth == 1}">
+                                <a class="btn btn-sm btn-outline-success" href="${pageContext.request.contextPath}/Behavior/watchlist?id=${c.id}"
+                                   role="button">
+                                    <i class="fa fa-plus" aria-hidden="true"></i>
+                                    Add
+                                </a>
+                                <a class="btn btn-sm btn-outline-danger" href="${pageContext.request.contextPath}/Behavior/Auction?id=${c.id}"
+                                   role="button">
+                                    <i class="fa fa-cart-plus" aria-hidden="true"></i>
+                                    Đấu giá
+                                </a>
+                            </c:if>
+
+                        </div>
+                    </div>
+                </div>
+            </c:forEach>
+        </div>
+        <div>
+            <h4>Top 5 sản phẩm nhiều lượt ra giá nhất</h4>
+        </div>
+        <div class="row m-0">
+            <c:forEach items="${top5CountAuction}" var="c">
+                <div class="col-sm-auto col-item p-0 card_hover">
+                    <div class="card h-100">
+                        <img src="${pageContext.request.contextPath}/public/imgs/${c.id}/1.jpg" alt="${c.name}" title="${c.name}" class="card-img-top">
+                        <div class="card-body">
+                            <h6 class="card-title">${c.name}</h6>
+                            <h5 class="card-title text-danger mb-0">
+                                <fmt:formatNumber value="${c.price}" type="number" />
+                            </h5>
+                            <small class="card-text">Người bán: ${c.idUserSell} </small>
+                            <br>
+                            <small class="card-text">Người đặt giá cao nhất: ${c.idUserCur}</small>
+                            <br>
+                            <small class="card-text">Số lượt ra giá: ${c.countAuction}</small>
                         </div>
                         <div class="card-footer text-muted">
                             <a class="btn btn-sm btn-outline-primary" href="${pageContext.request.contextPath}/Product/Detail?id=${c.id}&idType=${c.idType}"

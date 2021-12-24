@@ -118,6 +118,13 @@ public class ProductModels {
             return con.createQuery(query).executeAndFetch(Product.class);
         }
     }
+    public static List<Product> findTop5CountAuction() {
+        final String query = "SELECT * FROM sandaugia.product ORDER BY countAuction DESC LIMIT 5";
+
+        try (Connection con = DbUtils.getConnection()) {
+            return con.createQuery(query).executeAndFetch(Product.class);
+        }
+    }
 
 
     public static List<Product> findByTypeDetail(int idType, int id) {

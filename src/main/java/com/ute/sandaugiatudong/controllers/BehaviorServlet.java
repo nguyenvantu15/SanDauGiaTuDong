@@ -143,7 +143,6 @@ public class BehaviorServlet extends HttpServlet {
                     priceInPlush = 1000;
                 }
                 HistoryAuction rowNew = new HistoryAuction(proId, u.getId(), maxUserPrice, priceMaxBidder + priceInPlush, u.getId(), timeNow);
-                System.out.println(String.valueOf(rowNew.getPriceIn()));
 
                 HistoryAuctionModels.add(rowNew);
                 ProductModels.updatePrice(proId, priceMaxBidder + priceInPlush, u.getId(), product.getCountAuction() + 1);
