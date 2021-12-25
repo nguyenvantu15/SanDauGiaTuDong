@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@  taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 
 <t:main>
@@ -29,11 +30,11 @@
                 }
             </style>
         </jsp:attribute>
-        <jsp:attribute name="js">
+    <jsp:attribute name="js">
 <%--            js su li bang datetime--%>
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js" integrity="sha512-AIOTidJAcHBH2G/oZv9viEGXRqDNmfdPVPYOYKGy3fti0xIplnlgMHUGfuNRzC6FkzIo0iIxgFnr9RikFxK+sw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js" integrity="sha512-AIOTidJAcHBH2G/oZv9viEGXRqDNmfdPVPYOYKGy3fti0xIplnlgMHUGfuNRzC6FkzIo0iIxgFnr9RikFxK+sw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
             <script>
-<%--                kiem tra truoc khi submit--%>
+                <%--                kiem tra truoc khi submit--%>
                 $('#frmRegister').on('submit', function(e){
                     e.preventDefault();
                     const userName = $('#txtUserName').val();
@@ -46,15 +47,15 @@
 
                     // const  checkRepass = checkRepass(passWord.trim(), rePass.trim());
                     if(userName.length === 0 || passWord.length === 0 || rePass.length === 0
-                    || name.length === 0 || doB.length === 0 || phone.length ===0 || email.length === 0)
+                        || name.length === 0 || doB.length === 0 || phone.length ===0 || email.length === 0)
                     {
-                       alert("Thông tin người dùng chưa đầy đủ !!! \n Mời nhập lại !!!!");
-                       return;
+                        alert("Thông tin người dùng chưa đầy đủ !!! \n Mời nhập lại !!!!");
+                        return;
                     }
                     if(passWord.trim() !== rePass.trim())
                     {
                         alert("Mật khẩu không trùng khớp !!!");
-                            return;
+                        return;
                     }
 
                     $.getJSON('${pageContext.request.contextPath}/Account/IsAvailable?user=' + userName, function (data) {
@@ -66,10 +67,10 @@
                         }
                     });
                     // hành vi submit đầu tiên bị chặn lại sau nó kiểm tra rồi gỡ hàm này ra
-                   // $('#frmRegister').off('submit').submit();
+                    // $('#frmRegister').off('submit').submit();
                 });
 
-<%--                css cho ô input ngày sinh--%>
+                <%--                css cho ô input ngày sinh--%>
                 $('#txtDoB').datetimepicker({
                     // cho người dùng nhập ngày sinh
                     format: 'd/m/Y',
@@ -82,9 +83,10 @@
         </jsp:attribute>
 
     <jsp:body>
+
         <form action="" method="post" id="frmRegister">
             <div class="card mt-5 form-register" >
-                    <div class="m-auto"><h2>Đăng kí</h2></div>
+                <div class="m-auto"><h2>Đăng kí</h2></div>
                 <div class="card-body">
                     <h5>Tài khoản</h5>
                     <div class="form-group">
@@ -126,12 +128,13 @@
 
                     </div>
                 </div>
-                <div class="card-footer ">
-                    <button type="submit" class="btn btn-primary mb-5">
+                <div class="card-footer" style="display: flex">
+                    <button type="submit" class="btn btn-primary mb-5" id="OTP" name="btnOTP">
                         <i class="fa fa-check" aria-hidden="true"></i>
                         Đăng kí
                     </button>
                 </div>
+
             </div>
         </form>
 

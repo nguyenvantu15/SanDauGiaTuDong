@@ -17,6 +17,14 @@ public class ProductModels {
         }
     }
 
+//    public static List<Product> findAllSearch(String string) {
+//        final String query = "select * from sandaugia.product where match(product.name) against(" + string + ")";
+//
+//        try (Connection con = DbUtils.getConnection()) {
+//            return con.createQuery(query).executeAndFetch(Product.class);
+//        }
+//    }
+
     public static List<Category> findAllCategory() {
         final String query = "select * from sandaugia.category";
 
@@ -156,13 +164,6 @@ public class ProductModels {
         }
     }
 
-    public static List<Product> findTopAuctionEnd() {
-        final String query = "SELECT * FROM  product WHERE CURRENT_TIMESTAMP()<timeEnd ORDER BY timeEnd LIMIT 5";
-
-        try (Connection con = DbUtils.getConnection()) {
-            return con.createQuery(query).executeAndFetch(Product.class);
-        }
-    }
 
     public static List<Product> findByTypeDetail(int idType, int id) {
         final String query = "select * from sandaugia.product where idType = :idType and id != :id";
