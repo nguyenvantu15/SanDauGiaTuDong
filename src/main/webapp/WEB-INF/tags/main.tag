@@ -188,7 +188,6 @@
                             </a>
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                                 <c:if test="${auth ==2}">
-                                    <div class="dropdown-divider"></div>
                                     <a class="dropdown-item" href="${pageContext.request.contextPath}/Manage/Userproduct">
                                         <i class="fa fa-truck" aria-hidden="true"></i>
                                         Sản phẩm của bạn
@@ -218,7 +217,6 @@
 
 <%--                                account admin có permission = 3 được xem danh sách chấp nhận seller--%>
                                 <c:if test="${auth == 3}">
-                                    <div class="dropdown-divider"></div>
                                     <a class="dropdown-item" href="${pageContext.request.contextPath}/Account/RegisterSeller">
                                         <i class="fa fa-eye" aria-hidden="true"></i>
                                         List Access Seller
