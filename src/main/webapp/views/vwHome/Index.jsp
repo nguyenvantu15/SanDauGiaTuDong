@@ -6,9 +6,11 @@
 
 <jsp:useBean id="top5Price" scope="request" type="java.util.List<com.ute.sandaugiatudong.beans.Product>"/>
 <jsp:useBean id="top5CountAuction" scope="request" type="java.util.List<com.ute.sandaugiatudong.beans.Product>"/>
+<jsp:useBean id="top5AuctionEnd" scope="request" type="java.util.List<com.ute.sandaugiatudong.beans.Product>"/>
 <jsp:useBean id="timenow" scope="request" type="com.ute.sandaugiatudong.beans.DateTimeNew"/>
 <jsp:useBean id="listDateTimeEndPrice" scope="request" type="java.util.List<com.ute.sandaugiatudong.beans.DateTimeNew>"/>
 <jsp:useBean id="listDateTimeEndCountAuction" scope="request" type="java.util.List<com.ute.sandaugiatudong.beans.DateTimeNew>"/>
+<jsp:useBean id="listDateTimeEndAuctionEnd" scope="request" type="java.util.List<com.ute.sandaugiatudong.beans.DateTimeNew>"/>
 <jsp:useBean id="listCheckDay" scope="request" type="java.util.List<java.lang.Boolean>"/>
 
 <t:main>
@@ -186,6 +188,33 @@
                 i1 = i1 + 1;
             </c:forEach>
 
+
+            var dd2 = new Array(5);
+            for (k1 = 0; k1 < 5; k1++) {
+                dd2[k1] = 0;
+            }
+            var i2 = 0;
+            var deadline2 = new Array(5);
+            <c:forEach items="${listDateTimeEndAuctionEnd}" var="c2">
+                end2 = new Date(${c2.year}, ${c2.month}, ${c2.day}, ${c2.hour}, ${c2.minute}, ${c2.second});
+                start2 = new Date(${timenow.year}, ${timenow.month}, ${timenow.day}, ${timenow.hour}, ${timenow.minute}, ${timenow.second});
+                if (end2 <= start2) {
+                    dd2[i2] = 1;
+                }
+                a2 = end2 - start2;
+                tmp2 = new Date(Date.parse(new Date()) + a2)
+                deadline2[i2] = tmp2;
+                i2 = i2 + 1;
+            </c:forEach>
+            i2 = 0;
+            <c:forEach items="${top5AuctionEnd}" var="c2">
+                if (dd2[i2] === 1) {
+                    aaa('ae${c2.id}', deadline2[i2]);
+                } else {
+                    initializeClock('ae${c2.id}', deadline2[i2]);
+                }
+                i2 = i2 + 1;
+            </c:forEach>
         </script>
     </jsp:attribute>
     <jsp:body>
@@ -276,6 +305,71 @@
                             <br>
                             <small class="card-text">Số lượt ra giá: ${c.countAuction}</small>
                             <div id="ca${c.id}" class="clockdiv">
+                                <div>
+                                    <small class="days dateTimeText"></small>
+                                    <small>Ngày</small>
+                                </div>
+                                <div>
+                                    <small class="hours dateTimeText"></small>
+                                    <small>Giờ</small>
+                                </div>
+                                <div>
+                                    <small class="minutes dateTimeText"></small>
+                                    <small>Phút</small>
+                                </div>
+                                <div>
+                                    <small class="seconds dateTimeText"></small>
+                                    <small>Giây</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer text-muted">
+                            <a class="btn btn-sm btn-outline-primary"
+                               href="${pageContext.request.contextPath}/Product/Detail?id=${c.id}&idType=${c.idType}"
+                               role="button">
+                                <i class="fa fa-eye" aria-hidden="true"></i>
+                                Detail
+                            </a>
+                            <c:if test="${auth == 1}">
+                                <a class="btn btn-sm btn-outline-success"
+                                   href="${pageContext.request.contextPath}/Behavior/watchlist?id=${c.id}"
+                                   role="button">
+                                    <i class="fa fa-plus" aria-hidden="true"></i>
+                                    Add
+                                </a>
+                                <a class="btn btn-sm btn-outline-danger"
+                                   href="${pageContext.request.contextPath}/Behavior/Auction?id=${c.id}"
+                                   role="button">
+                                    <i class="fa fa-cart-plus" aria-hidden="true"></i>
+                                    Đấu giá
+                                </a>
+                            </c:if>
+
+                        </div>
+                    </div>
+                </div>
+            </c:forEach>
+        </div>
+        <div>
+            <h4>Top 5 sản phẩm gần kết thúc</h4>
+        </div>
+        <div class="row m-0">
+            <c:forEach items="${top5AuctionEnd}" var="c">
+                <div class="col-sm-auto col-item p-0 card_hover">
+                    <div class="card h-100">
+                        <img src="${pageContext.request.contextPath}/public/imgs/${c.id}/1.jpg" alt="${c.name}"
+                             title="${c.name}" class="card-img-top">
+                        <div class="card-body">
+                            <h6 class="card-title">${c.name}</h6>
+                            <h5 class="card-title text-danger mb-0">
+                                <fmt:formatNumber value="${c.price}" type="number"/>
+                            </h5>
+                            <small class="card-text">Người bán: ${c.idUserSell} </small>
+                            <br>
+                            <small class="card-text">Người đặt giá cao nhất: ${c.idUserCur}</small>
+                            <br>
+                            <small class="card-text">Số lượt ra giá: ${c.countAuction}</small>
+                            <div id="ae${c.id}" class="clockdiv">
                                 <div>
                                     <small class="days dateTimeText"></small>
                                     <small>Ngày</small>
