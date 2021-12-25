@@ -51,6 +51,7 @@ public class UserModels {
                     .executeUpdate();
         }
     }
+
     public static User findById(int id){
         final String query = "select * from sandaugia.user where id = :id";
         try (Connection con = DbUtils.getConnection()) {

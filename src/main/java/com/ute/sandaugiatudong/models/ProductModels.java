@@ -1,5 +1,6 @@
 package com.ute.sandaugiatudong.models;
 
+import com.ute.sandaugiatudong.beans.Category;
 import com.ute.sandaugiatudong.beans.Product;
 import com.ute.sandaugiatudong.beans.User;
 import com.ute.sandaugiatudong.utils.DbUtils;
@@ -13,6 +14,15 @@ public class ProductModels {
 
         try (Connection con = DbUtils.getConnection()) {
             return con.createQuery(query).executeAndFetch(Product.class);
+        }
+    }
+
+    public static List<Category> findAllCategory() {
+        final String query = "select * from sandaugia.category";
+
+        try (Connection con = DbUtils.getConnection()) {
+            return con.createQuery(query).
+                    executeAndFetch(Category.class);
         }
     }
 
@@ -56,6 +66,7 @@ public class ProductModels {
             return con.createQuery(query).addParameter("idCat", idCat).executeAndFetch(Product.class);
         }
     }
+
     public static void updatePrice(int id, int price, int idUserCur, int countAuction){
         String insertSQL = "UPDATE product SET  price = :price, idUserCur = :idusercur, countAuction = :countAuction WHERE id = :id ";
         try (Connection con = DbUtils.getConnection()){
@@ -67,6 +78,7 @@ public class ProductModels {
                     .executeUpdate();
         }
     }
+
     public static List<Product> findByIdUserSell(int id) {
         final String query = "select * from sandaugia.product where idUserSell = :id";
 
@@ -100,6 +112,23 @@ public class ProductModels {
         }
     }
 
+    public static void editProductById(Product p) {
+        String sql = "UPDATE sandaugia.product SET name = :name, price = :price, timeStart = :timeStart, timeEnd = :timeEnd , idType = :idType, idCat = :idCat, tinyDes = :tinyDes, fullDes = :fullDes WHERE id = :id";
+        try (Connection con = DbUtils.getConnection()) {
+            con.createQuery(sql)
+                    .addParameter("id", p.getId())
+                    .addParameter("name", p.getName())
+                    .addParameter("price", p.getPrice())
+                    .addParameter("timeStart", p.getTimeStart())
+                    .addParameter("timeEnd", p.getTimeEnd())
+                    .addParameter("idType", p.getIdType())
+                    .addParameter("idCat", p.getIdCat())
+                    .addParameter("tinyDes", p.getTinyDes())
+                    .addParameter("fullDes", p.getFullDes())
+                    .executeUpdate();
+        }
+    }
+
     public static int findMaxId(){
         final String query = "SELECT * FROM product ORDER BY id DESC LIMIT 1";
 
@@ -118,6 +147,7 @@ public class ProductModels {
             return con.createQuery(query).executeAndFetch(Product.class);
         }
     }
+
     public static List<Product> findTop5CountAuction() {
         final String query = "SELECT * FROM sandaugia.product ORDER BY countAuction DESC LIMIT 5";
 
@@ -125,7 +155,6 @@ public class ProductModels {
             return con.createQuery(query).executeAndFetch(Product.class);
         }
     }
-
 
     public static List<Product> findByTypeDetail(int idType, int id) {
         final String query = "select * from sandaugia.product where idType = :idType and id != :id";
