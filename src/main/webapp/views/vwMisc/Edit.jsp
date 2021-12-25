@@ -201,88 +201,90 @@
     <jsp:body>
 
         <div class = "container">
-        <div class = "product-div">
-            <div class = "product-div-left">
-                <div class = "img-container">
-                    <img src = "${pageContext.request.contextPath}/public/imgs/${ProductEdit.id}/1.jpg" alt = "watch">
+            <div class = "product-div">
+                <div class = "product-div-left">
+                    <div class = "img-container">
+                        <img src = "${pageContext.request.contextPath}/public/imgs/${ProductEdit.id}/1.jpg" alt = "watch">
+                    </div>
+                    <div class = "hover-container">
+                        <div><img src = "${pageContext.request.contextPath}/public/imgs/${ProductEdit.id}/1.jpg"></div>
+                        <div><img src = "${pageContext.request.contextPath}/public/imgs/${ProductEdit.id}/2.jpg"></div>
+                        <div><img src = "${pageContext.request.contextPath}/public/imgs/${ProductEdit.id}/3.jpg"></div>
+                        <div><img src = "${pageContext.request.contextPath}/public/imgs/${ProductEdit.id}/4.jpg"></div>
+                    </div>
                 </div>
-                <div class = "hover-container">
-                    <div><img src = "${pageContext.request.contextPath}/public/imgs/${ProductEdit.id}/1.jpg"></div>
-                    <div><img src = "${pageContext.request.contextPath}/public/imgs/${ProductEdit.id}/2.jpg"></div>
-                    <div><img src = "${pageContext.request.contextPath}/public/imgs/${ProductEdit.id}/3.jpg"></div>
-                    <div><img src = "${pageContext.request.contextPath}/public/imgs/${ProductEdit.id}/4.jpg"></div>
-                </div>
+
+                <form action="" method="post" id="frmEditPro" enctype="multipart/form-data">
+                    <div class = "product-div-right">
+                        <h4 class="color_primary mb-3">Chỉnh sửa sản phẩm</h4>
+
+                        <div class="color_primary mb-3">Tên sản phẩm
+                            <input type="text" value="${ProductEdit.name}" class="form-control" id="txtProName" placeholder="" name="name">
+                        </div>
+
+                        <div class="color_primary mb-3">Giá hiện tại
+                            <input type="number" value="${ProductEdit.price}" class="form-control" id="txtProPrice" placeholder="" name="price">
+                        </div>
+
+                        <div class="color_primary mb-3">Danh mục
+                            <select class="form-control" id="txtCategory" name="listCate">
+
+
+                                <c:forEach items="${listCate}" var="c">
+                                    <c:choose>
+                                        <c:when test="${ProductEdit.idCat == c.id}">
+                                            <option selected>${c.id}.${c.name}</option>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <option>${c.id}.${c.name}</option>
+                                        </c:otherwise>
+                                    </c:choose>
+                                </c:forEach>
+                            </select>
+                        </div>
+
+                        <div class="color_primary mb-3">Loại
+                            <select class="form-control" id="txtProType" name="ProType">
+                                <c:forEach items="${listType}" var="t">
+                                    <c:choose>
+                                        <c:when test="${ProductEdit.idType == t.id}">
+                                            <option selected>${t.id}.${t.name}&nbsp;&nbsp;&ndash;&ndash;${t.idCat} </option>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <option >${t.id}.${t.name}&nbsp;&nbsp;&ndash;&ndash;${t.idCat} </option>
+                                        </c:otherwise>
+                                    </c:choose>
+                                </c:forEach>
+                            </select>
+                        </div>
+
+                        <div class="color_primary mb-3">Thời gian bắt đầu:  ${ProductEdit.timeStart}
+
+                            <input type="datetime-local" class="form-control"  value="${ProductEdit.timeStart}"  name="timeStart">
+                        </div>
+
+                        <div class="color_primary mb-3">Thời gian kết thúc: ${ProductEdit.timeEnd}
+                            <input type="datetime-local" class="form-control" value="${ProductEdit.timeEnd}" name="timeEnd">
+                        </div>
+
+                        <div class="color_primary mb-3">Mô tả
+                            <input type="text" class="form-control" id="txtTinyDes" value="${ProductEdit.tinyDes}" placeholder="" name="tinyDes">
+                        </div>
+
+                        <div class="color_primary mb-3">Mô tả chi tiết
+                            <textarea type="text" id="txtFullDes" name="fullDes" >${ProductEdit.fullDes}</textarea>
+                        </div>
+
+                        <div class = "btn-groups  justify-content-between" >
+
+                            <button type = "submit" href="${pageContext.request.contextPath}/Misc/Edit?id=${ProductEdit.id}" class = "btn btn-success text-white"><i class = "fas  fa-save fa-lg" style="color: white"></i>Save</button>
+                            <a href="${pageContext.request.contextPath}/Manage/Userproduct">
+                                <button type = "button" class = "btn btn-danger text-white" ><i class = "fas fa-times fa-lg" style="color: white"></i>Exit</button>
+                            </a>
+                        </div>
+                    </div>
+                </form>
             </div>
-
-            <form action="" method="post" id="frmEditPro" enctype="multipart/form-data">
-            <div class = "product-div-right">
-                <h4 class="color_primary mb-3">Chỉnh sửa sản phẩm</h4>
-
-                <div class="color_primary mb-3">Tên sản phẩm
-                    <input type="text" value="${ProductEdit.name}" class="form-control" id="txtProName" placeholder="" name="name">
-                </div>
-
-                <div class="color_primary mb-3">Giá hiện tại
-                    <input type="number" value="${ProductEdit.price}" class="form-control" id="txtProPrice" placeholder="" name="price">
-                </div>
-
-                <div class="color_primary mb-3">Danh mục
-                    <select class="form-control" id="txtCategory" name="listCate">
-                        <c:forEach items="${listCate}" var="c">
-                            <c:choose>
-                                <c:when test="${ProductEdit.idCat == c.id}">
-                                    <option selected>${c.id}.${c.name}</option>
-                                </c:when>
-                                <c:otherwise>
-                                    <option>${c.id}.${c.name}</option>
-                                </c:otherwise>
-                            </c:choose>
-                        </c:forEach>
-                    </select>
-                </div>
-
-                <div class="color_primary mb-3">Loại
-                    <select class="form-control" id="txtProType" name="ProType">
-                        <c:forEach items="${listType}" var="t">
-                            <c:choose>
-                                <c:when test="${ProductEdit.idType == t.id}">
-                                    <option selected>${t.id}.${t.name}&nbsp;&nbsp;&ndash;&ndash;${t.idCat} </option>
-                                </c:when>
-                                <c:otherwise>
-                                    <option >${t.id}.${t.name}&nbsp;&nbsp;&ndash;&ndash;${t.idCat} </option>
-                                </c:otherwise>
-                            </c:choose>
-                        </c:forEach>
-                    </select>
-                </div>
-
-                <div class="color_primary mb-3">Thời gian bắt đầu:  ${ProductEdit.timeStart}
-
-                    <input type="datetime-local" class="form-control"  value="${ProductEdit.timeStart}"  name="timeStart">
-                </div>
-
-                <div class="color_primary mb-3">Thời gian kết thúc: ${ProductEdit.timeEnd}
-                    <input type="datetime-local" class="form-control" value="${ProductEdit.timeEnd}" name="timeEnd">
-                </div>
-
-                <div class="color_primary mb-3">Mô tả
-                    <input type="text" class="form-control" id="txtTinyDes" value="${ProductEdit.tinyDes}" placeholder="" name="tinyDes">
-                </div>
-
-                <div class="color_primary mb-3">Mô tả chi tiết
-                    <textarea type="text" id="txtFullDes" name="fullDes" >${ProductEdit.fullDes}</textarea>
-                </div>
-
-                <div class = "btn-groups  justify-content-between" >
-
-                    <button type = "submit" href="${pageContext.request.contextPath}/Misc/Edit?id=${ProductEdit.id}" class = "btn btn-success text-white"><i class = "fas  fa-save fa-lg" style="color: white"></i>Save</button>
-                    <a href="${pageContext.request.contextPath}/Manage/Userproduct">
-                    <button type = "button" class = "btn btn-danger text-white" ><i class = "fas fa-times fa-lg" style="color: white"></i>Exit</button>
-                    </a>
-                </div>
-            </div>
-            </form>
-        </div>
         </div>
 
     </jsp:body>

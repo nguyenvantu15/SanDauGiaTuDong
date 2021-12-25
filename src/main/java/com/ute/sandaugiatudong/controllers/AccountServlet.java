@@ -1,9 +1,7 @@
 package com.ute.sandaugiatudong.controllers;
 
 import at.favre.lib.crypto.bcrypt.BCrypt;
-import com.ute.sandaugiatudong.beans.Product;
 import com.ute.sandaugiatudong.beans.User;
-import com.ute.sandaugiatudong.models.ProductModels;
 import com.ute.sandaugiatudong.models.RegisterSellerModels;
 import com.ute.sandaugiatudong.models.UserModels;
 import com.ute.sandaugiatudong.utils.ServletUtils;
@@ -19,6 +17,16 @@ import java.io.PrintWriter;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Properties;
+import java.util.Random;
+
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 
 @WebServlet(name = "AccountServlet", value = "/Account/*")
 public class AccountServlet extends HttpServlet {
@@ -30,6 +38,9 @@ public class AccountServlet extends HttpServlet {
             switch (path) {
                 case "/Register":
                     ServletUtils.forward("/views/vwAccount/Register.jsp",request,response);
+                    break;
+                case "/ConfirmOTP":
+                    ServletUtils.forward("/views/vwAccount/ConfirmOTP.jsp",request,response);
                     break;
 
                 case "/Login":
@@ -54,7 +65,7 @@ public class AccountServlet extends HttpServlet {
                         ServletUtils.forward("/views/vwAccount/Update.jsp", request, response);
                     }
                     else {
-                       ServletUtils.redirect("/Account/Profile",request,response);
+                        ServletUtils.redirect("/Account/Profile",request,response);
                     }
                     break;
 
@@ -93,7 +104,12 @@ public class AccountServlet extends HttpServlet {
 
             //post Register
             case "/Register":
+                sendOTP(request,response);
                 registerUser(request,response);
+                break;
+
+            case "/ConfirmOTP":
+                confirmOTP(request,response);
                 break;
 
             //post Login
@@ -121,10 +137,81 @@ public class AccountServlet extends HttpServlet {
                 deleteSellerRe(request,response);
                 break;
 
+
             default:
                 ServletUtils.forward("/views/404.jsp",request,response);
                 break;
         }
+    }
+
+
+    private void confirmOTP(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        request.setCharacterEncoding("UTF-8");
+        HttpSession session = request.getSession();
+        User u = (User) session.getAttribute("userRegister");
+        String otp = (String) session.getAttribute("codeOTP");
+
+        String userOTP = request.getParameter("OTP").trim();
+
+        int OTP = Integer.parseInt(otp);
+        int uOTP = Integer.parseInt(userOTP);
+
+        if (OTP == uOTP)
+        {
+            UserModels.add(u);
+            ServletUtils.redirect("/Account/Register",request,response);
+        }
+        else {
+            request.setAttribute("hasErrorOTP", true);
+            request.setAttribute("errorMessageOTP", "Mã OTP Không chính xác");
+
+            ServletUtils.forward("/views/vwAccount/ConfirmOTP.jsp", request, response);
+        }
+
+
+    }
+
+    private void sendOTP(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        request.setCharacterEncoding("UTF-8");
+        String reMail= request.getParameter("email").trim();
+        Random ran = new Random();
+        int OTP = ran.nextInt((999999 - 100000) + 1) + 100000;
+
+        HttpSession session1 = request.getSession();
+        session1.setAttribute("codeOTP", String.valueOf(OTP));
+
+        final String sendMail = "atttsystem@gmail.com";
+        final String passSendMail = "ATTT19110306";
+
+        Properties prop = new Properties();
+        prop.put("mail.smtp.host","smtp.gmail.com");
+        prop.put("mail.smtp.port","587");
+        prop.put("mail.smtp.auth","true");
+        prop.put("mail.smtp.starttls.enable","true");
+        Session session = Session.getInstance(prop,new javax.mail.Authenticator(){
+            protected  PasswordAuthentication getPasswordAuthentication(){
+                return new PasswordAuthentication(sendMail,passSendMail);
+            }
+        });
+        // Đăng nhập được email
+
+        try{
+            Message message = new MimeMessage(session);
+            message.setFrom(new InternetAddress(sendMail));
+            message.setRecipients(
+                    Message.RecipientType.TO,
+                    InternetAddress.parse(reMail)
+            );
+            message.setSubject("Mã OTP");
+            message.setText(String.valueOf(OTP));
+            Transport.send(message);
+            System.out.println("Done");
+            System.out.println(OTP);
+        }catch (Exception e){
+
+        };
     }
 
     private void deleteSellerRe(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -190,10 +277,10 @@ public class AccountServlet extends HttpServlet {
         int permission = 1;
 
         User u = new User(0,permission,username,bcryptHashString,email,phone,name,ngaysinh);
-        UserModels.add(u);
 
-        ServletUtils.forward("/views/vwAccount/Register.jsp",request,response);
-
+        HttpSession session = request.getSession();
+        session.setAttribute("userRegister", u);
+        ServletUtils.redirect("/Account/ConfirmOTP",request,response);
     }
 
     private void updatePro(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
