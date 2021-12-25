@@ -109,6 +109,31 @@ public class ProductServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String path = request.getPathInfo();
 
+        switch (path) {
+            case "/Category":
+                String value =  request.getParameter("sortPro");
+                //System.out.println(value);
+                switch (value){
+                    case "1":
+
+                        break;
+                    case "2":
+                        break;
+                    case "3":
+                        break;
+                    case "4":
+                        break;
+                }
+                break;
+            case "/Type":
+            case "/Detail":
+                break;
+            default:
+                ServletUtils.forward("/views/404.jsp", request, response);
+                break;
+        }
     }
+
 }

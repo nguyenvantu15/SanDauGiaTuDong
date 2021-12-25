@@ -174,4 +174,19 @@ public class ProductModels {
                     .executeAndFetch(Product.class);
         }
     }
+
+    public static List<Product> sortPriceUp() {
+        final String query = "SELECT * FROM sandaugia.product ORDER BY price";
+
+        try (Connection con = DbUtils.getConnection()) {
+            return con.createQuery(query).executeAndFetch(Product.class);
+        }
+    }
+    public static List<Product> sortPriceDown() {
+        final String query = "SELECT * FROM sandaugia.product ORDER BY price DESC";
+
+        try (Connection con = DbUtils.getConnection()) {
+            return con.createQuery(query).executeAndFetch(Product.class);
+        }
+    }
 }

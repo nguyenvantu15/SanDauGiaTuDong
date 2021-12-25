@@ -164,11 +164,11 @@
             </div>
             <div class="mr-3 d-flex">
                 <form action="" method="post">
-                    <select ame="sortPro">
-                        <option>Sắp xếp giá tăng</option>
-                        <option>Sắp xếp giá giảm</option>
-                        <option>Thời gian kết thúc tăng</option>
-                        <option>Thời gian kết thúc giảm</option>
+                    <select name="sortPro">
+                        <option value="1">Sắp xếp giá tăng</option>
+                        <option value="2">Sắp xếp giá giảm</option>
+                        <option value="3">Thời gian kết thúc tăng</option>
+                        <option value="4">Thời gian kết thúc giảm</option>
                     </select>
                     <button type="submit" class="btn btn-secondary pt-1 pb-0 mb-1">
                         Xem
