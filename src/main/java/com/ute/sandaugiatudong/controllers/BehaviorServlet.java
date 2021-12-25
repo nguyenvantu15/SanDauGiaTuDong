@@ -1,9 +1,6 @@
 package com.ute.sandaugiatudong.controllers;
 
-import com.ute.sandaugiatudong.beans.HistoryAuction;
-import com.ute.sandaugiatudong.beans.Product;
-import com.ute.sandaugiatudong.beans.User;
-import com.ute.sandaugiatudong.beans.WatchList;
+import com.ute.sandaugiatudong.beans.*;
 import com.ute.sandaugiatudong.models.*;
 import com.ute.sandaugiatudong.utils.ServletUtils;
 
@@ -29,7 +26,20 @@ public class BehaviorServlet extends HttpServlet {
                 if (product == null) {
                     ServletUtils.redirect("/Home", request, response);
                 } else {
+
+                    DateTimeFormatter df = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+                    LocalDateTime nowTmp = LocalDateTime.now();
+                    String txtTimeNow = df.format(nowTmp);
+                    LocalDateTime timeNowTmp = LocalDateTime.parse(txtTimeNow, df);
+                    DateTimeNew timeNow = new DateTimeNew(timeNowTmp.getYear(), timeNowTmp.getMonthValue(), timeNowTmp.getDayOfMonth(), timeNowTmp.getHour(), timeNowTmp.getMinute(), timeNowTmp.getSecond());
+                    request.setAttribute("timenow", timeNow);
+
+                    LocalDateTime tmp = product.getTimeEnd();
+                    DateTimeNew TimeEnd = new DateTimeNew(tmp.getYear(), tmp.getMonthValue(), tmp.getDayOfMonth(), tmp.getHour(), tmp.getMinute(), tmp.getSecond());
+
+
                     request.setAttribute("product", product);
+                    request.setAttribute("TimeEnd", TimeEnd);
                     ServletUtils.forward("/views/vwAuction/Auction.jsp", request, response);
                 }
                 break;

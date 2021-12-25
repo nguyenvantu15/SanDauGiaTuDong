@@ -6,6 +6,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
 <jsp:useBean id="product" scope="request" type="com.ute.sandaugiatudong.beans.Product"/>
+<jsp:useBean id="timenow" scope="request" type="com.ute.sandaugiatudong.beans.DateTimeNew"/>
+<jsp:useBean id="TimeEnd" scope="request" type="com.ute.sandaugiatudong.beans.DateTimeNew"/>
 
 
 <t:main>
@@ -13,7 +15,6 @@
 
         <style>
             @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap');
-
             * {
                 padding: 0;
                 margin: 0;
@@ -252,6 +253,18 @@
 
             });
         </script>
+
+        <script>
+            end = new Date(${TimeEnd.year}, ${TimeEnd.month}, ${TimeEnd.day}, ${TimeEnd.hour}, ${TimeEnd.minute}, ${TimeEnd.second});
+            now = new Date(${timenow.year}, ${timenow.month}, ${timenow.day}, ${timenow.hour}, ${timenow.minute}, ${timenow.second});
+
+            if( end <= now){
+                $('#Auction').hide();
+                $('#thongbao').show();
+            }else{
+                $('#thongbao').hide();
+            }
+        </script>
     </jsp:attribute>
 
     <jsp:body>
@@ -271,18 +284,27 @@
                 </div>
                 <div class="product-div-right">
                     <form action="" method="post" id = "frmAuction">
-                        <span class="product-name">${product.name}</span>
-
+                        <span class="product-name mb-2">${product.name}</span>
                         <h5 class="card-title text-danger" >
                             <fmt:formatNumber value="${product.price}" type="number"/>
                         </h5>
-                        <div class="form-group">
-                            <label for="txtProPrice">Mức giá tối đa</label>
-                            <input type="number" class="form-control" id="txtProPrice" placeholder="" name="price">
+                        <div class="form-group mt-4">
+                            <h6 class="mb-0">Thời gian kết thúc</h6>
+                            <small>Ngày ${TimeEnd.day} Tháng ${TimeEnd.month} Năm ${TimeEnd.year} - ${TimeEnd.hour}giờ:${TimeEnd.minute}phút</small>
+
                         </div>
-                        <button type="submit" class="btn btn-groups btn-danger mb-5">
-                            Đấu giá
-                        </button>
+                        <div id = "thongbao">
+                            <p class="text-danger">Đã hết thời hạn đấu giá </p>
+                        </div>
+                        <div id = "Auction">
+                            <div class="form-group">
+                                <label for="txtProPrice">Mức giá tối đa</label>
+                                <input type="number" class="form-control" id="txtProPrice" placeholder="" name="price">
+                            </div>
+                            <button id="buttonAuc" type="submit" class="btn btn-groups btn-danger mb-5">
+                                Đấu giá
+                            </button>
+                        </div>
                     </form>
 
                 </div>

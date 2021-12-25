@@ -11,7 +11,7 @@
 <jsp:useBean id="listDateTimeEndPrice" scope="request" type="java.util.List<com.ute.sandaugiatudong.beans.DateTimeNew>"/>
 <jsp:useBean id="listDateTimeEndCountAuction" scope="request" type="java.util.List<com.ute.sandaugiatudong.beans.DateTimeNew>"/>
 <jsp:useBean id="listDateTimeEndAuctionEnd" scope="request" type="java.util.List<com.ute.sandaugiatudong.beans.DateTimeNew>"/>
-<jsp:useBean id="listCheckDay" scope="request" type="java.util.List<java.lang.Boolean>"/>
+
 
 <t:main>
     <jsp:attribute name="css">
