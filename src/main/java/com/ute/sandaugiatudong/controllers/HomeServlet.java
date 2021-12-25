@@ -35,10 +35,10 @@ public class HomeServlet extends HttpServlet {
                 for (int i = 0; i < 5; i++) {
                     LocalDateTime tmp = top5Price.get(i).getTimeEnd();
                     boolean kt = nowTmp.isBefore(tmp);
-                    if(kt){
+                    if (kt) {
                         DateTimeNew DateTmp = new DateTimeNew(tmp.getYear(), tmp.getMonthValue(), tmp.getDayOfMonth(), tmp.getHour(), tmp.getMinute(), tmp.getSecond());
                         listDateTimeEndPrice.add(DateTmp);
-                    }else {
+                    } else {
                         DateTimeNew DateTmp = new DateTimeNew(nowTmp.getYear(), nowTmp.getMonthValue(), nowTmp.getDayOfMonth(), nowTmp.getHour(), nowTmp.getMinute(), nowTmp.getSecond());
                         listDateTimeEndPrice.add(DateTmp);
                     }
@@ -51,10 +51,10 @@ public class HomeServlet extends HttpServlet {
                 for (int i = 0; i < 5; i++) {
                     LocalDateTime tmp = top5CountAuction.get(i).getTimeEnd();
                     boolean kt = nowTmp.isBefore(tmp);
-                    if(kt){
+                    if (kt) {
                         DateTimeNew DateTmp = new DateTimeNew(tmp.getYear(), tmp.getMonthValue(), tmp.getDayOfMonth(), tmp.getHour(), tmp.getMinute(), tmp.getSecond());
                         listDateTimeEndCountAuction.add(DateTmp);
-                    }else {
+                    } else {
                         DateTimeNew DateTmp = new DateTimeNew(nowTmp.getYear(), nowTmp.getMonthValue(), nowTmp.getDayOfMonth(), nowTmp.getHour(), nowTmp.getMinute(), nowTmp.getSecond());
                         listDateTimeEndCountAuction.add(DateTmp);
                     }
@@ -68,7 +68,7 @@ public class HomeServlet extends HttpServlet {
                 List<Boolean> listCheckDay = new ArrayList<>();
                 for (int i = 0; i < 5; i++) {
                     boolean kt = nowTmp.isBefore(top5Price.get(i).getTimeEnd());
-                    if( kt ){
+                    if (kt) {
                         listCheckDay.add(kt);
                     }
                 }
@@ -86,10 +86,10 @@ public class HomeServlet extends HttpServlet {
                 for (int i = 0; i < top5AuctionEnd.size(); i++) {
                     LocalDateTime tmp = top5AuctionEnd.get(i).getTimeEnd();
                     boolean kt = nowTmp.isBefore(tmp);
-                    if(kt){
+                    if (kt) {
                         DateTimeNew DateTmp = new DateTimeNew(tmp.getYear(), tmp.getMonthValue(), tmp.getDayOfMonth(), tmp.getHour(), tmp.getMinute(), tmp.getSecond());
                         listDateTimeEndAuctionEnd.add(DateTmp);
-                    }else {
+                    } else {
                         DateTimeNew DateTmp = new DateTimeNew(nowTmp.getYear(), nowTmp.getMonthValue(), nowTmp.getDayOfMonth(), nowTmp.getHour(), nowTmp.getMinute(), nowTmp.getSecond());
                         listDateTimeEndAuctionEnd.add(DateTmp);
                     }
