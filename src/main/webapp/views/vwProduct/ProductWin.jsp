@@ -66,7 +66,7 @@
                                 Thanh Toán
                             </a>
                             <a class="btn btn-sm btn-outline-primary"
-                               href="${pageContext.request.contextPath}/Behavior/Review?id=${c.id}"
+                               href="${pageContext.request.contextPath}/Review/Reviewseller?id=${c.id}"
                                role="button">
                                 <i class="fa fa-pencil" aria-hidden="true"></i>
                                 Đánh giá
