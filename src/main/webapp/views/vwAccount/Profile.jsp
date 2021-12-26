@@ -1,6 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
-
+<%@  taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <t:main>
 
@@ -150,14 +150,30 @@
                                         <input type="text" class="form-control" id="permission" name="permission" value="${authUser.permission}" style="background: #1A233A" disabled  >
                                     </div>
                                 </div>
+                                <c:if  test="${authUser.permission == 2}">
+                                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                        <div class="form-group">
+                                            <label for="Mark">Mark</label>
+                                            <input type="text" class="form-control" id ="Mark" name="phone" value="${authUser.mark}" style="background: #1A233A" disabled >
+                                        </div>
+                                    </div>
+                                    <div class="row gutters" style="padding-left: 32px; width: 100%;">
+                                        <div>Comment của khách hàng</div>
+                                        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 mt-3 mb-3" style="padding: 0; padding: 0;
+                                                                                                          border: 1px solid #596280; border-radius: 2px; background: #1a233a">
+                                            <div>${authUser.comment}</div>
+                                        </div>
+                                    </div>
+                                </c:if>
+
                             </div>
 
                             <div class="row gutters">
                                 <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                                     <div class="text-right">
-
+                                        <c:if  test="${authUser.permission != 2}">
                                         <button type="submit" id="submitSeller" name="submitSeller" class="btn btn-warning" >Đăng kí Seller</button>
-
+                                        </c:if>
                                         <a href="${pageContext.request.contextPath}/Account/Update?id=${authUser.id}">
                                             <button type="button" id="submitUpdate" name="submit" class="btn btn-primary" >Update</button>
                                         </a>
