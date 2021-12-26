@@ -3,7 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
-<jsp:useBean id="proSearch" scope="request" type="java.util.List<com.ute.sandaugiatudong.beans.Product>"/>
+<%--<jsp:useBean id="proSearch" scope="request" type="java.util.List<com.ute.sandaugiatudong.beans.Product>"/>--%>
 
 <t:main>
     <jsp:attribute name="css">
@@ -34,7 +34,7 @@
 
     <jsp:body>
         <c:choose>
-        <c:when test="${proSearch.size() == 0}">
+        <c:when test="${listProductSearch.size() == 0}">
             <div class="card-body">
                 <p class="card-text">Không có dữ liệu.</p>
             </div>
@@ -44,7 +44,7 @@
             <h4>Danh Mục</h4>
         </div>
         <div class="row">
-            <c:forEach items="${proSearch}" var="p">
+            <c:forEach items="${listProductSearch}" var="p">
                 <div class="col-sm-auto col-item p-0 card_hover">
                     <div class="card h-100">
                         <img src="${pageContext.request.contextPath}/public/imgs/${p.id}/1.jpg" alt="${p.name}" title="${p.name}" class="card-img-top">

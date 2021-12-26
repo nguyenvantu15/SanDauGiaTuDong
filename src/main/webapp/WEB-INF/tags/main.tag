@@ -144,6 +144,8 @@
             color: #fcd001;
         }
     </style>
+
+
     <%--    Lỗ css --%>
     <jsp:invoke fragment = "css"/>
 </head>
@@ -163,9 +165,10 @@
                 <li class="nav-item dropdown">
                 </li>
             </ul>
-            <form class="form-inline my-2 my-lg-0" id="frmSearch">
-                <input class="form-control-sm mr-sm-2 " type="search" name="txtSearch" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success btn_search btn-sm" type="submit">Search</button>
+
+            <form id="frmSearch" action="SearchControl" method="post" class="form-inline my-2 my-lg-0" id="frmSearch">
+                <input class="form-control-sm mr-sm-2 " id="search" type="text" name="txtsearch" placeholder="Search" >
+                    <button type="submit" formaction="${pageContext.request.contextPath}/SearchControl/Search" name="btnSearch" class="btn btn-outline-success btn_search btn-sm">Search</button>
             </form>
 
         </div>

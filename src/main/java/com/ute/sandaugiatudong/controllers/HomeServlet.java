@@ -2,6 +2,7 @@ package com.ute.sandaugiatudong.controllers;
 
 import com.ute.sandaugiatudong.beans.DateTimeNew;
 import com.ute.sandaugiatudong.beans.Product;
+import com.ute.sandaugiatudong.beans.User;
 import com.ute.sandaugiatudong.models.ProductModels;
 import com.ute.sandaugiatudong.utils.ServletUtils;
 
@@ -10,6 +11,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -99,6 +101,7 @@ public class HomeServlet extends HttpServlet {
 
                 ServletUtils.forward("/views/vwHome/Index.jsp", request, response);
                 break;
+
             default:
                 ServletUtils.forward("/views/404.jsp", request, response);
                 break;
@@ -107,6 +110,5 @@ public class HomeServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
     }
 }

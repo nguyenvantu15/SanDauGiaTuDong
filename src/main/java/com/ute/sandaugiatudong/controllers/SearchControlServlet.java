@@ -28,10 +28,7 @@ public class SearchControlServlet extends HttpServlet {
         }
         switch (path) {
             case "/Search":
-                HttpSession session = request.getSession();
-                String tr = (String) session.getAttribute("stringSearch");
-                System.out.println(tr);
-                ServletUtils.forward("/views/404.jsp",request,response);
+                ServletUtils.forward("/views/vwProduct/FullTextSearchCate.jsp", request, response);
                 break;
             default:
                 ServletUtils.redirect("/Home",request,response);
@@ -49,10 +46,10 @@ public class SearchControlServlet extends HttpServlet {
                 String p1 = request.getParameter("txtsearch").trim();
                 String str = "\'" + p1 + "\'";
                 List<Product> t = ProductModels.findAllSearch(str);
-                request.setAttribute("proSearch", t);
+//                request.setAttribute("proSearch", t);
 
                 HttpSession session = request.getSession();
-                session.setAttribute("stringSearch", str);
+                session.setAttribute("listProductSearch", t);
 
                 ServletUtils.forward("/views/vwProduct/FullTextSearchCate.jsp", request, response);
                 break;
