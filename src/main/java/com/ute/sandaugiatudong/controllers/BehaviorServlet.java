@@ -37,9 +37,13 @@ public class BehaviorServlet extends HttpServlet {
                     LocalDateTime tmp = product.getTimeEnd();
                     DateTimeNew TimeEnd = new DateTimeNew(tmp.getYear(), tmp.getMonthValue(), tmp.getDayOfMonth(), tmp.getHour(), tmp.getMinute(), tmp.getSecond());
 
+                    tmp = product.getTimeStart();
+                    DateTimeNew TimeStart = new DateTimeNew(tmp.getYear(), tmp.getMonthValue(), tmp.getDayOfMonth(), tmp.getHour(), tmp.getMinute(), tmp.getSecond());
 
                     request.setAttribute("product", product);
                     request.setAttribute("TimeEnd", TimeEnd);
+                    request.setAttribute("TimeStart", TimeStart);
+
                     ServletUtils.forward("/views/vwAuction/Auction.jsp", request, response);
                 }
                 break;
@@ -67,6 +71,14 @@ public class BehaviorServlet extends HttpServlet {
                 String url = request.getHeader("referer");
                 if (url == null) url = "/Home";
                 ServletUtils.redirect(url, request, response);
+                break;
+            case "/ProductWin":
+                HttpSession session2 = request.getSession();
+                User Bidder1 = (User) session2.getAttribute("authUser");
+
+                List<Product> listProWin = ProductModels.findProUserWin(Bidder1.getId());
+                request.setAttribute("listProWin", listProWin);
+                ServletUtils.forward("/views/vwProduct/ProductWin.jsp", request, response);
                 break;
             default:
                 ServletUtils.forward("/views/404.jsp", request, response);

@@ -8,6 +8,7 @@
 <jsp:useBean id="product" scope="request" type="com.ute.sandaugiatudong.beans.Product"/>
 <jsp:useBean id="timenow" scope="request" type="com.ute.sandaugiatudong.beans.DateTimeNew"/>
 <jsp:useBean id="TimeEnd" scope="request" type="com.ute.sandaugiatudong.beans.DateTimeNew"/>
+<jsp:useBean id="TimeStart" scope="request" type="com.ute.sandaugiatudong.beans.DateTimeNew"/>
 
 
 <t:main>
@@ -257,8 +258,8 @@
         <script>
             end = new Date(${TimeEnd.year}, ${TimeEnd.month}, ${TimeEnd.day}, ${TimeEnd.hour}, ${TimeEnd.minute}, ${TimeEnd.second});
             now = new Date(${timenow.year}, ${timenow.month}, ${timenow.day}, ${timenow.hour}, ${timenow.minute}, ${timenow.second});
-
-            if( end <= now){
+            start = new Date(${TimeStart.year}, ${TimeStart.month}, ${TimeStart.day}, ${TimeStart.hour}, ${TimeStart.minute}, ${TimeStart.second});
+            if( end <= now || now<start){
                 $('#Auction').hide();
                 $('#thongbao').show();
             }else{
@@ -289,8 +290,12 @@
                             <fmt:formatNumber value="${product.price}" type="number"/>
                         </h5>
                         <div class="form-group mt-4">
+                            <h6 class="mb-0">Thời gian bắt đầu</h6>
+                            <small>Ngày ${TimeStart.day} Tháng ${TimeStart.month} Năm ${TimeStart.year} - ${TimeStart.hour}giờ:${TimeStart.minute}phút</small>
+
                             <h6 class="mb-0">Thời gian kết thúc</h6>
                             <small>Ngày ${TimeEnd.day} Tháng ${TimeEnd.month} Năm ${TimeEnd.year} - ${TimeEnd.hour}giờ:${TimeEnd.minute}phút</small>
+
 
                         </div>
                         <div id = "thongbao">

@@ -211,10 +211,14 @@
                                 </c:if>
 
                                 <c:if test="${auth == 1}">
-                                    <div class="dropdown-divider"></div>
                                     <a class="dropdown-item" href="${pageContext.request.contextPath}/Behavior/viewwatchlist">
                                         <i class="fa fa-eye" aria-hidden="true"></i>
                                         Watch List
+                                    </a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="${pageContext.request.contextPath}/Behavior/ProductWin">
+                                        <i class="fa fa-money" aria-hidden="true"></i>
+                                        Sản phẩm đã thắng
                                     </a>
                                 </c:if>
 
