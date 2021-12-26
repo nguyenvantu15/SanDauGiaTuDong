@@ -27,6 +27,10 @@ public class ManageProductServlet extends HttpServlet {
                 break;
             case "/Uploadauction":
                 break;
+            case "/ViewSellerProAuction":
+
+                ServletUtils.forward("/views/vwProduct/ProductAuctionBySeller.jsp", request, response);
+                break;
             default:
                 ServletUtils.forward("/views/404.jsp", request, response);
                 break;

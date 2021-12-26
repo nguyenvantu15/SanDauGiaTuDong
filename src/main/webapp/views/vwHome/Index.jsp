@@ -9,8 +9,11 @@
 <jsp:useBean id="top5AuctionEnd" scope="request" type="java.util.List<com.ute.sandaugiatudong.beans.Product>"/>
 <jsp:useBean id="timenow" scope="request" type="com.ute.sandaugiatudong.beans.DateTimeNew"/>
 <jsp:useBean id="listDateTimeEndPrice" scope="request" type="java.util.List<com.ute.sandaugiatudong.beans.DateTimeNew>"/>
+<jsp:useBean id="listDateTimeStartPrice" scope="request" type="java.util.List<com.ute.sandaugiatudong.beans.DateTimeNew>"/>
 <jsp:useBean id="listDateTimeEndCountAuction" scope="request" type="java.util.List<com.ute.sandaugiatudong.beans.DateTimeNew>"/>
+<jsp:useBean id="listDateTimeStartCountAuction" scope="request" type="java.util.List<com.ute.sandaugiatudong.beans.DateTimeNew>"/>
 <jsp:useBean id="listDateTimeEndAuctionEnd" scope="request" type="java.util.List<com.ute.sandaugiatudong.beans.DateTimeNew>"/>
+<jsp:useBean id="listDateTimeStartAuctionEnd" scope="request" type="java.util.List<com.ute.sandaugiatudong.beans.DateTimeNew>"/>
 
 
 <t:main>
@@ -41,8 +44,9 @@
                 transform: translateY(-1px);
                 box-shadow: 0 2px 10px 4px rgba(0, 0, 0, 0.5);;
             }
-            .dateTimeText{
-                color : red;
+
+            .dateTimeText {
+                color: red;
             }
         </style>
         <style>
@@ -138,27 +142,38 @@
             for (j = 0; j < 5; j++) {
                 dd[j] = 0;
             }
+            nowCur = new Date(${timenow.year}, ${timenow.month}, ${timenow.day}, ${timenow.hour}, ${timenow.minute}, ${timenow.second});
             var i = 0;
             var deadline = new Array(5);
             <c:forEach items="${listDateTimeEndPrice}" var="c">
-                end = new Date(${c.year}, ${c.month}, ${c.day}, ${c.hour}, ${c.minute}, ${c.second});
-                start = new Date(${timenow.year}, ${timenow.month}, ${timenow.day}, ${timenow.hour}, ${timenow.minute}, ${timenow.second});
-                if (end <= start) {
+            end = new Date(${c.year}, ${c.month}, ${c.day}, ${c.hour}, ${c.minute}, ${c.second});
+            start = new Date(${timenow.year}, ${timenow.month}, ${timenow.day}, ${timenow.hour}, ${timenow.minute}, ${timenow.second});
+            if (end <= start) {
+                dd[i] = 1;
+            }
+            a = end - start;
+            tmp = new Date(Date.parse(new Date()) + a)
+            deadline[i] = tmp;
+            i = i + 1;
+            </c:forEach>
+            i = 0;
+            <c:forEach items="${listDateTimeStartPrice}" var="c">
+            st1 = new Date(${c.year}, ${c.month}, ${c.day}, ${c.hour}, ${c.minute}, ${c.second});
+            if (dd[i] === 0) {
+                if (nowCur <= st1) {
                     dd[i] = 1;
                 }
-                a = end - start;
-                tmp = new Date(Date.parse(new Date()) + a)
-                deadline[i] = tmp;
-                i = i + 1;
+            }
+            i = i + 1;
             </c:forEach>
             i = 0;
             <c:forEach items="${top5Price}" var="c">
-                if (dd[i] === 1) {
-                    aaa('p${c.id}', deadline[i]);
-                } else {
-                    initializeClock('p${c.id}', deadline[i]);
-                }
-                i = i + 1;
+            if (dd[i] === 1) {
+                aaa('p${c.id}', deadline[i]);
+            } else {
+                initializeClock('p${c.id}', deadline[i]);
+            }
+            i = i + 1;
             </c:forEach>
 
             var dd1 = new Array(5);
@@ -168,24 +183,36 @@
             var i1 = 0;
             var deadline1 = new Array(5);
             <c:forEach items="${listDateTimeEndCountAuction}" var="c1">
-                end1 = new Date(${c1.year}, ${c1.month}, ${c1.day}, ${c1.hour}, ${c1.minute}, ${c1.second});
-                start1 = new Date(${timenow.year}, ${timenow.month}, ${timenow.day}, ${timenow.hour}, ${timenow.minute}, ${timenow.second});
-                if (end1 <= start1) {
+            end1 = new Date(${c1.year}, ${c1.month}, ${c1.day}, ${c1.hour}, ${c1.minute}, ${c1.second});
+            start1 = new Date(${timenow.year}, ${timenow.month}, ${timenow.day}, ${timenow.hour}, ${timenow.minute}, ${timenow.second});
+            if (end1 <= start1) {
+                dd1[i1] = 1;
+            }
+            a1 = end1 - start1;
+            tmp1 = new Date(Date.parse(new Date()) + a1)
+            deadline1[i1] = tmp1;
+            i1 = i1 + 1;
+            </c:forEach>
+
+            i1 = 0;
+            <c:forEach items="${listDateTimeStartCountAuction}" var="c1">
+            st1 = new Date(${c1.year}, ${c1.month}, ${c1.day}, ${c1.hour}, ${c1.minute}, ${c1.second});
+            if (dd1[i1] === 0) {
+                if (nowCur <= st1) {
                     dd1[i1] = 1;
                 }
-                a1 = end1 - start1;
-                tmp1 = new Date(Date.parse(new Date()) + a1)
-                deadline1[i1] = tmp1;
-                i1 = i1 + 1;
+            }
+            i1 = i1 + 1;
             </c:forEach>
+
             i1 = 0;
             <c:forEach items="${top5CountAuction}" var="c1">
-                if (dd1[i1] === 1) {
-                    aaa('ca${c1.id}', deadline1[i1]);
-                } else {
-                    initializeClock('ca${c1.id}', deadline1[i1]);
-                }
-                i1 = i1 + 1;
+            if (dd1[i1] === 1) {
+                aaa('ca${c1.id}', deadline1[i1]);
+            } else {
+                initializeClock('ca${c1.id}', deadline1[i1]);
+            }
+            i1 = i1 + 1;
             </c:forEach>
 
 
@@ -196,24 +223,35 @@
             var i2 = 0;
             var deadline2 = new Array(5);
             <c:forEach items="${listDateTimeEndAuctionEnd}" var="c2">
-                end2 = new Date(${c2.year}, ${c2.month}, ${c2.day}, ${c2.hour}, ${c2.minute}, ${c2.second});
-                start2 = new Date(${timenow.year}, ${timenow.month}, ${timenow.day}, ${timenow.hour}, ${timenow.minute}, ${timenow.second});
-                if (end2 <= start2) {
-                    dd2[i2] = 1;
-                }
-                a2 = end2 - start2;
-                tmp2 = new Date(Date.parse(new Date()) + a2)
-                deadline2[i2] = tmp2;
-                i2 = i2 + 1;
+            end2 = new Date(${c2.year}, ${c2.month}, ${c2.day}, ${c2.hour}, ${c2.minute}, ${c2.second});
+            start2 = new Date(${timenow.year}, ${timenow.month}, ${timenow.day}, ${timenow.hour}, ${timenow.minute}, ${timenow.second});
+            if (end2 <= start2) {
+                dd2[i2] = 1;
+            }
+            a2 = end2 - start2;
+            tmp2 = new Date(Date.parse(new Date()) + a2)
+            deadline2[i2] = tmp2;
+            i2 = i2 + 1;
             </c:forEach>
             i2 = 0;
-            <c:forEach items="${top5AuctionEnd}" var="c2">
-                if (dd2[i2] === 1) {
-                    aaa('ae${c2.id}', deadline2[i2]);
-                } else {
-                    initializeClock('ae${c2.id}', deadline2[i2]);
+            <c:forEach items="${listDateTimeStartAuctionEnd}" var="c2">
+            st1 = new Date(${c2.year}, ${c2.month}, ${c2.day}, ${c2.hour}, ${c2.minute}, ${c2.second});
+            if (dd2[i2] === 0) {
+                if (nowCur <= st1) {
+                    dd2[i2] = 1;
                 }
-                i2 = i2 + 1;
+            }
+            i2 = i2 + 1;
+            </c:forEach>
+
+            i2 = 0;
+            <c:forEach items="${top5AuctionEnd}" var="c2">
+            if (dd2[i2] === 1) {
+                aaa('ae${c2.id}', deadline2[i2]);
+            } else {
+                initializeClock('ae${c2.id}', deadline2[i2]);
+            }
+            i2 = i2 + 1;
             </c:forEach>
         </script>
     </jsp:attribute>

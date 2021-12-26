@@ -59,6 +59,7 @@ public class ProductServlet extends HttpServlet {
                 String txtTimeNow = df.format(nowTmp);
 
                 List<DateTimeNew> listDateTimeProByCat = new ArrayList<>();
+                List<DateTimeNew> listDateTimeStartProByCat = new ArrayList<>();
                 for (int i = 0; i < list.size(); i++) {
                     LocalDateTime tmp = list.get(i).getTimeEnd();
                     boolean kt = nowTmp.isBefore(tmp);
@@ -69,13 +70,22 @@ public class ProductServlet extends HttpServlet {
                         DateTimeNew DateTmp = new DateTimeNew(nowTmp.getYear(), nowTmp.getMonthValue(), nowTmp.getDayOfMonth(), nowTmp.getHour(), nowTmp.getMinute(), nowTmp.getSecond());
                         listDateTimeProByCat.add(DateTmp);
                     }
+
+                    LocalDateTime tmp1 = list.get(i).getTimeStart();
+                    DateTimeNew tmpStart = new DateTimeNew(tmp1.getYear(), tmp1.getMonthValue(), tmp1.getDayOfMonth(), tmp1.getHour(), tmp1.getMinute(), tmp1.getSecond());
+                    listDateTimeStartProByCat.add(tmpStart);
                 }
+                request.setAttribute("listDateTimeStartProByCat", listDateTimeStartProByCat);
+
                 request.setAttribute("listDateTimeProByCat", listDateTimeProByCat);
                 LocalDateTime timeNowTmp = LocalDateTime.parse(txtTimeNow, df);
 
                 DateTimeNew timeNow = new DateTimeNew(timeNowTmp.getYear(), timeNowTmp.getMonthValue(), timeNowTmp.getDayOfMonth(), timeNowTmp.getHour(), timeNowTmp.getMinute(), timeNowTmp.getSecond());
 
                 request.setAttribute("timenow", timeNow);
+
+
+
 
                 ServletUtils.forward("/views/vwProduct/Category.jsp", request, response);
                 break;
@@ -113,6 +123,7 @@ public class ProductServlet extends HttpServlet {
                 String txtTimeNow1 = df1.format(nowTmp1);
 
                 List<DateTimeNew> listDateTimeProByType = new ArrayList<>();
+                List<DateTimeNew> listDateTimeStartProByType = new ArrayList<>();
                 for (int i = 0; i < list1.size(); i++) {
                     LocalDateTime tmp = list1.get(i).getTimeEnd();
                     boolean kt = nowTmp1.isBefore(tmp);
@@ -123,8 +134,12 @@ public class ProductServlet extends HttpServlet {
                         DateTimeNew DateTmp = new DateTimeNew(nowTmp1.getYear(), nowTmp1.getMonthValue(), nowTmp1.getDayOfMonth(), nowTmp1.getHour(), nowTmp1.getMinute(), nowTmp1.getSecond());
                         listDateTimeProByType.add(DateTmp);
                     }
+                    LocalDateTime tmp1 = list1.get(i).getTimeStart();
+                    DateTimeNew tmpStart = new DateTimeNew(tmp1.getYear(), tmp1.getMonthValue(), tmp1.getDayOfMonth(), tmp1.getHour(), tmp1.getMinute(), tmp1.getSecond());
+                    listDateTimeStartProByType.add(tmpStart);
                 }
                 request.setAttribute("listDateTimeProByType", listDateTimeProByType);
+                request.setAttribute("listDateTimeStartProByType", listDateTimeStartProByType);
                 LocalDateTime timeNowTmp1 = LocalDateTime.parse(txtTimeNow1, df1);
 
                 DateTimeNew timeNow1 = new DateTimeNew(timeNowTmp1.getYear(), timeNowTmp1.getMonthValue(), timeNowTmp1.getDayOfMonth(), timeNowTmp1.getHour(), timeNowTmp1.getMinute(), timeNowTmp1.getSecond());

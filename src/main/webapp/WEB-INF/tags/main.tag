@@ -196,7 +196,7 @@
                                     <div class="dropdown-divider"></div>
                                     <a class="dropdown-item" href="${pageContext.request.contextPath}/Misc/Add">
                                         <i class="fa fa-money" aria-hidden="true"></i>
-                                        Sản phẩm đang đấu giá
+                                        Đang đấu giá
                                     </a>
 
                                     <div class="dropdown-divider"></div>

@@ -5,6 +5,7 @@
 
 <jsp:useBean id="ProductByType" scope="request" type="java.util.List<com.ute.sandaugiatudong.beans.Product>"/>
 <jsp:useBean id="listDateTimeProByType" scope="request" type="java.util.List<com.ute.sandaugiatudong.beans.DateTimeNew>"/>
+<jsp:useBean id="listDateTimeStartProByType" scope="request" type="java.util.List<com.ute.sandaugiatudong.beans.DateTimeNew>"/>
 <jsp:useBean id="timenow" scope="request" type="com.ute.sandaugiatudong.beans.DateTimeNew"/>
 <t:main>
     <jsp:attribute name="css">
@@ -129,12 +130,12 @@
 
             }
 
-            var dd = new Array(5);
-            for (j = 0; j < 5; j++) {
+            var dd = new Array(${ProductByType.size()});
+            for (j = 0; j < ${listDateTimeStartProByType.size()}; j++) {
                 dd[j] = 0;
             }
             var i = 0;
-            var deadline = new Array(5);
+            var deadline = new Array(${ProductByType.size()});
             <c:forEach items="${listDateTimeProByType}" var="c">
             end = new Date(${c.year}, ${c.month}, ${c.day}, ${c.hour}, ${c.minute}, ${c.second});
             start = new Date(${timenow.year}, ${timenow.month}, ${timenow.day}, ${timenow.hour}, ${timenow.minute}, ${timenow.second});
@@ -146,6 +147,19 @@
             deadline[i] = tmp;
             i = i + 1;
             </c:forEach>
+
+            i = 0;
+            nowCur = new Date(${timenow.year}, ${timenow.month}, ${timenow.day}, ${timenow.hour}, ${timenow.minute}, ${timenow.second});
+            <c:forEach items="${listDateTimeStartProByType}" var="c">
+            st1 = new Date(${c.year}, ${c.month}, ${c.day}, ${c.hour}, ${c.minute}, ${c.second});
+            if (dd[i] === 0){
+                if(nowCur <= st1 ){
+                    dd[i]=1;
+                }
+            }
+                i = i + 1;
+            </c:forEach>
+
             i = 0;
             <c:forEach items="${ProductByType}" var="c">
             if (dd[i] === 1) {
@@ -160,7 +174,7 @@
     <jsp:body>
         <div class = "row rowHead">
             <div class="ml-3">
-                <h4>Danh Mục</h4>
+                <h4>Loại</h4>
             </div>
             <div class="mr-3 d-flex">
                 <form action="" method="post">
