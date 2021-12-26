@@ -18,14 +18,40 @@ import java.util.List;
 
 @WebServlet(name = "ProductServlet", value = "/Product/*")
 public class ProductServlet extends HttpServlet {
+    private String a = "0";//nhận biết các kiểu sort
+    private String b = "0";
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String path = request.getPathInfo();
-
         switch (path) {
             case "/Category":
                 int ProID = Integer.parseInt(request.getParameter("id"));
-                List<Product> list = ProductModels.findByCat(ProID);
+                List<Product> list = new ArrayList<>();
+
+                switch (a) {
+                    case "1":
+                        list = ProductModels.sortCatProPriceUp(ProID);
+                        a = "0";
+                        break;
+                    case "2":
+                        list = ProductModels.sortCatProPriceDown(ProID);
+                        a = "0";
+                        break;
+                    case "3":
+                        list = ProductModels.sortCatProTimeEndUp(ProID);
+                        a = "0";
+                        break;
+                    case "4":
+                        list = ProductModels.sortCatProTimeEndDown(ProID);
+                        a = "0";
+                        break;
+                    default:
+                        list = ProductModels.findByCat(ProID);
+                        a = "0";
+                        break;
+                }
+
                 request.setAttribute("ProductByCategory", list);
 
                 DateTimeFormatter df = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
@@ -55,7 +81,31 @@ public class ProductServlet extends HttpServlet {
                 break;
             case "/Type":
                 int sp = Integer.parseInt(request.getParameter("id"));
-                List<Product> list1 = ProductModels.findByType(sp);
+                List<Product> list1 = new ArrayList<>();
+
+                switch (b) {
+                    case "1":
+                        list1 = ProductModels.sortTypeProPriceUp(sp);
+                        b = "0";
+                        break;
+                    case "2":
+                        list1 = ProductModels.sortTypeProPriceDown(sp);
+                        b = "0";
+                        break;
+                    case "3":
+                        list1 = ProductModels.sortTypeProTimeEndUp(sp);
+                        b = "0";
+                        break;
+                    case "4":
+                        list1 = ProductModels.sortTypeProTimeEndDown(sp);
+                        b = "0";
+                        break;
+                    default:
+                        list1 =  ProductModels.findByType(sp);
+                        b = "0";
+                        break;
+                }
+
                 request.setAttribute("ProductByType", list1);
 
                 DateTimeFormatter df1 = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
@@ -113,21 +163,17 @@ public class ProductServlet extends HttpServlet {
 
         switch (path) {
             case "/Category":
-                String value =  request.getParameter("sortPro");
-                //System.out.println(value);
-                switch (value){
-                    case "1":
-
-                        break;
-                    case "2":
-                        break;
-                    case "3":
-                        break;
-                    case "4":
-                        break;
-                }
+                String value = request.getParameter("sortPro");
+                a = value;
+                String url = request.getHeader("referer");
+                ServletUtils.redirect(url, request, response);
                 break;
             case "/Type":
+                String valueb = request.getParameter("sortPro");
+                b = valueb;
+                String urlb = request.getHeader("referer");
+                ServletUtils.redirect(urlb, request, response);
+                break;
             case "/Detail":
                 break;
             default:

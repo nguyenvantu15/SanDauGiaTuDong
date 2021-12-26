@@ -26,8 +26,7 @@ public class ProductModels {
         }
     }
 
-    public static void add(Product p)
-    {
+    public static void add(Product p) {
         String insertSQL = "INSERT INTO product (name, price, countAuction, idUserSell, mark, timeStart, timeEnd, idUserCur, idCat, idType, tinyDes, fullDes) VALUES (:name,:price,:countauction,:idusersell,:mark,:timestart,:timeend,:idusercur,:idcat,:idtype,:tinydes,:fulldes)";
         try (Connection con = DbUtils.getConnection()){
             con.createQuery(insertSQL)
@@ -155,6 +154,7 @@ public class ProductModels {
             return con.createQuery(query).executeAndFetch(Product.class);
         }
     }
+
     public static List<Product> findTopAuctionEnd() {
         final String query = "SELECT * FROM  product WHERE CURRENT_TIMESTAMP()<timeEnd ORDER BY timeEnd LIMIT 5";
 
@@ -170,6 +170,86 @@ public class ProductModels {
             return con.createQuery(query)
                     .addParameter("idType", idType)
                     .addParameter("id", id)
+                    .executeAndFetch(Product.class);
+        }
+    }
+
+    public static List<Product> sortCatProPriceUp(int idCat) {
+        final String query = "SELECT * FROM  product WHERE idCat = :idCat ORDER BY price ";
+
+        try (Connection con = DbUtils.getConnection()) {
+            return con.createQuery(query)
+                    .addParameter("idCat",idCat)
+                    .executeAndFetch(Product.class);
+        }
+    }
+
+    public static List<Product> sortCatProPriceDown(int idCat) {
+        final String query = "SELECT * FROM  product WHERE idCat = :idCat ORDER BY price DESC";
+
+        try (Connection con = DbUtils.getConnection()) {
+            return con.createQuery(query)
+                    .addParameter("idCat",idCat)
+                    .executeAndFetch(Product.class);
+        }
+    }
+
+    public static List<Product> sortCatProTimeEndUp(int idCat) {
+        final String query = "SELECT * FROM  product WHERE idCat = :idCat ORDER BY timeEnd";
+
+        try (Connection con = DbUtils.getConnection()) {
+            return con.createQuery(query)
+                    .addParameter("idCat",idCat)
+                    .executeAndFetch(Product.class);
+        }
+    }
+
+    public static List<Product> sortCatProTimeEndDown(int idCat) {
+        final String query = "SELECT * FROM  product WHERE idCat = :idCat ORDER BY timeEnd DESC";
+
+        try (Connection con = DbUtils.getConnection()) {
+            return con.createQuery(query)
+                    .addParameter("idCat",idCat)
+                    .executeAndFetch(Product.class);
+        }
+    }
+
+    public static List<Product> sortTypeProPriceUp(int idType) {
+        final String query = "SELECT * FROM  product WHERE idType = :idType ORDER BY price";
+
+        try (Connection con = DbUtils.getConnection()) {
+            return con.createQuery(query)
+                    .addParameter("idType",idType)
+                    .executeAndFetch(Product.class);
+        }
+    }
+
+    public static List<Product> sortTypeProPriceDown(int idType) {
+        final String query = "SELECT * FROM  product WHERE idType = :idType ORDER BY price DESC";
+
+        try (Connection con = DbUtils.getConnection()) {
+            return con.createQuery(query)
+                    .addParameter("idType",idType)
+                    .executeAndFetch(Product.class);
+        }
+    }
+
+    public static List<Product> sortTypeProTimeEndUp(int idType) {
+        final String query = "SELECT * FROM  product WHERE idType = :idType ORDER BY timeEnd";
+
+        try (Connection con = DbUtils.getConnection()) {
+            return con.createQuery(query)
+                    .addParameter("idType",idType)
+                    .executeAndFetch(Product.class);
+        }
+    }
+
+    public static List<Product> sortTypeProTimeEndDown(int idType) {
+        final String query = "SELECT * FROM  product WHERE idType = :idType ORDER BY timeEnd DESC";
+
+        try (Connection con = DbUtils.getConnection()) {
+            return con.createQuery(query)
+                    .addParameter("idType",idType)
                     .executeAndFetch(Product.class);
         }
     }

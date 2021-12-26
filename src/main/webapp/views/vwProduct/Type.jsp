@@ -55,6 +55,11 @@
                 font-size: 16px;
             }
         </style>
+        <style>
+            .rowHead{
+                justify-content: space-between;
+            }
+        </style>
     </jsp:attribute>
 
     <jsp:attribute name="js">
@@ -153,8 +158,24 @@
         </script>
     </jsp:attribute>
     <jsp:body>
-        <div>
-            <h4>Danh Mục</h4>
+        <div class = "row rowHead">
+            <div class="ml-3">
+                <h4>Danh Mục</h4>
+            </div>
+            <div class="mr-3 d-flex">
+                <form action="" method="post">
+                    <select name="sortPro">
+                        <option value="1">Sắp xếp giá tăng</option>
+                        <option value="2">Sắp xếp giá giảm</option>
+                        <option value="3">Thời gian kết thúc tăng</option>
+                        <option value="4">Thời gian kết thúc giảm</option>
+                    </select>
+                    <button type="submit" class="btn btn-secondary pt-1 pb-0 mb-1">
+                        Xem
+                    </button>
+                </form>
+
+            </div>
         </div>
         <div class="row">
             <c:forEach items="${ProductByType}" var="c">
