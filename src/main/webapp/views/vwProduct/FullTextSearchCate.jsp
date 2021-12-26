@@ -3,7 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
-<jsp:useBean id="ProductByCategory" scope="request" type="java.util.List<com.ute.sandaugiatudong.beans.Product>"/>
+<%--<jsp:useBean id="proSearch" scope="request" type="java.util.List<com.ute.sandaugiatudong.beans.Product>"/>--%>
 
 <t:main>
     <jsp:attribute name="css">
@@ -33,34 +33,41 @@
     </jsp:attribute>
 
     <jsp:body>
+        <c:choose>
+        <c:when test="${listProductSearch.size() == 0}">
+            <div class="card-body">
+                <p class="card-text">Không có dữ liệu.</p>
+            </div>
+        </c:when>
+        <c:otherwise>
         <div>
             <h4>Danh Mục</h4>
         </div>
         <div class="row">
-            <c:forEach items="${ProductByCategory}" var="c">
+            <c:forEach items="${listProductSearch}" var="p">
                 <div class="col-sm-auto col-item p-0 card_hover">
                     <div class="card h-100">
-                        <img src="${pageContext.request.contextPath}/public/imgs/${c.id}/1.jpg" alt="${c.name}" title="${c.name}" class="card-img-top">
+                        <img src="${pageContext.request.contextPath}/public/imgs/${p.id}/1.jpg" alt="${p.name}" title="${p.name}" class="card-img-top">
                         <div class="card-body">
-                            <h6 class="card-title">${c.name}</h6>
+                            <h6 class="card-title">${p.name}</h6>
                             <h5 class="card-title text-danger">
-                                <fmt:formatNumber value="${c.price}" type="number" />
+                                <fmt:formatNumber value="${p.price}" type="number" />
                             </h5>
                             <p class="card-text">kkkk</p>
                         </div>
                         <div class="card-footer text-muted">
-                            <a class="btn btn-sm btn-outline-primary" href="${pageContext.request.contextPath}/Product/Detail?id=${c.id}&idType=${c.idType}"
+                            <a class="btn btn-sm btn-outline-primary" href="${pageContext.request.contextPath}/Product/Detail?id=${p.id}&idType=${p.idType}"
                                role="button">
                                 <i class="fa fa-eye" aria-hidden="true"></i>
                                 Detail
                             </a>
                             <c:if test="${auth == 1}">
-                                <a class="btn btn-sm btn-outline-success" href="${pageContext.request.contextPath}/Behavior/watchlist?id=${c.id}"
+                                <a class="btn btn-sm btn-outline-success" href="${pageContext.request.contextPath}/Behavior/watchlist?id=${p.id}"
                                    role="button">
                                     <i class="fa fa-plus" aria-hidden="true"></i>
                                     Add
                                 </a>
-                                <a class="btn btn-sm btn-outline-danger" href="${pageContext.request.contextPath}/Behavior/Auction?id=${c.id}"
+                                <a class="btn btn-sm btn-outline-danger" href="${pageContext.request.contextPath}/Behavior/Auction?id=${p.id}"
                                    role="button">
                                     <i class="fa fa-cart-plus" aria-hidden="true"></i>
                                     Đấu giá
@@ -71,6 +78,8 @@
                     </div>
                 </div>
             </c:forEach>
+        </c:otherwise>
+        </c:choose>
 
         </div>
     </jsp:body>

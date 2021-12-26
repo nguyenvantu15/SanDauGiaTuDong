@@ -8,7 +8,17 @@ import org.sql2o.Connection;
 
 import java.util.List;
 
+
 public class ProductModels {
+
+        public static List<Product> findAllSearch(String string) {
+        String query = "select * from sandaugia.product where match(product.name) against(" + string + ")" ;
+
+        try (Connection con = DbUtils.getConnection()) {
+            return con.createQuery(query)
+                    .executeAndFetch(Product.class);
+        }
+    }
     public static List<Product> findAll() {
         final String query = "select * from sandaugia.product";
 
@@ -157,6 +167,8 @@ public class ProductModels {
 
     public static List<Product> findTopAuctionEnd() {
         final String query = "SELECT * FROM  product WHERE CURRENT_TIMESTAMP()<timeEnd ORDER BY timeEnd LIMIT 5";
+
+
 
         try (Connection con = DbUtils.getConnection()) {
             return con.createQuery(query).executeAndFetch(Product.class);
