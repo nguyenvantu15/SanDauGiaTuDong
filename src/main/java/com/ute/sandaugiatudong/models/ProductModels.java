@@ -265,4 +265,24 @@ public class ProductModels {
                     .executeAndFetch(Product.class);
         }
     }
+
+    public static List<Product> findProAuctionBySeller(int idUserSell) {
+        final String query = "SELECT * FROM  product WHERE CURRENT_TIMESTAMP()<timeEnd AND CURRENT_TIMESTAMP() >= timeStart AND idUserSell = :idUserSell";
+
+        try (Connection con = DbUtils.getConnection()) {
+            return con.createQuery(query)
+                    .addParameter("idUserSell",idUserSell)
+                    .executeAndFetch(Product.class);
+        }
+    }
+
+    public static List<Product> findProUserWin(int idUserCur) {
+        final String query = "SELECT * FROM product WHERE idUserCur = :idUserCur AND CURRENT_TIMESTAMP() > timeEnd";
+
+        try (Connection con = DbUtils.getConnection()) {
+            return con.createQuery(query)
+                    .addParameter("idUserCur",idUserCur)
+                    .executeAndFetch(Product.class);
+        }
+    }
 }

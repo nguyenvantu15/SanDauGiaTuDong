@@ -151,7 +151,6 @@ public class AccountServlet extends HttpServlet {
         HttpSession session = request.getSession();
         User u = (User) session.getAttribute("userRegister");
         String otp = (String) session.getAttribute("codeOTP");
-
         String userOTP = request.getParameter("OTP").trim();
 
         int OTP = Integer.parseInt(otp);
@@ -210,7 +209,7 @@ public class AccountServlet extends HttpServlet {
             System.out.println("Done");
             System.out.println(OTP);
         }catch (Exception e){
-
+            System.out.println(OTP);
         };
     }
 
@@ -218,7 +217,7 @@ public class AccountServlet extends HttpServlet {
         //Lay du lieu tren view xuong
         request.setCharacterEncoding("UTF-8");
 
-        int id = Integer.parseInt(request.getParameter("id"));;
+        int id = Integer.parseInt(request.getParameter("id"));
         RegisterSellerModels.deleteRequest(id);
         ServletUtils.redirect("/Account/RegisterSeller", request, response);
 

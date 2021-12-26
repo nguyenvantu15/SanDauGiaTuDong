@@ -1,5 +1,6 @@
 package com.ute.sandaugiatudong.controllers;
 
+import com.ute.sandaugiatudong.beans.DateTimeNew;
 import com.ute.sandaugiatudong.beans.Product;
 import com.ute.sandaugiatudong.beans.User;
 import com.ute.sandaugiatudong.models.ProductModels;
@@ -9,6 +10,9 @@ import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 
 @WebServlet(name = "ManageProductServlet", value = "/Manage/*")
@@ -20,7 +24,7 @@ public class ManageProductServlet extends HttpServlet {
             case "/Userproduct":
                 HttpSession session = request.getSession();
                 User u = (User) session.getAttribute("authUser");
-                List <Product> listProductUser = ProductModels.findByIdUserSell(u.getId());
+                List<Product> listProductUser = ProductModels.findByIdUserSell(u.getId());
                 request.setAttribute("ProductByUser", listProductUser);
                 ServletUtils.forward("/views/vwProduct/UserUpload.jsp", request, response);
 
@@ -28,6 +32,29 @@ public class ManageProductServlet extends HttpServlet {
             case "/Uploadauction":
                 break;
             case "/ViewSellerProAuction":
+
+                HttpSession session1 = request.getSession();
+                User seller = (User) session1.getAttribute("authUser");
+
+                List<Product> listProAuctionBySeller = ProductModels.findProAuctionBySeller(seller.getId());
+
+                List<DateTimeNew> listDateTimeEnd = new ArrayList<>();
+                for (int i = 0; i < listProAuctionBySeller.size(); i++) {
+                    LocalDateTime tmp = listProAuctionBySeller.get(i).getTimeEnd();
+                    DateTimeNew tmpEnd = new DateTimeNew(tmp.getYear(), tmp.getMonthValue(), tmp.getDayOfMonth(), tmp.getHour(), tmp.getMinute(), tmp.getSecond());
+                    listDateTimeEnd.add(tmpEnd);
+                }
+
+                DateTimeFormatter df = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+                LocalDateTime nowTmp = LocalDateTime.now();
+                String txtTimeNow = df.format(nowTmp);
+                LocalDateTime timeNowTmp = LocalDateTime.parse(txtTimeNow, df);
+                DateTimeNew timeNow = new DateTimeNew(timeNowTmp.getYear(), timeNowTmp.getMonthValue(), timeNowTmp.getDayOfMonth(), timeNowTmp.getHour(), timeNowTmp.getMinute(), timeNowTmp.getSecond());
+
+                request.setAttribute("timenow", timeNow);
+
+                request.setAttribute("listProAuctionBySeller", listProAuctionBySeller);
+                request.setAttribute("listDateTimeEnd", listDateTimeEnd);
 
                 ServletUtils.forward("/views/vwProduct/ProductAuctionBySeller.jsp", request, response);
                 break;

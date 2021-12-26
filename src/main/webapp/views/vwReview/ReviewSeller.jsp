@@ -6,9 +6,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
 <jsp:useBean id="product" scope="request" type="com.ute.sandaugiatudong.beans.Product"/>
-<jsp:useBean id="timenow" scope="request" type="com.ute.sandaugiatudong.beans.DateTimeNew"/>
-<jsp:useBean id="TimeEnd" scope="request" type="com.ute.sandaugiatudong.beans.DateTimeNew"/>
-<jsp:useBean id="TimeStart" scope="request" type="com.ute.sandaugiatudong.beans.DateTimeNew"/>
 
 
 <t:main>
@@ -266,6 +263,9 @@
                 $('#thongbao').hide();
             }
         </script>
+        <script>
+
+        </script>
     </jsp:attribute>
 
     <jsp:body>
@@ -284,32 +284,43 @@
                     </div>
                 </div>
                 <div class="product-div-right">
+
                     <form action="" method="post" id = "frmAuction">
-                        <span class="product-name mb-2">${product.name}</span>
-                        <h5 class="card-title text-danger" >
-                            <fmt:formatNumber value="${product.price}" type="number"/>
-                        </h5>
-                        <div class="form-group mt-4">
-                            <h6 class="mb-0">Thời gian bắt đầu</h6>
-                            <small>Ngày ${TimeStart.day} Tháng ${TimeStart.month} Năm ${TimeStart.year} - ${TimeStart.hour}giờ:${TimeStart.minute}phút</small>
-
-                            <h6 class="mb-0">Thời gian kết thúc</h6>
-                            <small>Ngày ${TimeEnd.day} Tháng ${TimeEnd.month} Năm ${TimeEnd.year} - ${TimeEnd.hour}giờ:${TimeEnd.minute}phút</small>
-
-
+                        <div class="form-group">
+                            <span class="product-name mb-2">${product.name}</span>
                         </div>
-                        <div id = "thongbao">
-                            <p class="text-danger">Đã hết thời hạn đấu giá </p>
+                        <div class="form-group">
+                            <h5 class="card-title text-danger" >
+                                <fmt:formatNumber value="${product.price}" type="number"/>
+                            </h5>
                         </div>
-                        <div id = "Auction">
-                            <div class="form-group">
-                                <label for="txtProPrice">Mức giá tối đa</label>
-                                <input type="number" class="form-control" id="txtProPrice" placeholder="" name="price">
+
+
+                        <h6>Đánh giá người bán:</h6>
+                        <div class="form-group row mt-3">
+                            <div class="form-check ml-3">
+                                <input class="form-check-input" type="radio" name="likeSeller" id="radioLike" value="1" checked>
+                                <label class="form-check-label" for="radioLike">
+                                    <fa4 class="fa fa-thumbs-up"></fa4>
+                                    Thích
+                                </label>
                             </div>
-                            <button id="buttonAuc" type="submit" class="btn btn-groups btn-danger mb-5">
-                                Đấu giá
-                            </button>
+                            <div class="form-check ml-3">
+                                <input class="form-check-input" type="radio" name="likeSeller" id="exampleRadios2" value="2">
+                                <label class="form-check-label" for="exampleRadios2">
+                                    <fa4 class="fa fa-thumbs-down"></fa4>
+                                    Không thích
+                                </label>
+                            </div>
                         </div>
+                        <div class="form-group">
+                            <label for="commentSeller">Nhận xét người bán: </label>
+                            <input type="text" class="form-control" id="commentSeller" placeholder="" name="commentSeller">
+                        </div>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fa fa-save" aria-hidden="true"></i>
+                            Gửi đánh giá
+                        </button>
                     </form>
 
                 </div>
@@ -319,3 +330,4 @@
 
     </jsp:body>
 </t:main>
+
