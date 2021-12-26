@@ -3,8 +3,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
-<jsp:useBean id="ProductByCategory" scope="request" type="java.util.List<com.ute.sandaugiatudong.beans.Product>"/>
-<jsp:useBean id="listDateTimeProByCat" scope="request" type="java.util.List<com.ute.sandaugiatudong.beans.DateTimeNew>"/>
+<jsp:useBean id="listProAuctionBySeller" scope="request" type="java.util.List<com.ute.sandaugiatudong.beans.Product>"/>
+<jsp:useBean id="listDateTimeEnd" scope="request" type="java.util.List<com.ute.sandaugiatudong.beans.DateTimeNew>"/>
 <jsp:useBean id="timenow" scope="request" type="com.ute.sandaugiatudong.beans.DateTimeNew"/>
 
 <t:main>
@@ -136,7 +136,7 @@
             }
             var i = 0;
             var deadline = new Array(5);
-            <c:forEach items="${listDateTimeProByCat}" var="c">
+            <c:forEach items="${listDateTimeEnd}" var="c">
             end = new Date(${c.year}, ${c.month}, ${c.day}, ${c.hour}, ${c.minute}, ${c.second});
             start = new Date(${timenow.year}, ${timenow.month}, ${timenow.day}, ${timenow.hour}, ${timenow.minute}, ${timenow.second});
             if (end <= start) {
@@ -148,7 +148,7 @@
             i = i + 1;
             </c:forEach>
             i = 0;
-            <c:forEach items="${ProductByCategory}" var="c">
+            <c:forEach items="${listProAuctionBySeller}" var="c">
             if (dd[i] === 1) {
                 aaa('p${c.id}', deadline[i]);
             } else {
@@ -179,7 +179,7 @@
             </div>
         </div>
         <div class="row">
-            <c:forEach items="${ProductByCategory}" var="c">
+            <c:forEach items="${listProAuctionBySeller}" var="c">
                 <div class="col-sm-auto col-item p-0 card_hover">
                     <div class="card h-100">
                         <img src="${pageContext.request.contextPath}/public/imgs/${c.id}/1.jpg" alt="${c.name}" title="${c.name}" class="card-img-top">
