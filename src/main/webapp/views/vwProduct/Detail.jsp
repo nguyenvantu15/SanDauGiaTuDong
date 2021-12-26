@@ -26,6 +26,9 @@
                 font-family: 'Roboto', sans-serif;
                 background-color: #1a233a;
             }
+            strong{
+                font-size: 1.3rem;
+            }
 
             img{
                 width: 100%;
@@ -244,7 +247,7 @@
                     <div class = "product-div-right">
                         <span class = "product-name">${product.name}</span>
                         <p class="card-text"> ${product.tinyDes}</p>
-                        <span class = "product-price text-danger">Giá hiện tại: ${product.price} vnd</span>
+                        <span class = "product-price text-danger">Giá hiện tại: <fmt:formatNumber value="${product.price}" type="number" /> vnd</span>
                         <div class = "product-rating">
                             <span><i class = "fas fa-star"></i></span>
                             <span><i class = "fas fa-star"></i></span>
@@ -254,10 +257,14 @@
                             <span>(350 ratings)</span>
                         </div>
 
-                        <div>ID người bán: ${c.idUserSell}</div>
-                        <div>ID người đặt giá cao nhất: ${c.idUserCur}</div>
-                        <div>Thời điểm đăng</div>
-                        <div>Thời điểm kết thúc</div>
+                        <div>ID người bán: ${product.idUserSell}</div>
+                        <div>ID người đặt giá cao nhất: ${product.idUserCur}</div>
+                        <div>Thời điểm đăng
+                            <input type="datetime-local" class="form-control"  value="${product.timeStart}" disabled  name="timeStart">
+                        </div>
+                        <div>Thời điểm kết thúc
+                            <input type="datetime-local" class="form-control"  value="${product.timeEnd}"  disabled name="timeStart">
+                        </div>
                         <div>
                             <div style="color: #FF9F00;padding-top: 8px">Chi tiết sản phẩm</div>
                             <div style="padding-left: 5px">
@@ -291,7 +298,7 @@
                                 <h5 class="card-title text-danger">
                                     <fmt:formatNumber value="${c.price}" type="number" />
                                 </h5>
-                                <p class="card-text">ID người bán: ${c.idUserSell} </p>
+                                <p class="card-text">ID người bán: <span>${c.idUserSell}</span></p>
                                 <p class="card-text">ID người đặt giá cao nhất: ${c.idUserCur}</p>
                             </div>
                             <div class="card-footer text-muted">
