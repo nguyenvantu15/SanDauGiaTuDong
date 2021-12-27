@@ -234,6 +234,12 @@
                                         Type Product Manager
                                     </a>
 
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="${pageContext.request.contextPath}/Admin/CategoryManager">
+                                        <i class="fa fa-list" aria-hidden="true"></i>
+                                        Category Manager
+                                    </a>
+
                                 </c:if>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="${pageContext.request.contextPath}/Account/Profile">
