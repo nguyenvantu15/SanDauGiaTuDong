@@ -48,4 +48,24 @@ public class TypeModels {
             return list.get(0);
         }
     }
+
+    public static void addNewType(int idCat, String name) {
+        String insertSQL = "INSERT INTO sandaugia.type (name,idCat) VALUES (:name,:idCat)";
+        try (Connection con = DbUtils.getConnection()){
+            con.createQuery(insertSQL)
+                    .addParameter("name",name)
+                    .addParameter("idCat",idCat)
+                    .executeUpdate();
+        }
+    }
+
+    public static void removeProById(int id) {
+        final String query = "delete from sandaugia.type where id =" + id;
+        try (Connection con = DbUtils.getConnection()) {
+             con.createQuery(query)
+                    .executeUpdate();
+        }
+
+    }
+
 }

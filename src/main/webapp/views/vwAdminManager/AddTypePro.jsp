@@ -3,7 +3,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
-<%--Danh sach cate dduoc taoj trong MiscSerlet--%>
 <jsp:useBean id="listCate" scope="request" type="java.util.List<com.ute.sandaugiatudong.beans.Type>"/>
 <t:main>
     <jsp:attribute name="css">
@@ -32,7 +31,7 @@
                 }
                 else
                 {
-                    $('#frmRegister').off('submit').submit();
+                    $('#frmAddType').off('submit').submit();
                 }
 
             });
@@ -56,7 +55,14 @@
                 <input type="text" class="form-control" id="txtNewType" placeholder="" name="newtype">
             </div>
 
-            <button type="submit"  class="btn btn-primary mb-5">
+            <a href="${pageContext.request.contextPath}/Admin/CategoryManager">
+            <button type="button" class="btn btn-warning mb-5">
+                <i class="fa fa-backward" aria-hidden="true"></i>
+                Back
+            </button>
+            </a>
+
+            <button type="submit" formaction="${pageContext.request.contextPath}/Admin/AddTypePro" class="btn btn-primary mb-5">
                 <i class="fa fa-save" aria-hidden="true"></i>
                 Save
             </button>

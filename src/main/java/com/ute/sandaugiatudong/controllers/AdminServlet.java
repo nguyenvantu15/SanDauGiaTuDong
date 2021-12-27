@@ -2,9 +2,11 @@ package com.ute.sandaugiatudong.controllers;
 
 import at.favre.lib.crypto.bcrypt.BCrypt;
 import com.ute.sandaugiatudong.beans.Category;
+import com.ute.sandaugiatudong.beans.Type;
 import com.ute.sandaugiatudong.beans.User;
 import com.ute.sandaugiatudong.models.ProductModels;
 import com.ute.sandaugiatudong.models.RegisterSellerModels;
+import com.ute.sandaugiatudong.models.TypeModels;
 import com.ute.sandaugiatudong.models.UserModels;
 import com.ute.sandaugiatudong.utils.ServletUtils;
 
@@ -34,8 +36,13 @@ public class AdminServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         {
             String path = request.getPathInfo();
-
+            request.setCharacterEncoding("UTF-8");
             switch (path) {
+                case "/CategoryManager":
+                    List <Type> listType = TypeModels.findAll();
+                    request.setAttribute("listType", listType);
+                    ServletUtils.forward("/views/vwAdminManager/CategoryManager.jsp", request, response);
+                    break;
                 case "/DowngradeSeller":
                     ServletUtils.forward("/views/vwAdminManager/DowngradeSeller.jsp", request, response);
                     break;
@@ -45,11 +52,6 @@ public class AdminServlet extends HttpServlet {
                     request.setAttribute("listCate", listCate);
                     ServletUtils.forward("/views/vwAdminManager/AddTypePro.jsp", request, response);
                     break;
-
-                case "/RemovePro":
-                    ServletUtils.forward("/views/vwAdminManager/RemoveProduct.jsp", request, response);
-                    break;
-
                 default:
                     ServletUtils.forward("/views/404.jsp", request, response);
                     break;
@@ -67,12 +69,13 @@ public class AdminServlet extends HttpServlet {
                 DowngradeSeller(request, response);
                 break;
             //Thêm loại sản phẩm
+
             case "/AddTypePro":
                 AddTypePro(request, response);
                 break;
-
             //Xóa sản phẩm
             case "/RemovePro":
+                System.out.println("Post Remove");
                 RemovePro(request, response);
                 break;
 
@@ -90,7 +93,7 @@ public class AdminServlet extends HttpServlet {
         int permission = 2;
         RegisterSellerModels.updatePermission(id, permission);
         RegisterSellerModels.deleteRequest(id);
-        ServletUtils.redirect("/Account/RegisterSeller", request, response);
+        ServletUtils.redirect("/Admin/CategoryManager", request, response);
 
     }
 
@@ -99,8 +102,8 @@ public class AdminServlet extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
 
         int id = Integer.parseInt(request.getParameter("id"));
-        RegisterSellerModels.deleteRequest(id);
-        ServletUtils.redirect("/Account/RegisterSeller", request, response);
+       TypeModels.removeProById(id);
+        ServletUtils.redirect("/Admin/CategoryManager", request, response);
 
     }
 
@@ -114,7 +117,7 @@ public class AdminServlet extends HttpServlet {
         String idCate = listCate.split("\\.")[0];
         int idC = Integer.parseInt(idCate);
 
-        ProductModels.addNewType(idC,nameNewType);
+       TypeModels.addNewType(idC,nameNewType);
 
         ServletUtils.redirect("/Admin/AddTypePro", request, response);
 

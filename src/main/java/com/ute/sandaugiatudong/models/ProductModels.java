@@ -2,6 +2,7 @@ package com.ute.sandaugiatudong.models;
 
 import com.ute.sandaugiatudong.beans.Category;
 import com.ute.sandaugiatudong.beans.Product;
+import com.ute.sandaugiatudong.beans.Type;
 import com.ute.sandaugiatudong.beans.User;
 import com.ute.sandaugiatudong.utils.DbUtils;
 import org.sql2o.Connection;
@@ -286,13 +287,4 @@ public class ProductModels {
         }
     }
 
-    public static void addNewType(int idCat, String name) {
-        String insertSQL = "INSERT INTO sandaugia.type (name,idCat) VALUES (:name,:idCat)";
-        try (Connection con = DbUtils.getConnection()){
-            con.createQuery(insertSQL)
-                    .addParameter("name",name)
-                    .addParameter("idCat",idCat)
-                    .executeUpdate();
-        }
-    }
 }
