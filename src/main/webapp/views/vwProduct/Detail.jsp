@@ -7,12 +7,11 @@
 
 <jsp:useBean id="product" scope="request" type="com.ute.sandaugiatudong.beans.Product"/>
 <jsp:useBean id="listSameType" scope="request" type="java.util.List<com.ute.sandaugiatudong.beans.Product>"/>
+<jsp:useBean id="listUser" scope="request" type="java.util.List<com.ute.sandaugiatudong.beans.User>"/>
 
 
 <t:main>
     <jsp:attribute name="css">
-
-
         <style>
             @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap');
 
@@ -248,17 +247,40 @@
                         <span class = "product-name">${product.name}</span>
                         <p class="card-text"> ${product.tinyDes}</p>
                         <span class = "product-price text-danger">Giá hiện tại: <fmt:formatNumber value="${product.price}" type="number" /> vnd</span>
-                        <div class = "product-rating">
-                            <span><i class = "fas fa-star"></i></span>
-                            <span><i class = "fas fa-star"></i></span>
-                            <span><i class = "fas fa-star"></i></span>
-                            <span><i class = "fas fa-star"></i></span>
-                            <span><i class = "fas fa-star-half-alt"></i></span>
-                            <span>(350 ratings)</span>
-                        </div>
 
-                        <div>ID người bán: ${product.idUserSell}</div>
-                        <div>ID người đặt giá cao nhất: ${product.idUserCur}</div>
+                        <div>Người bán:
+                            <c:forEach items="${listUser}" var="u">
+                                <c:if test="${u.id == product.idUserSell}">
+                                    ${u.username} , điểm: ${u.mark}
+                                    <c:if test="${auth==1}">
+                                        <a href="">
+                                            <i class="fa fa-user" aria-hidden="true"></i>
+                                        </a>
+                                    </c:if>
+
+                                </c:if>
+                            </c:forEach>
+                        </div>
+                        <div>Người giữ giá:
+                            <c:choose>
+                                <c:when test="${product.idUserCur != 0}">
+                                    <c:forEach items="${listUser}" var="u">
+                                        <c:if test="${u.id == product.idUserCur}">
+                                            ${u.username} , điểm: ${u.mark}
+                                            <c:if test="${auth==2}">
+                                                <a href="">
+                                                    <i class="fa fa-user" aria-hidden="true"></i>
+                                                </a>
+                                            </c:if>
+
+                                        </c:if>
+                                    </c:forEach>
+                                </c:when>
+                                <c:otherwise>
+                                    chưa có ai
+                                </c:otherwise>
+                            </c:choose>
+                        </div>
                         <div>Thời điểm đăng
                             <input type="datetime-local" class="form-control"  value="${product.timeStart}" disabled  name="timeStart">
                         </div>
@@ -273,10 +295,19 @@
                         </div>
 
                         <div class = "btn-groups">
-                            <c:if test="${auth != 2 && auth != 3}">
-                                <button type = "button" class = "add-cart-btn"><i class = "fas fa-shopping-cart"></i>Ra giá</button>
+                            <c:if test="${auth == 1}">
+                                <a class="btn btn-danger" href="${pageContext.request.contextPath}/Behavior/Auction?id=${product.id}"
+                                   role="button">
+                                    <i class="fa fa-cart-plus" aria-hidden="true"></i>
+                                    Đấu giá
+                                </a>
+                                <a class="btn btn-outline-success" href="${pageContext.request.contextPath}/Behavior/watchlist?id=${c.id}"
+                                   role="button">
+                                    <i class="fa fa-plus" aria-hidden="true"></i>
+                                    Add Watch list
+                                </a>
                             </c:if>
-                            <button type = "button" class = "buy-now-btn"><i class = "fas fa-heart" style="color: red"></i>Yêu thích</button>
+
                         </div>
                     </div>
                 </div>

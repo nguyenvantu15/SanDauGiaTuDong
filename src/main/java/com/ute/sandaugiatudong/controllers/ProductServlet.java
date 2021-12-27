@@ -187,8 +187,25 @@ public class ProductServlet extends HttpServlet {
                 int proId = Integer.parseInt(request.getParameter("id"));
                 int idType = Integer.parseInt(request.getParameter("idType"));
 
-                List<Product> listSameType = ProductModels.findByTypeDetail(idType, proId);
+                List<User> tmpUser2 = UserModels.findAll();
+                List<User> listUser2 = new ArrayList<>();
+                for (int i = 0; i < tmpUser2.size(); i++) {
+                    String[] x = tmpUser2.get(i).getUsername().split("\\s");
+                    StringBuilder tmp = new StringBuilder(x[x.length - 1]);
+                    for (int j = 0; j < tmp.length(); j++) {
+                        if (j % 2 == 1) {
+                            tmp.setCharAt(j, '*');
+                        }
+                    }
+                    String txtUsername = tmp.toString();
+                    User a = new User(tmpUser2.get(i).getId(), tmpUser2.get(i).getMark(),txtUsername.toString());
+                    listUser2.add(a);
+                }
+                request.setAttribute("listUser", listUser2);
 
+
+
+                List<Product> listSameType = ProductModels.findByTypeDetail(idType, proId);
                 Product product = ProductModels.findById(proId);
 
                 if (product == null) {
