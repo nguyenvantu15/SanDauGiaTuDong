@@ -35,6 +35,19 @@ public class AdminServlet extends HttpServlet {
             String path = request.getPathInfo();
             request.setCharacterEncoding("UTF-8");
             switch (path) {
+
+                case "/UserManager":
+                    List <User> listUser = UserModels.findAll();
+                    request.setAttribute("listUser", listUser);
+                    ServletUtils.forward("/views/vwAdminManager/UserManager.jsp", request, response);
+                    break;
+                case "/AccountDetail":
+                    int idUser = Integer.parseInt(request.getParameter("id"));
+                    User user = UserModels.findById(idUser);
+                    request.setAttribute("AccountUser",user);
+                    ServletUtils.forward("/views/vwAdminManager/DetailAccountUser.jsp", request, response);
+                    break;
+
                 case "/CategoryManager":
                     List <Category> listCategory = CategoryModels.findAll();
                     request.setAttribute("listCategory", listCategory);
@@ -89,7 +102,9 @@ public class AdminServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String path = request.getPathInfo();
         switch (path) {
-
+            case "/RemoveAccount":
+                RemoveAccount(request, response);
+                break;
             case "/AddCategory":
                 AddCategory(request, response);
                 break;
@@ -165,6 +180,17 @@ public class AdminServlet extends HttpServlet {
 
 
         ServletUtils.redirect("/Admin/TypeManager", request, response);
+
+    }
+
+    private void RemoveAccount(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        //Lay du lieu tren view xuong
+        request.setCharacterEncoding("UTF-8");
+
+        int id = Integer.parseInt(request.getParameter("id"));
+        System.out.println(id);
+        UserModels.removeUserById(id);
+        ServletUtils.redirect("/Admin/UserManager", request, response);
 
     }
 

@@ -86,7 +86,7 @@ public class UserModels {
         }
     }
     public static List<User> findAll(){
-        final String query = "select * from sandaugia.user";
+        final String query = "select * from sandaugia.user ORDER BY permission";
         try (Connection con = DbUtils.getConnection()) {
             return con.createQuery(query)
                     .executeAndFetch(User.class);
@@ -107,5 +107,14 @@ public class UserModels {
 
             return list.get(0);
         }
+    }
+
+    public static void removeUserById(int id) {
+        final String query = "delete from sandaugia.user where id =" + id;
+        try (Connection con = DbUtils.getConnection()) {
+            con.createQuery(query)
+                    .executeUpdate();
+        }
+
     }
 }
