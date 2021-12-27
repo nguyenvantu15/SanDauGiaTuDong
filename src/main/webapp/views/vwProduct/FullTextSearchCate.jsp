@@ -3,11 +3,10 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
-<%--<jsp:useBean id="proSearch" scope="request" type="java.util.List<com.ute.sandaugiatudong.beans.Product>"/>--%>
-<%--<jsp:useBean id="listProductSearch" scope="request" type="java.util.List<com.ute.sandaugiatudong.beans.Product>"/>--%>
 <jsp:useBean id="listDateTimeEnd" scope="request" type="java.util.List<com.ute.sandaugiatudong.beans.DateTimeNew>"/>
 <jsp:useBean id="listDateTimeStart" scope="request" type="java.util.List<com.ute.sandaugiatudong.beans.DateTimeNew>"/>
 <jsp:useBean id="timenow" scope="request" type="com.ute.sandaugiatudong.beans.DateTimeNew"/>
+<jsp:useBean id="listUser" scope="request" type="java.util.List<com.ute.sandaugiatudong.beans.User>"/>
 <t:main>
     <jsp:attribute name="css">
         <style>
@@ -216,7 +215,14 @@
                                 <h5 class="card-title text-danger">
                                     <fmt:formatNumber value="${p.price}" type="number"/>
                                 </h5>
-                                <small class="card-text">Người bán: ${p.idUserSell} </small>
+                                <small class="card-text">Người bán:
+                                    <c:forEach items="${listUser}" var="u">
+                                        <c:if test="${u.id == p.idUserSell}">
+                                            ${u.username}
+                                        </c:if>
+                                    </c:forEach>
+
+                                </small>
                                 <br>
                                 <small class="card-text">Người đặt giá cao nhất: ${p.idUserCur}</small>
                                 <br>

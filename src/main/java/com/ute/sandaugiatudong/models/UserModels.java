@@ -1,6 +1,6 @@
 package com.ute.sandaugiatudong.models;
 
-import com.ute.sandaugiatudong.beans.Category;
+import com.ute.sandaugiatudong.beans.Product;
 import com.ute.sandaugiatudong.beans.User;
 import com.ute.sandaugiatudong.utils.DbUtils;
 import org.sql2o.Connection;
@@ -8,16 +8,6 @@ import org.sql2o.Connection;
 import java.util.List;
 
 public class UserModels {
-
-    public static List<User> findAll() {
-        final String query = "select * from sandaugia.user ORDER BY permission";
-
-        try (Connection con = DbUtils.getConnection()) {
-            return con.createQuery(query)
-                    .executeAndFetch(User.class);
-        }
-    }
-
     public static void add(User u)
     {
         String insertSQL = "INSERT INTO sandaugia.user (username, password, email, phone, permission, name, dob) VALUES (:username,:password,:email,:phone,:permission,:name,:dob)";
@@ -95,7 +85,14 @@ public class UserModels {
             return list.get(0);
         }
     }
+    public static List<User> findAll(){
+        final String query = "select * from sandaugia.user";
+        try (Connection con = DbUtils.getConnection()) {
+            return con.createQuery(query)
+                    .executeAndFetch(User.class);
 
+        }
+    }
 
     public static User findByUserName(String username){
         final String query = "select * from sandaugia.user where username = :username";
@@ -110,13 +107,5 @@ public class UserModels {
 
             return list.get(0);
         }
-    }
-    public static void removeUserById(int id) {
-        final String query = "delete from sandaugia.user where id =" + id;
-        try (Connection con = DbUtils.getConnection()) {
-            con.createQuery(query)
-                    .executeUpdate();
-        }
-
     }
 }
