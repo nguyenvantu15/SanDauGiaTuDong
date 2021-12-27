@@ -36,13 +36,28 @@ public class AdminServlet extends HttpServlet {
             request.setCharacterEncoding("UTF-8");
             switch (path) {
                 case "/CategoryManager":
+                    List <Category> listCategory = CategoryModels.findAll();
+                    request.setAttribute("listCategory", listCategory);
+                    ServletUtils.forward("/views/vwAdminManager/CategoryManager.jsp", request, response);
                     break;
+
+                case "/AddCategory":
+                    List <Category> listCateAdd = ProductModels.findAllCategory();
+                    request.setAttribute("listCategory", listCateAdd);
+                    ServletUtils.forward("/views/vwAdminManager/AddCategory.jsp", request, response);
+                    break;
+
+                case "/UpdateCategory":
+                    int idC = Integer.parseInt(request.getParameter("id"));
+
+                    Category cate = CategoryModels.findCateById(idC);
+                    request.setAttribute("CateU",cate);
+                    ServletUtils.forward("/views/vwAdminManager/UpdateCategory.jsp", request, response);
+                    break;
+
                 case "/TypeManager":
                     List <Type> listType = TypeModels.findAll();
                     request.setAttribute("listType", listType);
-                    ServletUtils.forward("/views/vwAdminManager/TypeManager.jsp", request, response);
-                    break;
-                case "/DowngradeSeller":
                     ServletUtils.forward("/views/vwAdminManager/TypeManager.jsp", request, response);
                     break;
 
@@ -75,12 +90,19 @@ public class AdminServlet extends HttpServlet {
         String path = request.getPathInfo();
         switch (path) {
 
-            //Haj cấp seller
-            case "/DowngradeSeller":
-                DowngradeSeller(request, response);
+            case "/AddCategory":
+                AddCategory(request, response);
                 break;
-            //Thêm loại sản phẩm
 
+            case "/RemoveCate":
+                RemoveCate(request, response);
+                break;
+
+            case "/UpdateCategory":
+                UpdateCate(request, response);
+                break;
+
+            //Thêm loại sản phẩm
             case "/AddType":
                 AddTypePro(request, response);
                 break;
@@ -99,17 +121,34 @@ public class AdminServlet extends HttpServlet {
         }
     }
 
-    private void DowngradeSeller(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    private void AddCategory(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        //Lay du lieu tren view xuong
+        request.setCharacterEncoding("UTF-8");
+
+        String nameNewcate = request.getParameter("newcate");
+
+        CategoryModels.addNewCate(nameNewcate);
+
+        ServletUtils.redirect("/Admin/AddCategory", request, response);
+
+    }
+
+    private void UpdateCate(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         //Lay du lieu tren view xuong
         request.setCharacterEncoding("UTF-8");
 
         int id = Integer.parseInt(request.getParameter("id"));
-        int permission = 2;
-        RegisterSellerModels.updatePermission(id, permission);
-        RegisterSellerModels.deleteRequest(id);
-        ServletUtils.redirect("/Admin/TypeManager", request, response);
+
+        String name = request.getParameter("name");
+
+        System.out.println(id + name);
+        CategoryModels.updateCategoryById(id,name);
+
+
+        ServletUtils.redirect("/Admin/CategoryManager", request, response);
 
     }
+
     private void UpdateType(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         //Lay du lieu tren view xuong
         request.setCharacterEncoding("UTF-8");
@@ -126,6 +165,16 @@ public class AdminServlet extends HttpServlet {
 
 
         ServletUtils.redirect("/Admin/TypeManager", request, response);
+
+    }
+
+    private void RemoveCate(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        //Lay du lieu tren view xuong
+        request.setCharacterEncoding("UTF-8");
+
+        int id = Integer.parseInt(request.getParameter("id"));
+        CategoryModels.removeCategory(id);
+        ServletUtils.redirect("/Admin/CategoryManager", request, response);
 
     }
 
