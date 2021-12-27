@@ -122,11 +122,8 @@ public class AdminServlet extends HttpServlet {
 
         String name = request.getParameter("name");
 
-        System.out.println(id);
-        System.out.println(idC);
-        System.out.println(name);
         TypeModels.updateTypeById(id,name,idC);
-        System.out.println("update type");
+
 
         ServletUtils.redirect("/Admin/TypeManager", request, response);
 
