@@ -210,7 +210,7 @@
                                 </c:forEach>
                             </small>
                             <br>
-                            <small class="card-text">Người giữu giá:
+                            <small class="card-text">Người giữ giá:
                                 <c:if test="${c.idUserCur != 0}">
                                     <c:forEach items="${listUser}" var="u">
                                         <c:if test="${u.id == c.idUserCur}">
