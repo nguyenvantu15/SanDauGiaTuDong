@@ -7,6 +7,8 @@
 <jsp:useBean id="listDateTimeProByCat" scope="request" type="java.util.List<com.ute.sandaugiatudong.beans.DateTimeNew>"/>
 <jsp:useBean id="listDateTimeStartProByCat" scope="request" type="java.util.List<com.ute.sandaugiatudong.beans.DateTimeNew>"/>
 <jsp:useBean id="timenow" scope="request" type="com.ute.sandaugiatudong.beans.DateTimeNew"/>
+<jsp:useBean id="listUser" scope="request" type="java.util.List<com.ute.sandaugiatudong.beans.User>"/>
+
 <t:main>
     <jsp:attribute name="css">
         <style>
@@ -200,9 +202,23 @@
                             <h5 class="card-title text-danger">
                                 <fmt:formatNumber value="${c.price}" type="number" />
                             </h5>
-                            <small class="card-text">Người bán: ${c.idUserSell} </small>
+                            <small class="card-text">Người bán:
+                                <c:forEach items="${listUser}" var="u">
+                                    <c:if test="${u.id == c.idUserSell}">
+                                        ${u.username}
+                                    </c:if>
+                                </c:forEach>
+                            </small>
                             <br>
-                            <small class="card-text">Người đặt giá cao nhất: ${c.idUserCur}</small>
+                            <small class="card-text">Người giữu giá:
+                                <c:if test="${c.idUserCur != 0}">
+                                    <c:forEach items="${listUser}" var="u">
+                                        <c:if test="${u.id == c.idUserCur}">
+                                            ${u.username}
+                                        </c:if>
+                                    </c:forEach>
+                                </c:if>
+                            </small>
                             <br>
                             <small class="card-text">Số lượt ra giá: ${c.countAuction}</small>
                             <br>

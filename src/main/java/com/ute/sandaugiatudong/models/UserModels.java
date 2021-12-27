@@ -1,5 +1,6 @@
 package com.ute.sandaugiatudong.models;
 
+import com.ute.sandaugiatudong.beans.Product;
 import com.ute.sandaugiatudong.beans.User;
 import com.ute.sandaugiatudong.utils.DbUtils;
 import org.sql2o.Connection;
@@ -84,7 +85,14 @@ public class UserModels {
             return list.get(0);
         }
     }
+    public static List<User> findAll(){
+        final String query = "select * from sandaugia.user";
+        try (Connection con = DbUtils.getConnection()) {
+            return con.createQuery(query)
+                    .executeAndFetch(User.class);
 
+        }
+    }
 
     public static User findByUserName(String username){
         final String query = "select * from sandaugia.user where username = :username";

@@ -3,8 +3,10 @@ package com.ute.sandaugiatudong.controllers;
 import com.ute.sandaugiatudong.beans.DateTimeNew;
 import com.ute.sandaugiatudong.beans.Product;
 import com.ute.sandaugiatudong.beans.Category;
+import com.ute.sandaugiatudong.beans.User;
 import com.ute.sandaugiatudong.models.CategoryModels;
 import com.ute.sandaugiatudong.models.ProductModels;
+import com.ute.sandaugiatudong.models.UserModels;
 import com.ute.sandaugiatudong.utils.ServletUtils;
 
 import javax.servlet.*;
@@ -28,6 +30,22 @@ public class ProductServlet extends HttpServlet {
             case "/Category":
                 int ProID = Integer.parseInt(request.getParameter("id"));
                 List<Product> list = new ArrayList<>();
+
+                List<User> tmpUser = UserModels.findAll();
+                List<User> listUser = new ArrayList<>();
+                for (int i = 0; i < tmpUser.size(); i++) {
+                    String[] x = tmpUser.get(i).getUsername().split("\\s");
+                    StringBuilder tmp = new StringBuilder(x[x.length - 1]);
+                    for (int j = 0; j < tmp.length(); j++) {
+                        if (j % 2 == 1) {
+                            tmp.setCharAt(j, '*');
+                        }
+                    }
+                    String txtUsername = tmp.toString();
+                    User a = new User(tmpUser.get(i).getId(), txtUsername.toString());
+                    listUser.add(a);
+                }
+                request.setAttribute("listUser", listUser);
 
                 switch (a) {
                     case "1":
@@ -92,6 +110,22 @@ public class ProductServlet extends HttpServlet {
             case "/Type":
                 int sp = Integer.parseInt(request.getParameter("id"));
                 List<Product> list1 = new ArrayList<>();
+
+                List<User> tmpUser1 = UserModels.findAll();
+                List<User> listUser1 = new ArrayList<>();
+                for (int i = 0; i < tmpUser1.size(); i++) {
+                    String[] x = tmpUser1.get(i).getUsername().split("\\s");
+                    StringBuilder tmp = new StringBuilder(x[x.length - 1]);
+                    for (int j = 0; j < tmp.length(); j++) {
+                        if (j % 2 == 1) {
+                            tmp.setCharAt(j, '*');
+                        }
+                    }
+                    String txtUsername = tmp.toString();
+                    User a = new User(tmpUser1.get(i).getId(), txtUsername.toString());
+                    listUser1.add(a);
+                }
+                request.setAttribute("listUser", listUser1);
 
                 switch (b) {
                     case "1":

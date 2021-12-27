@@ -2,7 +2,9 @@ package com.ute.sandaugiatudong.controllers;
 
 import com.ute.sandaugiatudong.beans.DateTimeNew;
 import com.ute.sandaugiatudong.beans.Product;
+import com.ute.sandaugiatudong.beans.User;
 import com.ute.sandaugiatudong.models.ProductModels;
+import com.ute.sandaugiatudong.models.UserModels;
 import com.ute.sandaugiatudong.utils.ServletUtils;
 
 import javax.servlet.ServletException;
@@ -17,9 +19,10 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
-@WebServlet(name = "SearchControl",value = "/SearchControl/*")
+@WebServlet(name = "SearchControl", value = "/SearchControl/*")
 public class SearchControlServlet extends HttpServlet {
     private String a = "0";
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
@@ -33,6 +36,24 @@ public class SearchControlServlet extends HttpServlet {
                 String p1 = request.getParameter("txtsearch").trim();
                 String textSearch = request.getParameter("txtsearch");
                 String str = "\'" + p1 + "\'";
+
+                //list userseller
+                List<User> tmpUser = UserModels.findAll();
+
+                List<User> listUser = new ArrayList<>();
+                for (int i = 0; i < tmpUser.size(); i++) {
+                    String[] x = tmpUser.get(i).getUsername().split("\\s");
+                    StringBuilder tmp = new StringBuilder(x[x.length - 1]);
+                    for (int j = 0; j < tmp.length(); j++) {
+                        if (j % 2 == 1) {
+                            tmp.setCharAt(j, '*');
+                        }
+                    }
+                    String txtUsername = tmp.toString();
+                    User a = new User(tmpUser.get(i).getId(), txtUsername.toString());
+                    listUser.add(a);
+                }
+                request.setAttribute("listUser", listUser);
 
                 List<Product> list = new ArrayList<>();
 
@@ -95,7 +116,7 @@ public class SearchControlServlet extends HttpServlet {
                 ServletUtils.forward("/views/vwProduct/FullTextSearchCate.jsp", request, response);
                 break;
             default:
-                ServletUtils.redirect("/Home",request,response);
+                ServletUtils.redirect("/Home", request, response);
                 break;
         }
     }

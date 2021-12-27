@@ -60,6 +60,11 @@ public class User {
         this.dob = dob;
     }
 
+    public User(int id, String username) {
+        this.id = id;
+        this.username = username;
+    }
+
     public User(int id, int permission, String username, String password, String email, String phone, String name, LocalDate dob) {
         this.id = id;
         this.permission = permission;

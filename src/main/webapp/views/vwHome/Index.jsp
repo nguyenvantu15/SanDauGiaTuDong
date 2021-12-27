@@ -14,6 +14,7 @@
 <jsp:useBean id="listDateTimeStartCountAuction" scope="request" type="java.util.List<com.ute.sandaugiatudong.beans.DateTimeNew>"/>
 <jsp:useBean id="listDateTimeEndAuctionEnd" scope="request" type="java.util.List<com.ute.sandaugiatudong.beans.DateTimeNew>"/>
 <jsp:useBean id="listDateTimeStartAuctionEnd" scope="request" type="java.util.List<com.ute.sandaugiatudong.beans.DateTimeNew>"/>
+<jsp:useBean id="listUser" scope="request" type="java.util.List<com.ute.sandaugiatudong.beans.User>"/>
 
 
 <t:main>
@@ -270,9 +271,23 @@
                             <h5 class="card-title text-danger mb-0">
                                 <fmt:formatNumber value="${c.price}" type="number"/>
                             </h5>
-                            <small class="card-text">Người bán: ${c.idUserSell} </small>
+                            <small class="card-text">Người bán:
+                                <c:forEach items="${listUser}" var="u">
+                                    <c:if test="${u.id == c.idUserSell}">
+                                        ${u.username}
+                                    </c:if>
+                                </c:forEach>
+                            </small>
                             <br>
-                            <small class="card-text">Người đặt giá cao nhất: ${c.idUserCur}</small>
+                            <small class="card-text">Người giữ giá:
+                                <c:if test="${c.idUserCur != 0}">
+                                    <c:forEach items="${listUser}" var="u">
+                                        <c:if test="${u.id == c.idUserCur}">
+                                            ${u.username}
+                                        </c:if>
+                                    </c:forEach>
+                                </c:if>
+                            </small>
                             <br>
                             <small class="card-text">Số lượt ra giá: ${c.countAuction}</small>
                             <br>
@@ -337,9 +352,23 @@
                             <h5 class="card-title text-danger mb-0">
                                 <fmt:formatNumber value="${c.price}" type="number"/>
                             </h5>
-                            <small class="card-text">Người bán: ${c.idUserSell} </small>
+                            <small class="card-text">Người bán:
+                                <c:forEach items="${listUser}" var="u">
+                                    <c:if test="${u.id == c.idUserSell}">
+                                        ${u.username}
+                                    </c:if>
+                                </c:forEach>
+                            </small>
                             <br>
-                            <small class="card-text">Người đặt giá cao nhất: ${c.idUserCur}</small>
+                            <small class="card-text">Người giữ giá:
+                                <c:if test="${c.idUserCur != 0}">
+                                    <c:forEach items="${listUser}" var="u">
+                                        <c:if test="${u.id == c.idUserCur}">
+                                            ${u.username}
+                                        </c:if>
+                                    </c:forEach>
+                                </c:if>
+                            </small>
                             <br>
                             <small class="card-text">Số lượt ra giá: ${c.countAuction}</small>
                             <div id="ca${c.id}" class="clockdiv">
@@ -402,9 +431,24 @@
                             <h5 class="card-title text-danger mb-0">
                                 <fmt:formatNumber value="${c.price}" type="number"/>
                             </h5>
-                            <small class="card-text">Người bán: ${c.idUserSell} </small>
+                            <small class="card-text">Người bán:
+                                <c:forEach items="${listUser}" var="u">
+                                    <c:if test="${u.id == c.idUserSell}">
+                                        ${u.username}
+                                    </c:if>
+                                </c:forEach>
+                            </small>
                             <br>
-                            <small class="card-text">Người đặt giá cao nhất: ${c.idUserCur}</small>
+                            <small class="card-text">Người giữ giá:
+                                <c:if test="${c.idUserCur != 0}">
+                                    <c:forEach items="${listUser}" var="u">
+                                        <c:if test="${u.id == c.idUserCur}">
+                                            ${u.username}
+                                        </c:if>
+                                    </c:forEach>
+                                </c:if>
+
+                            </small>
                             <br>
                             <small class="card-text">Số lượt ra giá: ${c.countAuction}</small>
                             <div id="ae${c.id}" class="clockdiv">
