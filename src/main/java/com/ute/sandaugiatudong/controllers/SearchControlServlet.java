@@ -33,8 +33,7 @@ public class SearchControlServlet extends HttpServlet {
                 String p1 = request.getParameter("txtsearch").trim();
                 String textSearch = request.getParameter("txtsearch");
                 String str = "\'" + p1 + "\'";
-//                request.setAttribute("proSearch", t);
-                //////////////
+
                 List<Product> list = new ArrayList<>();
 
                 switch (a) {
@@ -87,10 +86,8 @@ public class SearchControlServlet extends HttpServlet {
                 LocalDateTime timeNowTmp = LocalDateTime.parse(txtTimeNow, df);
 
                 DateTimeNew timeNow = new DateTimeNew(timeNowTmp.getYear(), timeNowTmp.getMonthValue(), timeNowTmp.getDayOfMonth(), timeNowTmp.getHour(), timeNowTmp.getMinute(), timeNowTmp.getSecond());
-
                 request.setAttribute("timenow", timeNow);
 
-                //////////////
                 HttpSession session = request.getSession();
                 session.setAttribute("listProductSearch", list);
                 session.setAttribute("textSearch", textSearch);
