@@ -179,10 +179,12 @@
                                                 Trở về
                                             </button>
                                         </a>
+                                        <c:if  test="${AccountUser.permission != 3}">
                                             <button type="summit" id="submitUpdate" name="submit" formaction="${pageContext.request.contextPath}/Admin/RemoveAccount" class="btn btn-danger" >
                                                 <i class="fa fa-times" aria-hidden="true"></i>
                                                 Xóa
                                             </button>
+                                        </c:if>
                                     </div>
                                 </div>
                             </div>
