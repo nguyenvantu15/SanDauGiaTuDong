@@ -8,12 +8,12 @@ import org.sql2o.Connection;
 public class ReviewModels {
     public static void add(Review r)
     {
-        String insertSQL = "INSERT INTO review (userreview, touser, like, comment) VALUES (:userreview,:touser,:like,:comment)";
+        String insertSQL = "INSERT INTO review (userreview, touser, mark, comment) VALUES (:userreview,:touser,:mark,:comment)";
         try (Connection con = DbUtils.getConnection()){
             con.createQuery(insertSQL)
                     .addParameter("userreview",r.getUserreview())
                     .addParameter("touser",r.getTouser())
-                    .addParameter("like",r.getLike())
+                    .addParameter("mark",r.getMark())
                     .addParameter("comment",r.getComment())
                     .executeUpdate();
         }

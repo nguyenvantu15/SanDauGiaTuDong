@@ -52,6 +52,24 @@ public class UserModels {
         }
     }
 
+    public static void update1(User u) {
+        String sql = "UPDATE user SET  username = :username, password = :password, email = :email, phone = :phone, permission = :permission, name = :name, dob = :dob, mark = :mark, comment = :comment WHERE id = :id";
+        try (Connection con = DbUtils.getConnection()) {
+            con.createQuery(sql)
+                    .addParameter("id", u.getId())
+                    .addParameter("username",u.getUsername())
+                    .addParameter("permission",u.getPermission())
+                    .addParameter("name", u.getName())
+                    .addParameter("email", u.getEmail())
+                    .addParameter("phone", u.getPhone())
+                    .addParameter("dob", u.getDob())
+                    .addParameter("password", u.getPassword())
+                    .addParameter("mark",u.getMark())
+                    .addParameter("comment",u.getComment())
+                    .executeUpdate();
+        }
+    }
+
     public static User findById(int id){
         final String query = "select * from sandaugia.user where id = :id";
         try (Connection con = DbUtils.getConnection()) {
