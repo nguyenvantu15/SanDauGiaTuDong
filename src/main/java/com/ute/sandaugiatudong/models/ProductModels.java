@@ -285,4 +285,14 @@ public class ProductModels {
                     .executeAndFetch(Product.class);
         }
     }
+
+    public static void addNewType(int idCat, String name) {
+        String insertSQL = "INSERT INTO sandaugia.type (name,idCat) VALUES (:name,:idCat)";
+        try (Connection con = DbUtils.getConnection()){
+            con.createQuery(insertSQL)
+                    .addParameter("name",name)
+                    .addParameter("idCat",idCat)
+                    .executeUpdate();
+        }
+    }
 }
