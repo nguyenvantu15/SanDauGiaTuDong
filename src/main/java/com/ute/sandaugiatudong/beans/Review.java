@@ -3,7 +3,7 @@ package com.ute.sandaugiatudong.beans;
 public class Review {
     private int userreview;
     private int touser;
-    private int like;
+    private int mark;
     private String comment;
 
     public int getUserreview() {
@@ -14,18 +14,18 @@ public class Review {
         return touser;
     }
 
-    public int getLike() {
-        return like;
+    public int getMark() {
+        return mark;
     }
 
     public String getComment() {
         return comment;
     }
 
-    public Review(int userreview, int touser, int like, String comment) {
+    public Review(int userreview, int touser, int mark, String comment) {
         this.userreview = userreview;
         this.touser = touser;
-        this.like = like;
+        this.mark = mark;
         this.comment = comment;
     }
 
