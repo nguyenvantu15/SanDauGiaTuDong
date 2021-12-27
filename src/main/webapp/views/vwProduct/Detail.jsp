@@ -253,7 +253,7 @@
                                 <c:if test="${u.id == product.idUserSell}">
                                     ${u.username} , điểm: ${u.mark}
                                     <c:if test="${auth==1}">
-                                        <a href="">
+                                        <a href="${pageContext.request.contextPath}/Review/Viewreview?id=${u.id}">
                                             <i class="fa fa-user" aria-hidden="true"></i>
                                         </a>
                                     </c:if>
@@ -268,7 +268,7 @@
                                         <c:if test="${u.id == product.idUserCur}">
                                             ${u.username} , điểm: ${u.mark}
                                             <c:if test="${auth==2}">
-                                                <a href="">
+                                                <a href="${pageContext.request.contextPath}/Review/Viewreview?id=${u.id}">
                                                     <i class="fa fa-user" aria-hidden="true"></i>
                                                 </a>
                                             </c:if>

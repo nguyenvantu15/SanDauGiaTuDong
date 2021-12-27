@@ -46,6 +46,27 @@ public class ReviewServlet extends HttpServlet {
                 break;
             case "/Reviewbidder":
                 break;
+            case "/Viewreview":
+                int Userid = Integer.parseInt(request.getParameter("id"));
+
+                User usertmp = UserModels.findById(Userid);
+
+
+                String[] x = usertmp.getUsername().split("\\s");
+                StringBuilder tmp = new StringBuilder(x[x.length - 1]);
+                for (int j = 0; j < tmp.length(); j++) {
+                    if (j % 2 == 1) {
+                        tmp.setCharAt(j, '*');
+                    }
+                }
+                String txtUsername = tmp.toString();
+                User user = new User(Userid, usertmp.getMark(), txtUsername,usertmp.getComment());
+
+
+                request.setAttribute("user", user);
+
+                ServletUtils.forward("/views/vwReview/ViewReview.jsp", request, response);
+                break;
             default:
                 ServletUtils.forward("/views/404.jsp", request, response);
                 break;
@@ -81,7 +102,7 @@ public class ReviewServlet extends HttpServlet {
 
 
                 LocalDateTime now = LocalDateTime.now();
-                String txtcomment = "<p>" + "#" + u.getId() + " " + now.getDayOfMonth() + "/" + now.getMonthValue() + "/" + now.getYear() +  ":" + comment + "</p>";
+                String txtcomment = "<p>" + "#" + u.getId() + " " + now.getDayOfMonth() + "/" + now.getMonthValue() + "/" + now.getYear() + ":" + comment + "</p>";
                 Review review = new Review(u.getId(), idSeller, like, txtcomment);
                 ReviewModels.add(review);
 

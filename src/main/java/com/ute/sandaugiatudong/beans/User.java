@@ -71,6 +71,13 @@ public class User {
         this.username = username;
     }
 
+    public User(int id, int mark, String username, String comment) {
+        this.id = id;
+        this.mark = mark;
+        this.username = username;
+        this.comment = comment;
+    }
+
     public User(int id, int permission, String username, String password, String email, String phone, String name, LocalDate dob) {
         this.id = id;
         this.permission = permission;
