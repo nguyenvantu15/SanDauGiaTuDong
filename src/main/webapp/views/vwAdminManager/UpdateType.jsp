@@ -3,7 +3,10 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
-<jsp:useBean id="listCate" scope="request" type="java.util.List<com.ute.sandaugiatudong.beans.Type>"/>
+<jsp:useBean id="listCateUp" scope="request" type="java.util.List<com.ute.sandaugiatudong.beans.Type>"/>
+<jsp:useBean id="TypeU" scope="request" type="com.ute.sandaugiatudong.beans.Type"/>
+
+
 <t:main>
     <jsp:attribute name="css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css" integrity="sha512-f0tzWhCwVFS3WeYaofoLWkTP62ObhewQ1EZn65oSYDZUg1+CyywGKkWzm8BxaJj5HGKI72PnMH9jYyIFz+GH7g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -20,18 +23,23 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.2.5/js/locales/vi.min.js"></script>
 
         <script>
-            $('#frmAddType').on('submit', function(e){
+            $('#frmUpdateType').on('submit', function(e){
                 e.preventDefault();
-                const newType = $('#txtNewType').val();
+                const newType = $('#txtType').val();
 
                 if(newType.length === 0 )
                 {
-                    alert("Chưa nhập loại sản phẩm mới !!! \n Mời nhập lại !!!!");
+                    alert("Chưa nhập loại sản phẩm  !!! \n Mời nhập lại !!!!");
                     return;
                 }
                 else
                 {
-                    $('#frmAddType').off('submit').submit();
+                    document
+                        .querySelectorAll( "input" )
+                        .forEach( ( input ) => {
+                            input.removeAttribute( "disabled" );
+                        } );
+                    $('#frmUpdateType').off('submit').submit();
                 }
 
             });
@@ -39,20 +47,26 @@
     </jsp:attribute>
 
     <jsp:body>
-        <h4>Thêm loại sản phẩm</h4>
-        <form action="" method="post" id="frmAddType">
+        <h4>Chỉnh sửa thể loại sản phẩm</h4>
+        <form action="" method="post" id="frmUpdateType">
             <div class="form-group">
-                <label for="txtCategory">Category</label>
+                <label for="txtCategory">Thuộc danh mục:</label>
                 <select class="form-control" id="txtCategory" name="category">
-                    <c:forEach items="${listCate}" var="c">
+                    <c:forEach items="${listCateUp}" var="c">
+                        <c:if  test="${c.id == TypeU.idCat}">
+                            <option selected>${c.id}.${c.name}</option>
+                        </c:if>
                         <option>${c.id}.${c.name}</option>
                     </c:forEach>
                 </select>
             </div>
-
             <div class="form-group">
-                <label for="txtNewType">Tên loại sản phẩm mới</label>
-                <input type="text" class="form-control" id="txtNewType" placeholder="" name="newtype">
+                <label for="txtIdT">ID</label>
+                <input type="text" class="form-control" id="txtIdT" disabled value="${TypeU.id}" placeholder="" name="id">
+            </div>
+            <div class="form-group">
+                <label for="txtType">Tên loại sản phẩm</label>
+                <input type="text" class="form-control" id="txtType" value="${TypeU.name}" placeholder="" name="name">
             </div>
 
             <a href="${pageContext.request.contextPath}/Admin/TypeManager">
@@ -62,7 +76,7 @@
             </button>
             </a>
 
-            <button type="submit" formaction="${pageContext.request.contextPath}/Admin/AddType" class="btn btn-primary mb-5">
+            <button type="submit" formaction="${pageContext.request.contextPath}/Admin/UpdateType" class="btn btn-primary mb-5">
                 <i class="fa fa-save" aria-hidden="true"></i>
                 Save
             </button>

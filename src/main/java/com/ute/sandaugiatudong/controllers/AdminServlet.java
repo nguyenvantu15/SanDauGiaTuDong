@@ -4,10 +4,7 @@ import at.favre.lib.crypto.bcrypt.BCrypt;
 import com.ute.sandaugiatudong.beans.Category;
 import com.ute.sandaugiatudong.beans.Type;
 import com.ute.sandaugiatudong.beans.User;
-import com.ute.sandaugiatudong.models.ProductModels;
-import com.ute.sandaugiatudong.models.RegisterSellerModels;
-import com.ute.sandaugiatudong.models.TypeModels;
-import com.ute.sandaugiatudong.models.UserModels;
+import com.ute.sandaugiatudong.models.*;
 import com.ute.sandaugiatudong.utils.ServletUtils;
 
 import javax.mail.Message;
@@ -39,18 +36,32 @@ public class AdminServlet extends HttpServlet {
             request.setCharacterEncoding("UTF-8");
             switch (path) {
                 case "/CategoryManager":
+                    break;
+                case "/TypeManager":
                     List <Type> listType = TypeModels.findAll();
                     request.setAttribute("listType", listType);
-                    ServletUtils.forward("/views/vwAdminManager/CategoryManager.jsp", request, response);
+                    ServletUtils.forward("/views/vwAdminManager/TypeManager.jsp", request, response);
                     break;
                 case "/DowngradeSeller":
-                    ServletUtils.forward("/views/vwAdminManager/DowngradeSeller.jsp", request, response);
+                    ServletUtils.forward("/views/vwAdminManager/TypeManager.jsp", request, response);
                     break;
 
-                case "/AddTypePro":
+                case "/AddType":
                     List <Category> listCate = ProductModels.findAllCategory();
                     request.setAttribute("listCate", listCate);
                     ServletUtils.forward("/views/vwAdminManager/AddTypePro.jsp", request, response);
+                    break;
+
+                case "/UpdateType":
+                    List <Category> listCateUp = ProductModels.findAllCategory();
+                    request.setAttribute("listCateUp", listCateUp);
+
+                    int id = Integer.parseInt(request.getParameter("id"));
+                    Type type = TypeModels.findCatIdByTypeId(id);
+                    request.setAttribute("TypeU",type);
+
+
+                    ServletUtils.forward("/views/vwAdminManager/UpdateType.jsp", request, response);
                     break;
                 default:
                     ServletUtils.forward("/views/404.jsp", request, response);
@@ -70,13 +81,16 @@ public class AdminServlet extends HttpServlet {
                 break;
             //Thêm loại sản phẩm
 
-            case "/AddTypePro":
+            case "/AddType":
                 AddTypePro(request, response);
                 break;
             //Xóa sản phẩm
-            case "/RemovePro":
-                System.out.println("Post Remove");
-                RemovePro(request, response);
+            case "/RemoveType":
+                RemoveType(request, response);
+                break;
+
+            case "/UpdateType":
+                UpdateType(request, response);
                 break;
 
             default:
@@ -93,17 +107,38 @@ public class AdminServlet extends HttpServlet {
         int permission = 2;
         RegisterSellerModels.updatePermission(id, permission);
         RegisterSellerModels.deleteRequest(id);
-        ServletUtils.redirect("/Admin/CategoryManager", request, response);
+        ServletUtils.redirect("/Admin/TypeManager", request, response);
+
+    }
+    private void UpdateType(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        //Lay du lieu tren view xuong
+        request.setCharacterEncoding("UTF-8");
+
+        int id = Integer.parseInt(request.getParameter("id"));
+
+        String strCat = request.getParameter("category");
+        String idCate = strCat.split("\\.")[0];
+        int idC = Integer.parseInt(idCate);
+
+        String name = request.getParameter("name");
+
+        System.out.println(id);
+        System.out.println(idC);
+        System.out.println(name);
+        TypeModels.updateTypeById(id,name,idC);
+        System.out.println("update type");
+
+        ServletUtils.redirect("/Admin/TypeManager", request, response);
 
     }
 
-    private void RemovePro(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    private void RemoveType(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         //Lay du lieu tren view xuong
         request.setCharacterEncoding("UTF-8");
 
         int id = Integer.parseInt(request.getParameter("id"));
        TypeModels.removeProById(id);
-        ServletUtils.redirect("/Admin/CategoryManager", request, response);
+        ServletUtils.redirect("/Admin/TypeManager", request, response);
 
     }
 
@@ -119,7 +154,7 @@ public class AdminServlet extends HttpServlet {
 
        TypeModels.addNewType(idC,nameNewType);
 
-        ServletUtils.redirect("/Admin/AddTypePro", request, response);
+        ServletUtils.redirect("/Admin/AddType", request, response);
 
     }
 }

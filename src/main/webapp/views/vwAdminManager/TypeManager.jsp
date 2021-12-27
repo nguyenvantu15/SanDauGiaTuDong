@@ -30,15 +30,15 @@
                             <thead>
                             <tr>
                                 <th style="font-size: 1.4rem; color: royalblue ; width: 10%">#</th>
-                                <div style="font-size: 1.4rem; color: royalblue  ; width: 20%">Quản lí cái loại sản phẩm trong danh mục</div>
+                                <th style="font-size: 1.4rem; color: royalblue  ; width: 20%">Quản lí cái loại sản phẩm trong danh mục</th>
                             </tr>
                             <tr>
                                 <th name="id">ID Danh mục</th>
                                 <th>ID Loại</th>
                                 <th>Name</th>
                                 <th class="text-right">
-                                    <a href=" ${pageContext.request.contextPath}/Admin/AddTypePro">
-                                    <button type="button" class="btn btn-outline-primary" style="width: 80px" formaction="${pageContext.request.contextPath}/Account/Delete?id=${s.id}">
+                                    <a href=" ${pageContext.request.contextPath}/Admin/AddType">
+                                    <button type="button" class="btn btn-outline-primary" style="width: 80px" >
                                         Thêm
                                         <i class="fa fa-check" aria-hidden="true"></i>
                                     </button>
@@ -55,18 +55,20 @@
                                     <td>${t.name}</td>
 
                                     <td class="text-right">
-                                        <button type="submit" class="btn btn-outline-danger" style="width: 80px" formaction="${pageContext.request.contextPath}/Admin/RemovePro?id=${t.id} ">
+                                        <button type="submit" class="btn btn-outline-danger" style="width: 80px" formaction="${pageContext.request.contextPath}/Admin/RemoveType?id=${t.id} ">
                                             Xóa
                                             <i class="fa fa-times" aria-hidden="true"></i>
                                         </button>
                                     </td>
+                                    </form>
                                     <td class="text-right">
-                                        <button type="submit" class="btn btn-outline-success" style="width: 80px" formaction="${pageContext.request.contextPath}/Account/Accept?id=${s.id}">
+                                        <a href=" ${pageContext.request.contextPath}/Admin/UpdateType?id=${t.id}">
+                                        <button type="button" class="btn btn-outline-success" style="width: 80px" >
                                             Sửa
                                             <i class="fa fa-pencil" aria-hidden="true"></i>
                                         </button>
+                                        </a>
                                     </td>
-                                    </form>
                                 </tr>
                             </c:forEach>
                             </tbody>
