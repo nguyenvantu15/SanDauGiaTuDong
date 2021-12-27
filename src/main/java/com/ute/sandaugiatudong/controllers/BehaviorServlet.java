@@ -80,6 +80,22 @@ public class BehaviorServlet extends HttpServlet {
                 request.setAttribute("listProWin", listProWin);
                 ServletUtils.forward("/views/vwProduct/ProductWin.jsp", request, response);
                 break;
+            case "/Producbidderauction":
+                HttpSession session3 = request.getSession();
+                User u3 = (User) session3.getAttribute("authUser");
+                List<ProductBidderAuction> listProAndBidder = HistoryAuctionModels.findProBidderAuc(u3.getId());
+
+                List<Product> listProAuction = new ArrayList<>();
+                for (int i = 0; i < listProAndBidder.size(); i++) {
+                    Product tmp = ProductModels.findById(listProAndBidder.get(i).getIdPro());
+                    if(ProductModels.ProductIsAution(tmp.getId())){
+                        listProAuction.add(tmp);
+                    }
+                }
+
+                request.setAttribute("listProAuction",listProAuction);
+                ServletUtils.forward("/views/vwAuction/ProductBidderAuction.jsp", request, response);
+                break;
             default:
                 ServletUtils.forward("/views/404.jsp", request, response);
                 break;
@@ -99,6 +115,9 @@ public class BehaviorServlet extends HttpServlet {
             case "/viewwatchlist":
                 break;
             case "/DeleteWatchitem":
+                break;
+            case "/Producbidderauction":
+
                 break;
             default:
                 ServletUtils.forward("/views/404.jsp", request, response);

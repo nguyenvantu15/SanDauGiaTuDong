@@ -3,14 +3,11 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
-<jsp:useBean id="listProWin" scope="request" type="java.util.List<com.ute.sandaugiatudong.beans.Product>"/>
+<jsp:useBean id="listProAuction" scope="request" type="java.util.List<com.ute.sandaugiatudong.beans.Product>"/>
+
 <t:main>
     <jsp:attribute name="css">
         <style>
-            body {
-                background: #e5e9f3;
-            }
-
             .row {
                 margin-left: -6px;
                 margin-right: -6px;
@@ -32,19 +29,15 @@
                 transform: translateY(-1px);
                 box-shadow: 0 2px 10px 4px rgba(0, 0, 0, 0.5);;
             }
-
-            .dateTimeText {
-                color: red;
-            }
         </style>
     </jsp:attribute>
 
-    <jsp:attribute name="js">
-    </jsp:attribute>
     <jsp:body>
-        <h4>Sản phẩm bạn đã thắng</h4>
+        <div>
+            <h4>Danh Sách sản phẩm bạn đang đấu giá</h4>
+        </div>
         <div class="row">
-            <c:forEach items="${listProWin}" var="c">
+            <c:forEach items="${listProAuction}" var="c">
                 <div class="col-sm-auto col-item p-0 card_hover">
                     <div class="card h-100">
                         <img src="${pageContext.request.contextPath}/public/imgs/${c.id}/1.jpg" alt="${c.name}"
@@ -54,33 +47,25 @@
                             <h5 class="card-title text-danger">
                                 <fmt:formatNumber value="${c.price}" type="number"/>
                             </h5>
-                            <small class="card-text">Người bán: ${c.idUserSell} </small>
-                            <br>
-
+                            <p class="card-text">${c.tinyDes}</p>
                         </div>
                         <div class="card-footer text-muted">
-                            <a class="btn btn-sm btn-outline-primary" href="${pageContext.request.contextPath}/Product/Detail?id=${c.id}&idType=${c.idType}"
+                            <a class="btn btn-sm btn-outline-primary"
+                               href="${pageContext.request.contextPath}/Product/Detail?id=${c.id}"
                                role="button">
                                 <i class="fa fa-eye" aria-hidden="true"></i>
                                 Detail
                             </a>
-                            <a class="btn btn-sm btn-outline-success"
-                               href="#"
+                            <a class="btn btn-sm btn-outline-danger"
+                               href="${pageContext.request.contextPath}/Behavior/Auction?id=${c.id}"
                                role="button">
-                                <i class="fa fa-money" aria-hidden="true"></i>
-                                Thanh Toán
-                            </a>
-                            <a class="btn btn-sm btn-outline-warning"
-                               href="${pageContext.request.contextPath}/Review/Reviewseller?id=${c.id}"
-                               role="button">
-                                <i class="fa fa-pencil" aria-hidden="true"></i>
-                                Đánh giá
+                                <i class="fa fa-cart-plus" aria-hidden="true"></i>
+                                Đấu giá
                             </a>
                         </div>
                     </div>
                 </div>
             </c:forEach>
-
         </div>
     </jsp:body>
 </t:main>

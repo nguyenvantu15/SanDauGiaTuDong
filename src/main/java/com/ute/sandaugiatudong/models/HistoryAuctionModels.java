@@ -1,6 +1,8 @@
 package com.ute.sandaugiatudong.models;
 
 import com.ute.sandaugiatudong.beans.HistoryAuction;
+import com.ute.sandaugiatudong.beans.Product;
+import com.ute.sandaugiatudong.beans.ProductBidderAuction;
 import com.ute.sandaugiatudong.beans.WatchList;
 import com.ute.sandaugiatudong.utils.DbUtils;
 import org.sql2o.Connection;
@@ -30,6 +32,15 @@ public class HistoryAuctionModels {
         try (Connection con = DbUtils.getConnection()) {
             return con.createQuery(query).addParameter("idPro", idPro)
                     .executeAndFetch(HistoryAuction.class);
+        }
+    }
+
+    public static List<ProductBidderAuction> findProBidderAuc(int idBidder) {
+        final String query = "SELECT DISTINCT idPro,idBidder FROM historyauction WHERE idBidder= :idBidder";
+
+        try (Connection con = DbUtils.getConnection()) {
+            return con.createQuery(query).addParameter("idBidder", idBidder)
+                    .executeAndFetch(ProductBidderAuction.class);
         }
     }
 }

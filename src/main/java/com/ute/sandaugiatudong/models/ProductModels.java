@@ -320,4 +320,21 @@ public class ProductModels {
                     .executeAndFetch(Product.class);
         }
     }
+
+    public static Boolean ProductIsAution(int id) {
+        final String query = "SELECT * FROM product WHERE CURRENT_TIMESTAMP()>=timeStart AND CURRENT_TIMESTAMP()<timeEnd AND id = :id";
+
+        try (Connection con = DbUtils.getConnection()) {
+            List<Product> list = con.createQuery(query)
+                    .addParameter("id", id)
+                    .executeAndFetch(Product.class);
+
+
+            if ( list.size() == 0 ){
+                return false;
+            }
+
+            return true;
+        }
+    }
 }
