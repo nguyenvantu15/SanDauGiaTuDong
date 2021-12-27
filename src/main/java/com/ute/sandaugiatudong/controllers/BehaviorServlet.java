@@ -81,6 +81,23 @@ public class BehaviorServlet extends HttpServlet {
                 ServletUtils.forward("/views/vwProduct/ProductWin.jsp", request, response);
                 break;
             case "/Producbidderauction":
+
+                List<User> tmpUser = UserModels.findAll();
+                List<User> listUser = new ArrayList<>();
+                for (int i = 0; i < tmpUser.size(); i++) {
+                    String[] x = tmpUser.get(i).getUsername().split("\\s");
+                    StringBuilder tmp = new StringBuilder(x[x.length - 1]);
+                    for (int j = 0; j < tmp.length(); j++) {
+                        if (j % 2 == 1) {
+                            tmp.setCharAt(j, '*');
+                        }
+                    }
+                    String txtUsername = tmp.toString();
+                    User a = new User(tmpUser.get(i).getId(), txtUsername.toString());
+                    listUser.add(a);
+                }
+                request.setAttribute("listUser", listUser);
+
                 HttpSession session3 = request.getSession();
                 User u3 = (User) session3.getAttribute("authUser");
                 List<ProductBidderAuction> listProAndBidder = HistoryAuctionModels.findProBidderAuc(u3.getId());
@@ -92,6 +109,39 @@ public class BehaviorServlet extends HttpServlet {
                         listProAuction.add(tmp);
                     }
                 }
+
+                //thoi gian
+
+                DateTimeFormatter df = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+                LocalDateTime nowTmp = LocalDateTime.now();
+                String txtTimeNow = df.format(nowTmp);
+
+                List<DateTimeNew> listDateTimeEnd = new ArrayList<>();
+                List<DateTimeNew> listDateTimeStart = new ArrayList<>();
+
+                for (int i = 0; i < listProAuction.size(); i++) {
+                    LocalDateTime tmp = listProAuction.get(i).getTimeEnd();
+                    boolean kt = nowTmp.isBefore(tmp);
+                    if (kt) {
+                        DateTimeNew DateTmp = new DateTimeNew(tmp.getYear(), tmp.getMonthValue(), tmp.getDayOfMonth(), tmp.getHour(), tmp.getMinute(), tmp.getSecond());
+                        listDateTimeEnd.add(DateTmp);
+                    } else {
+                        DateTimeNew DateTmp = new DateTimeNew(nowTmp.getYear(), nowTmp.getMonthValue(), nowTmp.getDayOfMonth(), nowTmp.getHour(), nowTmp.getMinute(), nowTmp.getSecond());
+                        listDateTimeEnd.add(DateTmp);
+                    }
+
+                    LocalDateTime tmp1 = listProAuction.get(i).getTimeStart();
+                    DateTimeNew tmpStart = new DateTimeNew(tmp1.getYear(), tmp1.getMonthValue(), tmp1.getDayOfMonth(), tmp1.getHour(), tmp1.getMinute(), tmp1.getSecond());
+                    listDateTimeStart.add(tmpStart);
+                }
+                request.setAttribute("listDateTimeStart", listDateTimeStart);
+                request.setAttribute("listDateTimeEnd", listDateTimeEnd);
+                LocalDateTime timeNowTmp = LocalDateTime.parse(txtTimeNow, df);
+
+                DateTimeNew timeNow = new DateTimeNew(timeNowTmp.getYear(), timeNowTmp.getMonthValue(), timeNowTmp.getDayOfMonth(), timeNowTmp.getHour(), timeNowTmp.getMinute(), timeNowTmp.getSecond());
+                request.setAttribute("timenow", timeNow);
+
+                //thoi gian
 
                 request.setAttribute("listProAuction",listProAuction);
                 ServletUtils.forward("/views/vwAuction/ProductBidderAuction.jsp", request, response);

@@ -224,7 +224,7 @@
 
                                 </small>
                                 <br>
-                                <small class="card-text">Người đặt giá cao nhất: ${p.idUserCur}</small>
+                                <small class="card-text">Người giữ giá: ${p.idUserCur}</small>
                                 <br>
                                 <small class="card-text">Số lượt ra giá: ${p.countAuction}</small>
                                 <br>

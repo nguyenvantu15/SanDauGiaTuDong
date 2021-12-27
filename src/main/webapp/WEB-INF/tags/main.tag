@@ -216,7 +216,7 @@
                                     </a>
                                     <div class="dropdown-divider"></div>
                                     <a class="dropdown-item" href="${pageContext.request.contextPath}/Behavior/Producbidderauction">
-                                        <i class="fa fa-money" aria-hidden="true"></i>
+                                        <i class="fa fa-cart-plus" aria-hidden="true"></i>
                                         Đang đấu giá
                                     </a>
                                     <div class="dropdown-divider"></div>
