@@ -229,6 +229,12 @@
                                         List Access Seller
                                     </a>
 
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="${pageContext.request.contextPath}/Admin/TypeManager">
+                                        <i class="fa fa-list" aria-hidden="true"></i>
+                                        Type Product Manager
+                                    </a>
+
                                 </c:if>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="${pageContext.request.contextPath}/Account/Profile">

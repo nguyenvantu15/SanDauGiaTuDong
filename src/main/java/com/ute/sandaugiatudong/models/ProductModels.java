@@ -2,6 +2,7 @@ package com.ute.sandaugiatudong.models;
 
 import com.ute.sandaugiatudong.beans.Category;
 import com.ute.sandaugiatudong.beans.Product;
+import com.ute.sandaugiatudong.beans.Type;
 import com.ute.sandaugiatudong.beans.User;
 import com.ute.sandaugiatudong.utils.DbUtils;
 import org.sql2o.Connection;
@@ -285,4 +286,5 @@ public class ProductModels {
                     .executeAndFetch(Product.class);
         }
     }
+
 }
