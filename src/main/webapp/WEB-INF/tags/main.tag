@@ -227,18 +227,22 @@
                                         <i class="fa fa-eye" aria-hidden="true"></i>
                                         List Access Seller
                                     </a>
-
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="${pageContext.request.contextPath}/Admin/UserManager">
+                                        <i class="fa fa-user" aria-hidden="true"></i>
+                                        Account User Manager
+                                    </a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="${pageContext.request.contextPath}/Admin/CategoryManager">
+                                        <i class="fa fa-list-alt" aria-hidden="true"></i>
+                                        Category Manager
+                                    </a>
                                     <div class="dropdown-divider"></div>
                                     <a class="dropdown-item" href="${pageContext.request.contextPath}/Admin/TypeManager">
                                         <i class="fa fa-list" aria-hidden="true"></i>
                                         Type Product Manager
                                     </a>
 
-                                    <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="${pageContext.request.contextPath}/Admin/CategoryManager">
-                                        <i class="fa fa-list" aria-hidden="true"></i>
-                                        Category Manager
-                                    </a>
 
                                 </c:if>
                                 <div class="dropdown-divider"></div>

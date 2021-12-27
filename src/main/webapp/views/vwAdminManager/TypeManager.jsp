@@ -11,13 +11,13 @@
 <t:main>
     <jsp:body>
         <div class="card">
-<%--            <h4 class="card-header d-flex justify-content-between">--%>
-<%--                Categories--%>
-<%--                <a class="btn btn-outline-success" href="${pageContext.request.contextPath}/Admin/Category/Add" role="button">--%>
-<%--                    <i class="fa fa-plus" aria-hidden="true"></i>--%>
-<%--                    Add Category--%>
-<%--                </a>--%>
-<%--            </h4>--%>
+            <h4 class="card-header d-flex justify-content-between">
+                Quản lí cái loại sản phẩm trong danh mục
+                <a class="btn btn-outline-primary mr-2" href=" ${pageContext.request.contextPath}/Admin/AddType" role="button">
+                    <i class="fa fa-plus" aria-hidden="true"></i>
+                    Thêm
+                </a>
+            </h4>
             <c:choose>
                 <c:when test="${listType.size() == 0}">
                     <div class="card-body">
@@ -29,21 +29,9 @@
                         <table class="table table-hover">
                             <thead>
                             <tr>
-                                <th style="font-size: 1.4rem; color: royalblue ; width: 10%">#</th>
-                                <th style="font-size: 1.4rem; color: royalblue  ; width: 20%">Quản lí cái loại sản phẩm trong danh mục</th>
-                            </tr>
-                            <tr>
-                                <th name="id">ID Danh mục</th>
-                                <th>ID Loại</th>
+                                <th >ID Category</th>
+                                <th>ID</th>
                                 <th>Name</th>
-                                <th class="text-right">
-                                    <a href=" ${pageContext.request.contextPath}/Admin/AddType">
-                                    <button type="button" class="btn btn-outline-primary" style="width: 80px" >
-                                        Thêm
-                                        <i class="fa fa-check" aria-hidden="true"></i>
-                                    </button>
-                                    </a>
-                                </th>
                             </tr>
                             </thead>
                             <tbody>

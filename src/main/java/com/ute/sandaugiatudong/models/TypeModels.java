@@ -10,7 +10,7 @@ import java.util.List;
 
 public class TypeModels {
     public static List<Type> findAll() {
-        final String query = "select * from sandaugia.type";
+        final String query = "select * from sandaugia.type ORDER BY idCat";
 
         try (Connection con = DbUtils.getConnection()) {
             return con.createQuery(query).executeAndFetch(Type.class);

@@ -171,7 +171,7 @@
                             <div class="row gutters">
                                 <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                                     <div class="text-right">
-                                        <c:if  test="${authUser.permission != 2}">
+                                        <c:if  test="${authUser.permission != 2 && authUser.permission != 3}">
                                         <button type="submit" id="submitSeller" name="submitSeller" class="btn btn-warning" >Đăng kí Seller</button>
                                         </c:if>
                                         <a href="${pageContext.request.contextPath}/Account/Update?id=${authUser.id}">
@@ -187,6 +187,6 @@
                 </div>
 
             </div>
-
+        </div>
     </jsp:body>
 </t:main>
