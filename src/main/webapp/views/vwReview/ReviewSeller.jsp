@@ -225,45 +225,22 @@
                 });
             }
 
-            $('#frmAuction').on('submit', function (e) {
+        <script>
+
+        </script>
+
+        <script>
+
+            $('#frmReview').on('submit',function (e) {
                 e.preventDefault();
-                const maxPrice = $('#txtProPrice').val();
-                const a = 1000000;
-
-                if ( 100000 >= ${product.price}){
-                    diff=10000;
-                } else if(500000 >= ${product.price}){
-                    diff = 20000;
-                }else if (1000000 >= ${product.price}){
-                    diff = 30000;
-                } else if (10000000 >= ${product.price}){
-                    diff = 50000;
-                } else {
-                    diff = 100000;
+                const val = $('#commentSeller').val();
+                if(val.length ===0 ){
+                    alert('Bạn chưa nhập đánh giá.');
+                }else {
+                    $('#frmReview').off('submit').submit();
                 }
-
-
-                if(maxPrice > ( ${product.price} + diff)){
-                    $('#frmAuction').off('submit').submit();
-                } else{
-                    alert('vui lòng nhập mức giá lớn hơn.');
-                }
-
             });
-        </script>
 
-        <script>
-            end = new Date(${TimeEnd.year}, ${TimeEnd.month}, ${TimeEnd.day}, ${TimeEnd.hour}, ${TimeEnd.minute}, ${TimeEnd.second});
-            now = new Date(${timenow.year}, ${timenow.month}, ${timenow.day}, ${timenow.hour}, ${timenow.minute}, ${timenow.second});
-            start = new Date(${TimeStart.year}, ${TimeStart.month}, ${TimeStart.day}, ${TimeStart.hour}, ${TimeStart.minute}, ${TimeStart.second});
-            if( end <= now || now<start){
-                $('#Auction').hide();
-                $('#thongbao').show();
-            }else{
-                $('#thongbao').hide();
-            }
-        </script>
-        <script>
 
         </script>
     </jsp:attribute>
@@ -283,19 +260,17 @@
                         <div><img src="${pageContext.request.contextPath}/public/imgs/${product.id}/4.jpg"></div>
                     </div>
                 </div>
+
                 <div class="product-div-right">
-
-                    <form action="" method="post" id = "frmAuction">
-                        <div class="form-group">
-                            <span class="product-name mb-2">${product.name}</span>
-                        </div>
-                        <div class="form-group">
-                            <h5 class="card-title text-danger" >
-                                <fmt:formatNumber value="${product.price}" type="number"/>
-                            </h5>
-                        </div>
-
-
+                    <div class="form-group">
+                        <span class="product-name mb-2">${product.name}</span>
+                    </div>
+                    <div class="form-group">
+                        <h5 class="card-title text-danger" >
+                            <fmt:formatNumber value="${product.price}" type="number"/>
+                        </h5>
+                    </div>
+                    <form action="" method="post" id="frmReview">
                         <h6>Đánh giá người bán:</h6>
                         <div class="form-group row mt-3">
                             <div class="form-check ml-3">
@@ -306,8 +281,8 @@
                                 </label>
                             </div>
                             <div class="form-check ml-3">
-                                <input class="form-check-input" type="radio" name="likeSeller" id="exampleRadios2" value="2">
-                                <label class="form-check-label" for="exampleRadios2">
+                                <input class="form-check-input" type="radio" name="likeSeller" id="radioDislike" value="2">
+                                <label class="form-check-label" for="radioDislike">
                                     <fa4 class="fa fa-thumbs-down"></fa4>
                                     Không thích
                                 </label>
