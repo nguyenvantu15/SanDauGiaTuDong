@@ -233,7 +233,7 @@
                         </div>
                         <div class="card-footer text-muted">
                             <a class="btn btn-sm btn-outline-primary"
-                               href="${pageContext.request.contextPath}/Product/Detail?id=${c.id}"
+                               href="${pageContext.request.contextPath}/Product/Detail?id=${c.id}&idType=${c.idType}"
                                role="button">
                                 <i class="fa fa-eye" aria-hidden="true"></i>
                                 Detail

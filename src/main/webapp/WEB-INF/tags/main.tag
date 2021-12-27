@@ -200,6 +200,11 @@
                                         <i class="fa fa-money" aria-hidden="true"></i>
                                         Đang đấu giá
                                     </a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="${pageContext.request.contextPath}/Manage/Productsold">
+                                        <i class="fa fa-check" aria-hidden="true"></i>
+                                        Đã bán
+                                    </a>
 
                                     <div class="dropdown-divider"></div>
                                     <a class="dropdown-item" href="${pageContext.request.contextPath}/Misc/Add">

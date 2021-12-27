@@ -245,11 +245,13 @@
                     diff = 100000;
                 }
 
-
+                priceMin = ${product.price} + diff;
+                tmp = priceMin.toString();
+                txt = 'vui lòng nhập mức giá lớn hơn. Giá đề suất ' + tmp;
                 if(maxPrice > ( ${product.price} + diff)){
                     $('#frmAuction').off('submit').submit();
                 } else{
-                    alert('vui lòng nhập mức giá lớn hơn.');
+                    alert(txt);
                 }
 
             });

@@ -7,7 +7,6 @@
 
 <jsp:useBean id="product" scope="request" type="com.ute.sandaugiatudong.beans.Product"/>
 
-
 <t:main>
     <jsp:attribute name="css">
 
@@ -199,9 +198,7 @@
         </style>
     </jsp:attribute>
     <jsp:attribute name="js">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
-              integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ=="
-              crossorigin="anonymous" referrerpolicy="no-referrer"/>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer"/>
         <script>
 
             const allHoverImages = document.querySelectorAll('.hover-container div img');
@@ -224,8 +221,6 @@
                     img.parentElement.classList.remove('active');
                 });
             }
-
-        <script>
 
         </script>
 
@@ -271,7 +266,7 @@
                         </h5>
                     </div>
                     <form action="" method="post" id="frmReview">
-                        <h6>Đánh giá người bán:</h6>
+                        <h6>Đánh giá :</h6>
                         <div class="form-group row mt-3">
                             <div class="form-check ml-3">
                                 <input class="form-check-input" type="radio" name="likeSeller" id="radioLike" value="1" checked>
@@ -289,7 +284,7 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="commentSeller">Nhận xét người bán: </label>
+                            <label for="commentSeller">Nhận xét : </label>
                             <input type="text" class="form-control" id="commentSeller" placeholder="" name="commentSeller">
                         </div>
                         <button type="submit" class="btn btn-primary">

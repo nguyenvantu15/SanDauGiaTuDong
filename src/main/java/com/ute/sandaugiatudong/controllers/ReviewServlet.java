@@ -12,6 +12,7 @@ import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @WebServlet(name = "ReviewServlet", value = "/Review/*")
@@ -21,6 +22,22 @@ public class ReviewServlet extends HttpServlet {
         String path = request.getPathInfo();
         switch (path) {
             case "/Reviewseller":
+
+                List<User> tmpUser = UserModels.findAll();
+                List<User> listUser = new ArrayList<>();
+                for (int i = 0; i < tmpUser.size(); i++) {
+                    String[] x = tmpUser.get(i).getUsername().split("\\s");
+                    StringBuilder tmp = new StringBuilder(x[x.length - 1]);
+                    for (int j = 0; j < tmp.length(); j++) {
+                        if (j % 2 == 1) {
+                            tmp.setCharAt(j, '*');
+                        }
+                    }
+                    String txtUsername = tmp.toString();
+                    User a = new User(tmpUser.get(i).getId(), txtUsername.toString());
+                    listUser.add(a);
+                }
+                request.setAttribute("listUser", listUser);
 
                 int ProID = Integer.parseInt(request.getParameter("id"));
                 Product product = ProductModels.findById(ProID);

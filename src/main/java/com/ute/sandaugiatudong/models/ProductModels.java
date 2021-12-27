@@ -337,4 +337,14 @@ public class ProductModels {
             return true;
         }
     }
+
+    public static List<Product> findProductSoldByUser(int idUserSell) {
+        final String query = "SELECT * FROM product WHERE CURRENT_TIMESTAMP()>timeEnd AND idUserSell = :idUserSell AND idUserCur != 0";
+
+        try (Connection con = DbUtils.getConnection()) {
+            return con.createQuery(query)
+                    .addParameter("idUserSell", idUserSell)
+                    .executeAndFetch(Product.class);
+        }
+    }
 }
