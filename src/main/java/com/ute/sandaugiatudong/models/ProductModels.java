@@ -287,4 +287,37 @@ public class ProductModels {
         }
     }
 
+    public static List<Product> findAllSearchSortPriceUp(String string) {
+        String query = "select * from sandaugia.product where match(product.name) against(" + string + ") ORDER BY price";
+
+        try (Connection con = DbUtils.getConnection()) {
+            return con.createQuery(query)
+                    .executeAndFetch(Product.class);
+        }
+    }
+    public static List<Product> findAllSearchSortPriceDown(String string) {
+        String query = "select * from sandaugia.product where match(product.name) against(" + string + ") ORDER BY price DESC ";
+
+        try (Connection con = DbUtils.getConnection()) {
+            return con.createQuery(query)
+                    .executeAndFetch(Product.class);
+        }
+    }
+
+    public static List<Product> findAllSearchSortTimeEndUp(String string) {
+        String query = "select * from sandaugia.product where match(product.name) against(" + string + ") ORDER BY timeEnd";
+
+        try (Connection con = DbUtils.getConnection()) {
+            return con.createQuery(query)
+                    .executeAndFetch(Product.class);
+        }
+    }
+    public static List<Product> findAllSearchSortTimeEndDown(String string) {
+        String query = "select * from sandaugia.product where match(product.name) against(" + string + ") ORDER BY timeEnd DESC";
+
+        try (Connection con = DbUtils.getConnection()) {
+            return con.createQuery(query)
+                    .executeAndFetch(Product.class);
+        }
+    }
 }
