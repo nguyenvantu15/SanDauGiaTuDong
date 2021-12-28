@@ -3,7 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
-<jsp:useBean id="WatchListByUser" scope="request" type="java.util.List<com.ute.sandaugiatudong.beans.WatchList>"/>
+<jsp:useBean id="WatchListByUser" scope="request" type="java.util.List<com.ute.sandaugiatudong.beans.Product>"/>
 
 <t:main>
     <jsp:attribute name="css">
@@ -51,7 +51,7 @@
                         </div>
                         <div class="card-footer text-muted">
                             <a class="btn btn-sm btn-outline-primary"
-                               href="${pageContext.request.contextPath}/Product/Detail?id=${c.id}"
+                               href="${pageContext.request.contextPath}/Product/Detail?id=${c.id}&idType=${c.idType}"
                                role="button">
                                 <i class="fa fa-eye" aria-hidden="true"></i>
                                 Detail

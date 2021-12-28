@@ -18,7 +18,6 @@ public class BehaviorServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String path = request.getPathInfo();
-
         switch (path) {
             case "/Auction":
                 int proId = Integer.parseInt(request.getParameter("id"));
@@ -46,6 +45,9 @@ public class BehaviorServlet extends HttpServlet {
 
                     ServletUtils.forward("/views/vwAuction/Auction.jsp", request, response);
                 }
+                break;
+            case "/confirmauction":
+                ServletUtils.forward("/views/vwAuction/ConfirmAuction.jsp", request, response);
                 break;
             case "/watchlist":
                 watchlist(request, response);
@@ -167,7 +169,19 @@ public class BehaviorServlet extends HttpServlet {
             case "/DeleteWatchitem":
                 break;
             case "/Producbidderauction":
+                break;
+            case "/confirmauction":
+                HttpSession sessionx = request.getSession();
+                HistoryAuction rowNew = (HistoryAuction) sessionx.getAttribute("rowNew");
+                int pr = (int) sessionx.getAttribute("priceNew");
+                Product productx = (Product) sessionx.getAttribute("product");
+                User ux = (User) sessionx.getAttribute("authUser");
 
+                HistoryAuctionModels.add(rowNew);
+
+                ProductModels.updatePrice(productx.getId(),rowNew.getPriceIn(), rowNew.getBidderCur(), productx.getCountAuction() + 1);
+
+                ServletUtils.redirect("/Home",request,response);
                 break;
             default:
                 ServletUtils.forward("/views/404.jsp", request, response);
@@ -197,13 +211,20 @@ public class BehaviorServlet extends HttpServlet {
         //nếu chưa có ai đấu giá
         if (historyAuctions.size() == 0) {
             HistoryAuction rowNew = new HistoryAuction(proId, u.getId(), maxUserPrice, product.getPrice(), u.getId(), timeNow);
-            HistoryAuctionModels.add(rowNew);
+//            HistoryAuctionModels.add(rowNew);
 
-            ProductModels.updatePrice(proId, product.getPrice(), u.getId(), product.getCountAuction() + 1);
+//            ProductModels.updatePrice(proId, product.getPrice(), u.getId(), product.getCountAuction() + 1);
+//
+//            String url = request.getHeader("referer");
+//            if (url == null) url = "/Home";
+//            ServletUtils.redirect(url, request, response);
 
-            String url = request.getHeader("referer");
-            if (url == null) url = "/Home";
-            ServletUtils.redirect(url, request, response);
+            int priceNew = product.getPrice();
+
+            session.setAttribute("rowNew",rowNew);
+            session.setAttribute("product",product);
+            session.setAttribute("priceNew",maxUserPrice);
+            ServletUtils.redirect("/Behavior/confirmauction", request, response);
         } else {
             int priceMaxBidder = 0;
 
@@ -235,23 +256,33 @@ public class BehaviorServlet extends HttpServlet {
                 }
                 HistoryAuction rowNew = new HistoryAuction(proId, u.getId(), maxUserPrice, priceMaxBidder + priceInPlush, u.getId(), timeNow);
 
-                HistoryAuctionModels.add(rowNew);
-                ProductModels.updatePrice(proId, priceMaxBidder + priceInPlush, u.getId(), product.getCountAuction() + 1);
-
-                String url = request.getHeader("referer");
-                if (url == null) url = "/Home";
-                ServletUtils.redirect(url, request, response);
+//                HistoryAuctionModels.add(rowNew);
+//                ProductModels.updatePrice(proId, priceMaxBidder + priceInPlush, u.getId(), product.getCountAuction() + 1);
+//
+//                String url = request.getHeader("referer");
+//                if (url == null) url = "/Home";
+                int priceNew = priceMaxBidder + priceInPlush;
+                session.setAttribute("rowNew",rowNew);
+                session.setAttribute("product",product);
+                session.setAttribute("priceNew",maxUserPrice);
+                ServletUtils.redirect("/Behavior/confirmauction", request, response);
             } else {
                 // tìm hàng có giá vào max
                 int idBidderCur = ProductModels.getIdCur(proId);
                 HistoryAuction rowNew = new HistoryAuction(proId, u.getId(), maxUserPrice, maxUserPrice, idBidderCur, timeNow);
 
-                HistoryAuctionModels.add(rowNew);
-                ProductModels.updatePrice(proId, maxUserPrice, idBidderCur, product.getCountAuction() + 1);
+//                HistoryAuctionModels.add(rowNew);
+//                ProductModels.updatePrice(proId, maxUserPrice, idBidderCur, product.getCountAuction() + 1);
+//
+//                String url = request.getHeader("referer");
+//                if (url == null) url = "/Home";
 
-                String url = request.getHeader("referer");
-                if (url == null) url = "/Home";
-                ServletUtils.redirect(url, request, response);
+                int priceNew1 = maxUserPrice;
+                session.setAttribute("rowNew",rowNew);
+                session.setAttribute("product",product);
+                session.setAttribute("priceNew",maxUserPrice);
+
+                ServletUtils.redirect("/Behavior/confirmauction", request, response);
             }
         }
 
