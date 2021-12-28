@@ -104,7 +104,11 @@ public class AccountServlet extends HttpServlet {
 
             //post Register
             case "/Register":
-                sendOTP(request,response);
+                try {
+                    sendOTP(request,response);
+                } catch (MessagingException e) {
+                    e.printStackTrace();
+                }
                 registerUser(request,response);
                 break;
 
@@ -171,8 +175,7 @@ public class AccountServlet extends HttpServlet {
 
     }
 
-    private void sendOTP(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+    private void sendOTP(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, MessagingException {
         request.setCharacterEncoding("UTF-8");
         String reMail= request.getParameter("email").trim();
         Random ran = new Random();
@@ -189,6 +192,7 @@ public class AccountServlet extends HttpServlet {
         prop.put("mail.smtp.port","587");
         prop.put("mail.smtp.auth","true");
         prop.put("mail.smtp.starttls.enable","true");
+        prop.put("mail.smtp.ssl.protocols", "TLSv1.2");
         Session session = Session.getInstance(prop,new javax.mail.Authenticator(){
             protected  PasswordAuthentication getPasswordAuthentication(){
                 return new PasswordAuthentication(sendMail,passSendMail);
@@ -209,6 +213,7 @@ public class AccountServlet extends HttpServlet {
             System.out.println("Done");
             System.out.println(OTP);
         }catch (Exception e){
+            System.out.println(e.toString());
             System.out.println(OTP);
         };
     }
