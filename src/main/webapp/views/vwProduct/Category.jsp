@@ -139,15 +139,15 @@
             var i = 0;
             var deadline = new Array(${ProductByCategory.size()});
             <c:forEach items="${listDateTimeProByCat}" var="c">
-            end = new Date(${c.year}, ${c.month}, ${c.day}, ${c.hour}, ${c.minute}, ${c.second});
-            start = new Date(${timenow.year}, ${timenow.month}, ${timenow.day}, ${timenow.hour}, ${timenow.minute}, ${timenow.second});
-            if (end <= start) {
-                dd[i] = 1;
-            }
-            a = end - start;
-            tmp = new Date(Date.parse(new Date()) + a)
-            deadline[i] = tmp;
-            i = i + 1;
+                end = new Date(${c.year}, ${c.month}, ${c.day}, ${c.hour}, ${c.minute}, ${c.second});
+                start = new Date(${timenow.year}, ${timenow.month}, ${timenow.day}, ${timenow.hour}, ${timenow.minute}, ${timenow.second});
+                if (end <= start) {
+                    dd[i] = 1;
+                }
+                a = end - start;
+                tmp = new Date(Date.parse(new Date()) + a)
+                deadline[i] = tmp;
+                i = i + 1;
             </c:forEach>
 
             i = 0;
