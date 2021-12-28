@@ -168,6 +168,20 @@
             <form id="frmSearch" action="${pageContext.request.contextPath}/SearchControl/Search" method="get" class="form-inline my-2 my-lg-0" id="frmSearch">
                 <input class="form-control-sm mr-sm-2 " id="search" type="text" name="txtsearch" placeholder="Search" >
                 <button  type="submit" name="btnSearch" class="btn btn-outline-success btn_search btn-sm">Search</button>
+
+<%--                <select multiple class="form-control" id="searchType">--%>
+<%--                    <option value="1">1</option>--%>
+<%--                    <option value="2" >2</option>--%>
+<%--                    <option>3</option>--%>
+<%--                    <option>4</option>--%>
+<%--                    <option>5</option>--%>
+<%--                </select>--%>
+<%--                <select name="sortPro">--%>
+<%--                    <option value="1">Sắp xếp giá tăng</option>--%>
+<%--                    <option value="2">Sắp xếp giá giảm</option>--%>
+<%--                    <option value="3">Thời gian kết thúc tăng</option>--%>
+<%--                    <option value="4">Thời gian kết thúc giảm</option>--%>
+<%--                </select>--%>
             </form>
 
         </div>

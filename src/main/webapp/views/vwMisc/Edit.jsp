@@ -127,7 +127,13 @@
             .color_primary{
                 color: #d99f3f;
             }
-
+            .details-pro h3{
+                font-size: 1.3rem;
+            }
+            .details-pro li{
+                font-size: 1.2rem;
+                margin-left: 35px;
+            }
         </style>
     </jsp:attribute>
 
@@ -198,12 +204,17 @@
         </script>
 
        <script>
-           var today = new Date();
-           var date = today.getDate()+'-'+(today.getMonth()+1)+'-'+today.getFullYear();
-           var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-           var dateTime = date+' '+time;
 
-           document.getElementById("hvn").innerHTML = dateTime;
+           function clock() {
+               var today = new Date();
+               var date = today.getDate() + '-' + (today.getMonth() + 1) + '-' + today.getFullYear();
+               var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+               var dateTime = date + ' ' + time;
+
+               document.getElementById("hvn").value = dateTime;
+               setTimeout("clock()",1000);
+           }
+           clock();
        </script>
     </jsp:attribute>
 
@@ -211,7 +222,7 @@
 
         <div class = "container">
             <div class = "product-div">
-                <div class = "product-div-left">
+                <div class = "product-div-left" style="max-height: 691px">
                     <div class = "img-container">
                         <img src = "${pageContext.request.contextPath}/public/imgs/${ProductEdit.id}/1.jpg" alt = "watch">
                     </div>
@@ -220,6 +231,10 @@
                         <div><img src = "${pageContext.request.contextPath}/public/imgs/${ProductEdit.id}/2.jpg"></div>
                         <div><img src = "${pageContext.request.contextPath}/public/imgs/${ProductEdit.id}/3.jpg"></div>
                         <div><img src = "${pageContext.request.contextPath}/public/imgs/${ProductEdit.id}/4.jpg"></div>
+                    </div>
+                    <div class = "details-pro mt-5" style="box-sizing: border-box; font-size: 1.4rem">
+                        <div style="text-align: center;color:orange">Mô tả chi tiết sản phẩm</div>
+                        <div>${ProductEdit.fullDes}</div>
                     </div>
                 </div>
 
@@ -268,7 +283,6 @@
                         </div>
 
                         <div class="color_primary mb-3">Thời gian bắt đầu:  ${ProductEdit.timeStart}
-
                             <input type="datetime-local" class="form-control"  value="${ProductEdit.timeStart}"  name="timeStart">
                         </div>
 
@@ -280,9 +294,12 @@
                             <input type="text" class="form-control" id="txtTinyDes" value="${ProductEdit.tinyDes}" placeholder="" name="tinyDes">
                         </div>
 
-                        <div class="color_primary mb-3">Mô tả chi tiết
-                            <div id="hvn"></div>
-                            <textarea type="text" id="txtFullDes" name="fullDes" >${ProductEdit.fullDes}</textarea>
+                        <div class="color_primary mb-3">Thêm mô tả chi tiết
+
+                            <div class="color_primary mb-3">Thời gian truy cập hiện tại
+                                <input type="text" class="form-control" id="hvn" name="timeNow" >
+                            </div>
+                            <textarea type="text" id="txtFullDes" name="fullDes"></textarea>
                         </div>
 
                         <div class = "btn-groups  justify-content-between" >

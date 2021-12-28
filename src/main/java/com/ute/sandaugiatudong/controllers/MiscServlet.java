@@ -39,6 +39,8 @@ public class MiscServlet extends HttpServlet {
 
                 Product p = ProductModels.findById(id);
                 request.setAttribute("ProductEdit", p);
+                //tạo Product gốc để sử dụng cập nhật tinyDes
+                session.setAttribute("ProductEditCurrent", p);
 
                 List <Category> listCate = ProductModels.findAllCategory();
                 request.setAttribute("listCate", listCate);
@@ -105,9 +107,15 @@ public class MiscServlet extends HttpServlet {
 
         LocalDateTime timeEnd = LocalDateTime.parse(time, df);
 
-        String fullDes = request.getParameter("fullDes");
+        String fullDesEdit = request.getParameter("fullDes");
         String tinyDes = request.getParameter("tinyDes");
 
+        String timeNow = request.getParameter("timeNow");
+
+        HttpSession session = request.getSession();
+        Product proCurr = (Product) session.getAttribute("ProductEditCurrent");
+
+        String fullDes = proCurr.getFullDes() + "<h3 style=\"color: orange\">" + timeNow + "</h3>" + fullDesEdit;
         Product p = new Product(id,price,idProType,idC,timeStart,timeEnd,name,tinyDes,fullDes);
         ProductModels.editProductById(p);
 
