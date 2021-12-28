@@ -105,6 +105,9 @@ public class AdminServlet extends HttpServlet {
             case "/RemoveAccount":
                 RemoveAccount(request, response);
                 break;
+            case "/ResetPass":
+                ResetPass(request,response);
+                break;
             case "/AddCategory":
                 AddCategory(request, response);
                 break;
@@ -135,6 +138,71 @@ public class AdminServlet extends HttpServlet {
                 break;
         }
     }
+
+    private void ResetPass(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        //Lay du lieu tren view xuong
+        request.setCharacterEncoding("UTF-8");
+        //Lấy id tài khoản cần reset
+        int id = Integer.parseInt(request.getParameter("id"));
+        //Lấy email để gửi thông báo
+        String reMail= request.getParameter("email").trim();
+
+        //Random pass reset
+        int leftLimit = 48; // numeral '0'
+        int rightLimit = 122; // letter 'z'
+        int len = 10;
+        Random random = new Random();
+        String generatedString = random.ints(leftLimit, rightLimit + 1)
+                .filter(i -> (i <= 57 || i >= 65) && (i <= 90 || i >= 97))
+                .limit(len)
+                .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
+                .toString();
+
+        String rawpawd = generatedString;
+        String bcryptHashString = BCrypt.withDefaults().hashToString(12, rawpawd.toCharArray());
+
+        //Gửi mail thông báo cho người dùng
+        final String sendMail = "atttsystem@gmail.com";
+        final String passSendMail = "ATTT19110306";
+
+        String mess = "The receiving system has reset your account password. \n" +
+                "To log in to your account, please enter the new password:   " + rawpawd;
+
+        Properties prop = new Properties();
+        prop.put("mail.smtp.host","smtp.gmail.com");
+        prop.put("mail.smtp.port","587");
+        prop.put("mail.smtp.auth","true");
+        prop.put("mail.smtp.starttls.enable","true");
+        Session session = Session.getInstance(prop,new javax.mail.Authenticator(){
+            protected  PasswordAuthentication getPasswordAuthentication(){
+                return new PasswordAuthentication(sendMail,passSendMail);
+            }
+        });
+        // Đăng nhập được email
+
+        try{
+            Message message = new MimeMessage(session);
+            message.setFrom(new InternetAddress(sendMail));
+            message.setRecipients(
+                    Message.RecipientType.TO,
+                    InternetAddress.parse(reMail)
+            );
+            message.setSubject("Notice to reset account password");
+            message.setText(mess);
+            Transport.send(message);
+            System.out.println("Done RePass");
+            System.out.println(rawpawd);
+
+            //Cập nhật pass mới và database
+            UserModels.resetPass(id,bcryptHashString);
+        }catch (Exception e){
+            System.out.println("PassWord Reset" + rawpawd);
+        };
+
+        ServletUtils.redirect("/Admin/UserManager", request, response);
+
+    }
+
 
     private void AddCategory(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         //Lay du lieu tren view xuong
@@ -188,7 +256,6 @@ public class AdminServlet extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
 
         int id = Integer.parseInt(request.getParameter("id"));
-        System.out.println(id);
         UserModels.removeUserById(id);
         ServletUtils.redirect("/Admin/UserManager", request, response);
 

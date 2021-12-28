@@ -179,6 +179,12 @@
                                                 Trở về
                                             </button>
                                         </a>
+
+                                            <button type="sumit" id="submitResetPass" name="submitResetPass" formaction="${pageContext.request.contextPath}/Admin/ResetPass" class="btn btn-primary">
+                                                <i class="fa fa-refresh" aria-hidden="true"></i>
+                                                Reset mật khẩu
+                                            </button>
+
                                         <c:if  test="${AccountUser.permission != 3}">
                                             <button type="summit" id="submitUpdate" name="submit" formaction="${pageContext.request.contextPath}/Admin/RemoveAccount" class="btn btn-danger" >
                                                 <i class="fa fa-times" aria-hidden="true"></i>

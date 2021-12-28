@@ -53,6 +53,16 @@ public class UserModels {
         }
     }
 
+    public static void resetPass(int id,String password) {
+        String sql = "UPDATE sandaugia.user SET password = :password WHERE id = :id";
+        try (Connection con = DbUtils.getConnection()) {
+            con.createQuery(sql)
+                    .addParameter("id", id)
+                    .addParameter("password", password)
+                    .executeUpdate();
+        }
+    }
+
     public static void update1(User u) {
         String sql = "UPDATE user SET  username = :username, password = :password, email = :email, phone = :phone, permission = :permission, name = :name, dob = :dob, mark = :mark, comment = :comment WHERE id = :id";
         try (Connection con = DbUtils.getConnection()) {
@@ -85,6 +95,7 @@ public class UserModels {
             return list.get(0);
         }
     }
+
     public static List<User> findAll(){
         final String query = "select * from sandaugia.user ORDER BY permission";
         try (Connection con = DbUtils.getConnection()) {
