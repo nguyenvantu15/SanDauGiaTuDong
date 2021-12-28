@@ -203,7 +203,7 @@ public class AccountServlet extends HttpServlet {
                     Message.RecipientType.TO,
                     InternetAddress.parse(reMail)
             );
-            message.setSubject("Mã OTP");
+            message.setSubject("Code OTP");
             message.setText(String.valueOf(OTP));
             Transport.send(message);
             System.out.println("Done");
