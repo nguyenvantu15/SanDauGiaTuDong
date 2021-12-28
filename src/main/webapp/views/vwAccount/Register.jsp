@@ -33,7 +33,45 @@
     <jsp:attribute name="js">
 <%--            js su li bang datetime--%>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js" integrity="sha512-AIOTidJAcHBH2G/oZv9viEGXRqDNmfdPVPYOYKGy3fti0xIplnlgMHUGfuNRzC6FkzIo0iIxgFnr9RikFxK+sw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-            <script>
+
+<%--        Tạo captcha--%>
+        <script>
+            function getRanIndex(maxLength){
+            //taoj một vị trí ngẫu nhiên
+                return Math.floor(Math.random() * maxLength);
+
+            }
+            var cap;
+            function getCaptcha(){
+                var canvas = document.getElementById('canvas');
+                var pen = canvas.getContext('2d');
+                var captch = Math.random().toString(36).substring(2,8);
+                //Math.random -> random ra so float nhu 0.0123
+                //toString(36) -> Chuyển đổi num thành cơ số 36
+                //để loại bỏ dấu chấm động được sử dụng substring(2,8)
+
+                pen.font = "60px Georgia";
+                pen.fillStyle ="grey";
+                pen.fillRect(0,0,600,600);
+                pen.fillStyle = "orange";
+                maxLength = captch.length;
+                index1 = getRanIndex(maxLength);
+                index2 = getRanIndex(maxLength);
+                //lam bat ki ki tu nao in hoa
+
+                captch = captch.substring(0,index1-1) + captch[index1].toUpperCase() + captch.substring(index1+1,maxLength);
+                captch = captch.substring(0,index2-1) + captch[index2].toUpperCase() + captch.substring(index2+1,maxLength);
+
+                cap = captch;
+                captch = captch.split('').join('');
+                pen.fillText(captch,50,100)
+            }
+
+            getCaptcha();
+
+        </script>
+<%--        Kiem tra truoc khi submit--%>
+        <script>
                 <%--                kiem tra truoc khi submit--%>
                 $('#frmRegister').on('submit', function(e){
                     e.preventDefault();
@@ -46,26 +84,37 @@
                     const email = $('#txtEmail').val();
 
                     // const  checkRepass = checkRepass(passWord.trim(), rePass.trim());
-                    if(userName.length === 0 || passWord.length === 0 || rePass.length === 0
+                    if(userName.length === 0 || passWord.length === 0 || rePass.length === 0 || doB ==='__/__/____'
                         || name.length === 0 || doB.length === 0 || phone.length ===0 || email.length === 0)
                     {
                         alert("Thông tin người dùng chưa đầy đủ !!! \n Mời nhập lại !!!!");
                         return;
                     }
+
                     if(passWord.trim() !== rePass.trim())
                     {
                         alert("Mật khẩu không trùng khớp !!!");
                         return;
                     }
 
+
                     $.getJSON('${pageContext.request.contextPath}/Account/IsAvailable?user=' + userName, function (data) {
+
                         if (data === true) {
-                            $('#frmRegister').off('submit').submit();
+                            //kiem tra captcha
+                            typedData = document.getElementById('txtUserCap').value;
+                            if (typedData === cap) {
+                                $('#frmRegister').off('submit').submit();
+                            } else
+                                alert("Capcha không chính xác !!!");
+                                document.getElementById('txtUserCap').value = "";
+                                getCaptcha();
                         }
                         else {
-                            alert('Tài khoản đã tồn tại.');
+                            alert('Tài khoản đã tồn tại !!!');
                         }
                     });
+
                     // hành vi submit đầu tiên bị chặn lại sau nó kiểm tra rồi gỡ hàm này ra
                     // $('#frmRegister').off('submit').submit();
                 });
@@ -80,7 +129,7 @@
 
                 $('#txtUserName').select();
             </script>
-        </jsp:attribute>
+    </jsp:attribute>
 
     <jsp:body>
 
@@ -125,6 +174,15 @@
                     <div class="form-group">
                         <label for="txtEmail">Email </label>
                         <input type="text" class="form-control" id="txtEmail" name="email" >
+
+                    </div>
+
+                    <div class="form-group">
+                        <label for="txtUserCap">Captcha </label>
+                        <div style="display: flex; justify-content:space-between;align-items:center">
+                            <canvas id="canvas"  style="width: 48%; height: 60px; border: 2px solid grey;"></canvas>
+                            <input style="width: 48%;height: 65px; margin-left: 10px" type="text" class="form-control" id="txtUserCap" name="email" >
+                        </div>
 
                     </div>
                 </div>
