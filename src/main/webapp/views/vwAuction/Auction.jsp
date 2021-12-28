@@ -300,18 +300,27 @@
 
 
                         </div>
-                        <div id = "thongbao">
-                            <p class="text-danger">Đã hết thời hạn đấu giá </p>
-                        </div>
-                        <div id = "Auction">
-                            <div class="form-group">
-                                <label for="txtProPrice">Mức giá tối đa</label>
-                                <input type="number" class="form-control" id="txtProPrice" placeholder="" name="price">
-                            </div>
-                            <button id="buttonAuc" type="submit" class="btn btn-groups btn-danger mb-5">
-                                Đấu giá
-                            </button>
-                        </div>
+
+                        <c:choose>
+                            <c:when test="${authUser.mark<8}">
+                                <p class="text-danger">Điểm uy tín của bạn không đủ. </p>
+                            </c:when>
+                            <c:otherwise>
+                                <div id = "thongbao">
+                                    <p class="text-danger">Đã hết thời hạn đấu giá </p>
+                                </div>
+                                <div id = "Auction">
+                                    <div class="form-group">
+                                        <label for="txtProPrice">Mức giá tối đa</label>
+                                        <input type="number" class="form-control" id="txtProPrice" placeholder="" name="price">
+                                    </div>
+                                    <button id="buttonAuc" type="submit" class="btn btn-groups btn-danger mb-5">
+                                        Đấu giá
+                                    </button>
+                                </div>
+                            </c:otherwise>
+                        </c:choose>
+
                     </form>
 
                 </div>
