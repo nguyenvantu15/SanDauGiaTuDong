@@ -199,7 +199,6 @@ public class AccountServlet extends HttpServlet {
             }
         });
         // Đăng nhập được email
-
         try{
             Message message = new MimeMessage(session);
             message.setFrom(new InternetAddress(sendMail));
@@ -210,12 +209,11 @@ public class AccountServlet extends HttpServlet {
             message.setSubject("Code OTP");
             message.setText(String.valueOf(OTP));
             Transport.send(message);
-            System.out.println("Done");
-            System.out.println(OTP);
         }catch (Exception e){
-            System.out.println(e.toString());
-            System.out.println(OTP);
-        };
+
+        }
+
+
     }
 
     private void deleteSellerRe(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

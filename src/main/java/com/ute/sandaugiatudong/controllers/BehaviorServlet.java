@@ -4,14 +4,20 @@ import com.ute.sandaugiatudong.beans.*;
 import com.ute.sandaugiatudong.models.*;
 import com.ute.sandaugiatudong.utils.ServletUtils;
 
+import javax.mail.*;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
+import java.util.Random;
 
 @WebServlet(name = "BehaviorServlet", value = "/Behavior/*")
 public class BehaviorServlet extends HttpServlet {
@@ -154,6 +160,23 @@ public class BehaviorServlet extends HttpServlet {
 
                 List<HistoryAuction> historyAuction = HistoryAuctionModels.findByIdProduct(producID);
 
+
+                List<User> tmpUser1 = UserModels.findAll();
+                List<User> listUser1 = new ArrayList<>();
+                for (int i = 0; i < tmpUser1.size(); i++) {
+                    String[] x = tmpUser1.get(i).getUsername().split("\\s");
+                    StringBuilder tmp = new StringBuilder(x[x.length - 1]);
+                    for (int j = 0; j < tmp.length(); j++) {
+                        if (j % 2 == 1) {
+                            tmp.setCharAt(j, '*');
+                        }
+                    }
+                    String txtUsername = tmp.toString();
+                    User a = new User(tmpUser1.get(i).getId(), txtUsername.toString());
+                    listUser1.add(a);
+                }
+                request.setAttribute("listUser", listUser1);
+
                 request.setAttribute("product",product1);
                 request.setAttribute("historyAuction",historyAuction);
                 ServletUtils.forward("/views/vwAuction/HistoryAuctionProduct.jsp", request, response);
@@ -181,6 +204,7 @@ public class BehaviorServlet extends HttpServlet {
             case "/Producbidderauction":
                 break;
             case "/confirmauction":
+                request.setCharacterEncoding("UTF-8");
                 HttpSession sessionx = request.getSession();
                 HistoryAuction rowNew = (HistoryAuction) sessionx.getAttribute("rowNew");
                 int pr = (int) sessionx.getAttribute("priceNew");
@@ -191,11 +215,61 @@ public class BehaviorServlet extends HttpServlet {
 
                 ProductModels.updatePrice(productx.getId(),rowNew.getPriceIn(), rowNew.getBidderCur(), productx.getCountAuction() + 1);
 
+                String notify = "Bạn da dau gia thanh cong san pham:"+ productx.getName()+ " muc gia toi da la:"+ Integer.toString(rowNew.getPriceMaxBidder());
+
+                try {
+                    sendMailNotifyBidder(request,response,notify);
+                } catch (MessagingException e) {
+                    e.printStackTrace();
+                }
                 ServletUtils.redirect("/Home",request,response);
                 break;
             default:
                 ServletUtils.forward("/views/404.jsp", request, response);
                 break;
+        }
+    }
+
+    private void sendMailNotifyBidder(HttpServletRequest request, HttpServletResponse response, String notify) throws ServletException, IOException, MessagingException {
+        request.setCharacterEncoding("UTF-8");
+
+//        Random ran = new Random();
+//        int OTP = ran.nextInt((999999 - 100000) + 1) + 100000;
+//
+//        HttpSession session1 = request.getSession();
+//        session1.setAttribute("codeOTP", String.valueOf(OTP));
+        HttpSession session1 = request.getSession();
+        User user = (User) session1.getAttribute("authUser");
+
+        String reMail= user.getEmail().trim();
+
+        final String sendMail = "atttsystem@gmail.com";
+        final String passSendMail = "ATTT19110306";
+
+        Properties prop = new Properties();
+        prop.put("mail.smtp.host","smtp.gmail.com");
+        prop.put("mail.smtp.port","587");
+        prop.put("mail.smtp.auth","true");
+        prop.put("mail.smtp.starttls.enable","true");
+        prop.put("mail.smtp.ssl.protocols", "TLSv1.2");
+        Session session = Session.getInstance(prop,new javax.mail.Authenticator(){
+            protected PasswordAuthentication getPasswordAuthentication(){
+                return new PasswordAuthentication(sendMail,passSendMail);
+            }
+        });
+        // Đăng nhập được email
+        try{
+            Message message = new MimeMessage(session);
+            message.setFrom(new InternetAddress(sendMail));
+            message.setRecipients(
+                    Message.RecipientType.TO,
+                    InternetAddress.parse(reMail)
+            );
+            message.setSubject("Thông Báo:");
+            message.setText(notify);
+            Transport.send(message);
+        }catch (Exception e){
+
         }
     }
 

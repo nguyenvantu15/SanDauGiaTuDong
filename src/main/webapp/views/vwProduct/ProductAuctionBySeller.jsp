@@ -219,18 +219,12 @@
                                 <i class="fa fa-eye" aria-hidden="true"></i>
                                 Detail
                             </a>
-                            <c:if test="${auth == 1}">
-                                <a class="btn btn-sm btn-outline-success" href="${pageContext.request.contextPath}/Behavior/watchlist?id=${c.id}"
-                                   role="button">
-                                    <i class="fa fa-plus" aria-hidden="true"></i>
-                                    Add
-                                </a>
-                                <a class="btn btn-sm btn-outline-danger" href="${pageContext.request.contextPath}/Behavior/Auction?id=${c.id}"
-                                   role="button">
-                                    <i class="fa fa-cart-plus" aria-hidden="true"></i>
-                                    Đấu giá
-                                </a>
-                            </c:if>
+                            <a class="btn btn-sm btn-outline-secondary"
+                               href="${pageContext.request.contextPath}/Behavior/viewhistoryauction?id=${c.id}"
+                               role="button">
+                                <i class="fa fa-history" aria-hidden="true"></i>
+                                History
+                            </a>
                         </div>
                     </div>
                 </div>

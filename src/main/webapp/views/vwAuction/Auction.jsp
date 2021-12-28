@@ -303,7 +303,7 @@
 
                         <c:choose>
                             <c:when test="${authUser.mark<8}">
-                                <p class="text-danger">Điểm uy tín của bạn không đủ. </p>
+                                <p class="text-danger">Điểm uy tín của bạn không đủ.  ${authUser.mark}</p>
                             </c:when>
                             <c:otherwise>
                                 <div id = "thongbao">

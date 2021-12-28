@@ -7,6 +7,7 @@
 
 <jsp:useBean id="product" scope="request" type="com.ute.sandaugiatudong.beans.Product"/>
 <jsp:useBean id="historyAuction" scope="request" type="java.util.List<com.ute.sandaugiatudong.beans.HistoryAuction>"/>
+<jsp:useBean id="listUser" scope="request" type="java.util.List<com.ute.sandaugiatudong.beans.User>"/>
 <%--<jsp:useBean id="listUser" scope="request" type="java.util.List<com.ute.sandaugiatudong.beans.User>"/>--%>
 
 
@@ -302,7 +303,13 @@
                             <c:forEach items="${historyAuction}" var="c">
                                 <tr>
                                     <td style="width: 172px;"><fmt:formatNumber value="${c.priceIn}" type="number"/></td>
-                                    <td>#${c.bidderCur}</td>
+                                    <td>#${c.bidderCur}(
+                                        <c:forEach items="${listUser}" var="u">
+                                            <c:if test="${u.id==c.bidderCur}">
+                                                ${u.username})
+                                            </c:if>
+                                        </c:forEach>
+                                    </td>
                                     <td class="">${c.time}</td>
                                 </tr>
                             </c:forEach>
@@ -311,7 +318,7 @@
                     </div>
 
                     <div class="btn-groups">
-                        <c:if test="${auth == 1}">
+                        <c:if test="${auth == 2}">
                             <a class="btn btn-danger"
                                href="${pageContext.request.contextPath}/Behavior/Auction?id=${product.id}"
                                role="button">

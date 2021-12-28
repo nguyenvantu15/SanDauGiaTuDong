@@ -79,7 +79,7 @@ public class SearchControlServlet extends HttpServlet {
                         a = "0";
                         break;
                 }
-
+                /////////////
                 DateTimeFormatter df = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
                 LocalDateTime nowTmp = LocalDateTime.now();
                 String txtTimeNow = df.format(nowTmp);
@@ -108,6 +108,7 @@ public class SearchControlServlet extends HttpServlet {
 
                 DateTimeNew timeNow = new DateTimeNew(timeNowTmp.getYear(), timeNowTmp.getMonthValue(), timeNowTmp.getDayOfMonth(), timeNowTmp.getHour(), timeNowTmp.getMinute(), timeNowTmp.getSecond());
                 request.setAttribute("timenow", timeNow);
+                /////
 
                 HttpSession session = request.getSession();
                 session.setAttribute("listProductSearch", list);

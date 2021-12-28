@@ -176,7 +176,6 @@
 
 
 
-
     <jsp:body>
         <c:choose>
             <c:when test="${listProductSearch.size() == 0}">
