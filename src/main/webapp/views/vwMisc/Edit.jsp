@@ -196,6 +196,15 @@
                 step:5
             });
         </script>
+
+       <script>
+           var today = new Date();
+           var date = today.getDate()+'-'+(today.getMonth()+1)+'-'+today.getFullYear();
+           var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+           var dateTime = date+' '+time;
+
+           document.getElementById("hvn").innerHTML = dateTime;
+       </script>
     </jsp:attribute>
 
     <jsp:body>
@@ -272,6 +281,7 @@
                         </div>
 
                         <div class="color_primary mb-3">Mô tả chi tiết
+                            <div id="hvn"></div>
                             <textarea type="text" id="txtFullDes" name="fullDes" >${ProductEdit.fullDes}</textarea>
                         </div>
 
