@@ -148,6 +148,16 @@ public class BehaviorServlet extends HttpServlet {
                 request.setAttribute("listProAuction",listProAuction);
                 ServletUtils.forward("/views/vwAuction/ProductBidderAuction.jsp", request, response);
                 break;
+            case "/viewhistoryauction":
+                int producID= Integer.parseInt(request.getParameter("id"));
+                Product product1 = ProductModels.findById(producID);
+
+                List<HistoryAuction> historyAuction = HistoryAuctionModels.findByIdProduct(producID);
+
+                request.setAttribute("product",product1);
+                request.setAttribute("historyAuction",historyAuction);
+                ServletUtils.forward("/views/vwAuction/HistoryAuctionProduct.jsp", request, response);
+                break;
             default:
                 ServletUtils.forward("/views/404.jsp", request, response);
                 break;

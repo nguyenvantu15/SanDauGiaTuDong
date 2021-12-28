@@ -244,6 +244,12 @@
                                 <i class="fa fa-cart-plus" aria-hidden="true"></i>
                                 Đấu giá
                             </a>
+                            <a class="btn btn-sm btn-outline-secondary"
+                               href="${pageContext.request.contextPath}/Behavior/viewhistoryauction?id=${c.id}"
+                               role="button">
+                                <i class="fa fa-history" aria-hidden="true"></i>
+                                History
+                            </a>
                         </div>
                     </div>
                 </div>
