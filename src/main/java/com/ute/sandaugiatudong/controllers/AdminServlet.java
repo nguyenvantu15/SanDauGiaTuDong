@@ -203,7 +203,6 @@ public class AdminServlet extends HttpServlet {
 
     }
 
-
     private void AddCategory(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         //Lay du lieu tren view xuong
         request.setCharacterEncoding("UTF-8");
