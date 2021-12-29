@@ -262,7 +262,7 @@
 
             $(function () {
                 var numberOfItems = $(".card-content .card").length;
-                var limitPerPage = 20; //How many card items visible per a page
+                var limitPerPage = 10; //How many card items visible per a page
                 var totalPages = Math.ceil(numberOfItems / limitPerPage);
                 var paginationSize = 5; //How many page elements visible in the pagination
                 var currentPage;
@@ -344,7 +344,7 @@
                 </div>
                 <div class="card-content row">
                     <c:forEach items="${listProductSearch}" var="p">
-                        <div class="card col-sm-auto col-item p-0 card_hover">
+                        <div class="col-sm-auto col-item p-0 card_hover">
                             <div class="card h-100">
                                 <img src="${pageContext.request.contextPath}/public/imgs/${p.id}/1.jpg" alt="${p.name}"
                                      title="${p.name}" class="card-img-top">
