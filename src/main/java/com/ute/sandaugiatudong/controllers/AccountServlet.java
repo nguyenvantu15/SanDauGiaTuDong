@@ -44,6 +44,9 @@ public class AccountServlet extends HttpServlet {
                     break;
 
                 case "/Login":
+                    HttpSession session = request.getSession();
+                    String url = request.getHeader("referer");
+                    session.setAttribute("UrlBeforeLogin",url );
                     ServletUtils.forward("/views/vwAccount/Login.jsp", request, response);
                     break;
                 case "/Profile":
@@ -358,7 +361,7 @@ public class AccountServlet extends HttpServlet {
                 //
                 session.setAttribute("auth", user.getPermission());
                 session.setAttribute("authUser", user);
-                String url = (String) (session.getAttribute("retUrl"));
+                String url = (String) (session.getAttribute("UrlBeforeLogin"));
                 if (url == null)
                     url = "/Home";
 
@@ -382,7 +385,11 @@ public class AccountServlet extends HttpServlet {
         session.setAttribute("auth", 0);
         session.setAttribute("authUser", new User());
         String url = request.getHeader("referer");
+
+        System.out.println(url);
         if (url == null)
+
+
             url = "/Home";
         ServletUtils.redirect(url, request, response);
     }
