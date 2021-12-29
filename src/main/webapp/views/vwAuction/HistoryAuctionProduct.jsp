@@ -8,6 +8,7 @@
 <jsp:useBean id="product" scope="request" type="com.ute.sandaugiatudong.beans.Product"/>
 <jsp:useBean id="historyAuction" scope="request" type="java.util.List<com.ute.sandaugiatudong.beans.HistoryAuction>"/>
 <jsp:useBean id="listUser" scope="request" type="java.util.List<com.ute.sandaugiatudong.beans.User>"/>
+<jsp:useBean id="listUserBidder" scope="request" type="java.util.List<com.ute.sandaugiatudong.beans.User>"/>
 <%--<jsp:useBean id="listUser" scope="request" type="java.util.List<com.ute.sandaugiatudong.beans.User>"/>--%>
 
 
@@ -279,15 +280,12 @@
                 <div class="product-div-right">
                     <h3>Lịch sử đấu giá: </h3>
                     <span class="product-name">${product.name}</span>
-                    <span class="product-price text-danger">Giá hiện tại: <fmt:formatNumber value="${product.price}"
-                                                                                            type="number"/> vnd</span>
+                    <span class="product-price text-danger">Giá hiện tại: <fmt:formatNumber value="${product.price}" type="number"/> vnd</span>
                     <div>Thời điểm đăng
-                        <input type="datetime-local" class="form-control" value="${product.timeStart}" disabled
-                               name="timeStart">
+                        <input type="datetime-local" class="form-control" value="${product.timeStart}" disabled name="timeStart">
                     </div>
                     <div class="mt-2">Thời điểm kết thúc
-                        <input type="datetime-local" class="form-control" value="${product.timeEnd}" disabled
-                               name="timeStart">
+                        <input type="datetime-local" class="form-control" value="${product.timeEnd}" disabled name="timeStart">
                     </div>
                     <div class="mt-3"><strong>Lịch sử đấu giá</strong></div>
                     <div>
@@ -316,18 +314,37 @@
                             </tbody>
                         </table>
                     </div>
-
-                    <div class="btn-groups">
+                    <form action="" method="post">
                         <c:if test="${auth == 2}">
-                            <a class="btn btn-danger"
-                               href="${pageContext.request.contextPath}/Behavior/Auction?id=${product.id}"
-                               role="button">
-                                <i class="fa fa-eraser" aria-hidden="true"></i>
-                                xóa người đang giữ giá
-                            </a>
+                            <c:if test="${historyAuction.size()  >0}">
+                                <div class="form-group">
+                                    <label for="DeleteDidder">chọn Bidder cần xóa</label>
+                                    <select class="form-control" id="DeleteDidder" name="DeleteBidder">
+                                        <c:forEach items="${listUserBidder}" var="lu">
+                                            <option value="${lu.id}">#${lu.id}(${lu.username})</option>
+                                        </c:forEach>
+                                    </select>
+                                </div>
+<%--                                <div class="form-group">--%>
+<%--                                    <label for="idProduct">Id của sản phẩm:</label>--%>
+<%--                                    <input type="text" class="form-control" value="${product.id}" disabled id="idProduct" name="idProduct">--%>
+<%--                                </div>--%>
+                                <button type="submit" class="btn btn-danger mb-5">
+                                    <i class="fa fa-save" aria-hidden="true"></i>
+                                    xóa
+                                </button>
+<%--                                <div class="btn-groups">--%>
+<%--                                    <a class="btn btn-danger"--%>
+<%--                                       href="${pageContext.request.contextPath}/Behavior/Delete"--%>
+<%--                                       role="button">--%>
+<%--                                        <i class="fa fa-eraser" aria-hidden="true"></i>--%>
+<%--                                        xóa Bidder--%>
+<%--                                    </a>--%>
+<%--                                </div>--%>
+                            </c:if>
                         </c:if>
+                    </form>
 
-                    </div>
                 </div>
             </div>
         </div>
