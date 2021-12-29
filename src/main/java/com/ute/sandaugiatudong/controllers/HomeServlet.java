@@ -25,7 +25,7 @@ public class HomeServlet extends HttpServlet {
     boolean kt = true;
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        if (kt==true){
+        if (kt){
             kt = false;
             ThreadTime threadTime = new ThreadTime();
             Timer timer = new Timer();
