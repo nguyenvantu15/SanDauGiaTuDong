@@ -111,12 +111,23 @@
                     alert("Thông tin người dùng chưa đầy đủ !!! \n Mời nhập lại !!!!");
                     return;
                 }
-
-
                 // hành vi submit đầu tiên bị chặn lại sau nó kiểm tra rồi gỡ hàm này ra
                 $('#frmUpdatePro').off('submit').submit();
             });
 
+        </script>
+
+        <script>
+            function check(){
+                var txtdate = "${userFind.dob}";
+
+                const d1 = txtdate.split('T');
+                const d2 = d1[0];
+                const d3 = d2.split('-');
+                const date = d3[2]+ '/' +d3[1] + '/' + d3[0];
+                $('#txtDoB').val(date);
+            }
+            check();
         </script>
     </jsp:attribute>
 
@@ -124,17 +135,17 @@
         <div class="container">
             <div class="row gutters mg-top">
                 <div class=" col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-<%--                    <c:if  test="${hasError}">--%>
-<%--                        <div  class="alert alert-warning alert-dismissible fade show" role="alert">--%>
-<%--                            <strong>Login failed! </strong> ${errorMessage}--%>
-<%--                            <button  type="button" class="close" data-dismiss="alert" aria-label="Close">--%>
-<%--                                <span  aria-hidden="true">&times;</span>--%>
-<%--                            </button>--%>
-<%--                        </div>--%>
-<%--                    </c:if>--%>
                     <form class="card h-100" action="" method="post" id="frmUpdatePro">
                     <div class="card h-100">
                         <div class="card-body">
+                            <c:if  test="${hasErrorPass}">
+                                <div  class="alert alert-warning alert-dismissible fade show" role="alert">
+                                    <strong>Error!!!! </strong> ${errorMessagePass}
+                                    <button  type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span  aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                            </c:if>
                             <div class="row gutters">
                                 <div class="col-xl-12  col-lg-12 col-md-12 col-sm-12 col-12">
                                     <h6 class="mb-3 text-primary font_1_3rem">Edit Profile with ID Account</h6>
@@ -160,8 +171,9 @@
                                 </div>
                                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                                     <div class="form-group">
-                                        <label for="txtDoB">Date of Birth</label>
-                                        <input type="text" class="form-control" id="txtDoB" value="${userFind.dob}"  name="dob" name="dob">
+                                        <label >Date of Birth</label>
+<%--                                        <input  type="datetime-local" id ="dob" value="${userFind.dob}" class="form-control" name="dob">--%>
+                                        <input type="text" class="form-control" id="txtDoB" value="${userFind.dob}"  name="dob" >
                                     </div>
                                 </div>
                             </div>

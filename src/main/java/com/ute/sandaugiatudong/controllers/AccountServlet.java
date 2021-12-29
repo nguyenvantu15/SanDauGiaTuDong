@@ -334,7 +334,6 @@ public class AccountServlet extends HttpServlet {
         //Hash mật khẩu để lưu vào database
         String bcryptHashString = BCrypt.withDefaults().hashToString(12, newpass.toCharArray());
 
-
         HttpSession session = request.getSession();
         if (result.verified) {
 
@@ -347,10 +346,13 @@ public class AccountServlet extends HttpServlet {
             ServletUtils.redirect("/Account/Login", request, response);
 
         } else {
+            User u = UserModels.findById(id);
 
-            request.setAttribute("hasError", true);
-            request.setAttribute("errorMessage", "Invalid login");
-            ServletUtils.redirect(String.format("/Account/Update?id=" + id), request, response);
+            request.setAttribute("hasErrorPass", true);
+            request.setAttribute("errorMessagePass", "Mật khẩu cũ không chính xác !");
+            request.setAttribute("userFind",u); //Gui thong tin ra ngoai
+            ServletUtils.forward("/views/vwAccount/Update.jsp", request, response);
+//            ServletUtils.redirect(String.format("/Account/Update?id=" + id), request, response);
         }
 
     }
