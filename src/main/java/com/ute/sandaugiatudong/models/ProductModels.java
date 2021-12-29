@@ -389,4 +389,21 @@ public class ProductModels {
                     .executeAndFetch(Product.class);
         }
     }
+
+    /////////////////////////////////////////////////////////////
+    public static Product checkByIdType(int idType){
+        final String query = "select * from sandaugia.product where idType = :idType";
+        try (Connection con = DbUtils.getConnection()) {
+            List<Product> list = con.createQuery(query)
+                    .addParameter("idType", idType)
+                    .executeAndFetch(Product.class);
+
+            if (list.size() == 0) {
+                return null;
+            }
+
+            return list.get(0);
+        }
+    }
+
 }

@@ -82,4 +82,20 @@ public class TypeModels {
         }
     }
 
+    //Khi xoa Category kiem tra xem danh muc co chứa loại sản phảm nào không
+    public static Type checkByIdCat(int idCat) {
+        final String query = "select * from sandaugia.type where idCat = :idCat";
+        try (Connection con = DbUtils.getConnection()) {
+            List<Type> list = con.createQuery(query)
+                    .addParameter("idCat", idCat)
+                    .executeAndFetch(Type.class);
+
+            if (list.size() == 0) {
+                return null;
+            }
+
+            return list.get(0);
+        }
+    }
+
 }
