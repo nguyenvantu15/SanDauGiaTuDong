@@ -2,6 +2,7 @@ package com.ute.sandaugiatudong.controllers;
 
 import at.favre.lib.crypto.bcrypt.BCrypt;
 import com.ute.sandaugiatudong.beans.Category;
+import com.ute.sandaugiatudong.beans.Product;
 import com.ute.sandaugiatudong.beans.Type;
 import com.ute.sandaugiatudong.beans.User;
 import com.ute.sandaugiatudong.models.*;
@@ -305,8 +306,20 @@ public class AdminServlet extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
 
         int id = Integer.parseInt(request.getParameter("id"));
-       TypeModels.removeProById(id);
-        ServletUtils.redirect("/Admin/TypeManager", request, response);
+        Product procheck = ProductModels.checkByIdType(id);
+        boolean isAvailableType = (procheck == null);
+        if(isAvailableType == true) {
+            TypeModels.removeProById(id);
+            ServletUtils.redirect("/Admin/TypeManager", request, response);
+        }
+        else
+        {
+            List <Type> listType = TypeModels.findAll();
+            request.setAttribute("listType", listType);
+            request.setAttribute("hasErrorType", true);
+            request.setAttribute("errorMessageType", " Thể loại sản phẩm này có chứa sản phẩm. Không thể xóa thể loại này.");
+            ServletUtils.forward("/views/vwAdminManager/TypeManager.jsp", request, response);
+        }
 
     }
 
