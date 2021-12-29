@@ -34,6 +34,14 @@ public class HistoryAuctionModels {
                     .executeAndFetch(HistoryAuction.class);
         }
     }
+    public static List<HistoryAuction> findByIdProduct1(int idPro) {
+        final String query = "SELECT DISTINCT idPro,idBidder FROM sandaugia.historyauction where idPro = :idPro";
+
+        try (Connection con = DbUtils.getConnection()) {
+            return con.createQuery(query).addParameter("idPro", idPro)
+                    .executeAndFetch(HistoryAuction.class);
+        }
+    }
 
     public static List<ProductBidderAuction> findProBidderAuc(int idBidder) {
         final String query = "SELECT DISTINCT idPro,idBidder FROM historyauction WHERE idBidder= :idBidder";

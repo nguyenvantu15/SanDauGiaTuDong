@@ -18,11 +18,20 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
 
 @WebServlet(name = "HomeServlet", value = "/Home/*")
 public class HomeServlet extends HttpServlet {
+    boolean kt = true;
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        if (kt==true){
+            kt = false;
+            ThreadTime threadTime = new ThreadTime();
+            Timer timer = new Timer();
+            timer.schedule(threadTime, 0, 1000);
+        }
+
         String path = request.getPathInfo();
         if (path == null || path.equals("/")) {
             path = "/Index";
