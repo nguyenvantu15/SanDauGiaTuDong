@@ -66,7 +66,6 @@
                 captch = captch.split('').join('');
                 pen.fillText(captch,50,100)
             }
-
             getCaptcha();
 
         </script>
@@ -97,47 +96,34 @@
                         return;
                     }
 
-                    var checkEmail;
-                    $.getJSON('${pageContext.request.contextPath}/Account/checkEmail?email=' + email, function (dataEmail) {
-
-                        if (dataEmail === true) {
-                            checkEmail = true;
-                        }
-                        else {
-                          checkEmail = false;
-                        }
-                    });
-
                     $.getJSON('${pageContext.request.contextPath}/Account/IsAvailable?username=' + userName, function (data) {
 
                         if (data === true) {
-                            if(checkEmail === true)
-                            {
-                                //kiem tra captcha
-                                typedData = document.getElementById('txtUserCap').value;
-                                if (typedData === cap) {
-                                    $('#frmRegister').off('submit').submit();
-                                } else {
-                                    alert("Capcha không chính xác !!!");
+                            $.getJSON('${pageContext.request.contextPath}/Account/checkEmail?email=' +email, function (dataEmail) {
+                                if(dataEmail === true){
+                                    typedData = document.getElementById('txtUserCap').value;
+                                   if(typedData === cap)
+                                   {
+                                       $('#frmRegister').off('submit').submit();
+                                   }
+                                   else {
+                                       alert("Capcha không chính xác !!!");
+                                       document.getElementById('txtUserCap').value = "";
+                                       getCaptcha();
+                                   }
+                                }
+                                else {
+                                    alert("Email đã được sử dụng !!!");
                                     document.getElementById('txtUserCap').value = "";
                                     getCaptcha()
                                 }
-                            }
-                            else {
-                                alert("Email đã được sử dụng !!!");
-                                document.getElementById('txtUserCap').value = "";
-                                getCaptcha()
-                            }
+                            });
                         }
-                        else {
-                            alert('Tên tài khoản đã tồn tại !!!');
-                            document.getElementById('txtUserCap').value = "";
-                            getCaptcha()
+                        else{
+                            alert("Tên tài khoản đã tồn tại !!!")
                         }
                     });
 
-                    // hành vi submit đầu tiên bị chặn lại sau nó kiểm tra rồi gỡ hàm này ra
-                    // $('#frmRegister').off('submit').submit();
                 });
 
                 <%--                css cho ô input ngày sinh--%>
@@ -201,8 +187,11 @@
                     <div class="form-group">
                         <label for="txtUserCap">Captcha </label>
                         <div style="display: flex; justify-content:space-between;align-items:center">
-                            <canvas id="canvas"  style="width: 48%; height: 60px; border: 2px solid grey;"></canvas>
-                            <input style="width: 48%;height: 65px; margin-left: 10px" type="text" class="form-control" id="txtUserCap" name="email" >
+                            <canvas id="canvas"  style="width: 44%; height: 60px; border: 2px solid grey;"></canvas>
+                            <button onclick="getCaptcha()" type="button" class = "btn btn-outline-primary">
+                                <i class="fa fa-refresh" aria-hidden="true"></i>
+                            </button>
+                            <input style="width: 44%;height: 65px;" type="text" class="form-control" id="txtUserCap" name="email" >
                         </div>
 
                     </div>
