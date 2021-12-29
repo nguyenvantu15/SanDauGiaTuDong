@@ -1,5 +1,6 @@
 package com.ute.sandaugiatudong.models;
 
+import com.ute.sandaugiatudong.beans.Product;
 import com.ute.sandaugiatudong.beans.User;
 import com.ute.sandaugiatudong.utils.DbUtils;
 import org.sql2o.Connection;
@@ -30,6 +31,21 @@ public class RegisterSellerModels {
             con.createQuery(sql)
                     .addParameter("id", id)
                     .executeUpdate();
+        }
+    }
+
+    public static User checkRequestUpdateSeller(int id){
+        final String query = "select * from sandaugia.registerseller where id = :id";
+        try (Connection con = DbUtils.getConnection()) {
+            List<User> list = con.createQuery(query)
+                    .addParameter("id", id)
+                    .executeAndFetch(User.class);
+
+            if (list.size() == 0) {
+                return null;
+            }
+
+            return list.get(0);
         }
     }
 }
