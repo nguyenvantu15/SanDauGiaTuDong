@@ -88,8 +88,25 @@ public class AdminServlet extends HttpServlet {
                     Type type = TypeModels.findCatIdByTypeId(id);
                     request.setAttribute("TypeU",type);
 
-
                     ServletUtils.forward("/views/vwAdminManager/UpdateType.jsp", request, response);
+                    break;
+
+//                    Kiểm tra Category nếu trong danh mục có sảm phẩm thì không cho xóa
+                case "/checkCategory":
+                    int idCate = Integer.parseInt(request.getParameter("id"));
+                    //truyen email vao ham tim
+
+
+                    Type typecheck = TypeModels.checkByIdCat(idCate);
+                    boolean isAvailableCate = (typecheck == null);// user = null thi tim k thay => true
+                    System.out.println(idCate);
+
+                    PrintWriter outCate = response.getWriter();
+                    response.setContentType("application/json");
+                    response.setCharacterEncoding("utf-8");
+
+                    outCate.print(isAvailableCate);
+                    outCate.flush();
                     break;
                 default:
                     ServletUtils.forward("/views/404.jsp", request, response);
@@ -266,8 +283,20 @@ public class AdminServlet extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
 
         int id = Integer.parseInt(request.getParameter("id"));
-        CategoryModels.removeCategory(id);
-        ServletUtils.redirect("/Admin/CategoryManager", request, response);
+        Type typecheck = TypeModels.checkByIdCat(id);
+        boolean isAvailableCate = (typecheck == null);
+        if(isAvailableCate == true) {
+            CategoryModels.removeCategory(id);
+            ServletUtils.redirect("/Admin/CategoryManager", request, response);
+        }
+        else
+        {
+            List <Category> listCategory = CategoryModels.findAll();
+            request.setAttribute("listCategory", listCategory);
+            request.setAttribute("hasErrorCate", true);
+            request.setAttribute("errorMessageCate", " Danh mục có chứa sản phẩm. Không thể xóa danh mục này.");
+            ServletUtils.forward("/views/vwAdminManager/CategoryManager.jsp", request, response);
+        }
 
     }
 

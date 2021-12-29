@@ -9,6 +9,15 @@
 
 
 <t:main>
+    <jsp:attribute name="js">
+    <script>
+
+    </script>
+        <script>
+
+        </script>
+
+     </jsp:attribute>
     <jsp:body>
         <div class="card">
             <h4 class="card-header d-flex justify-content-between">
@@ -18,6 +27,14 @@
                     Thêm
                 </a>
             </h4>
+            <c:if  test="${hasErrorCate}">
+                <div  class="alert alert-warning alert-dismissible fade show" role="alert">
+                    <strong>Error! </strong> ${errorMessageCate}
+                    <button  type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span  aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            </c:if>
             <c:choose>
                 <c:when test="${listCategory.size() == 0}">
                     <div class="card-body">
@@ -36,10 +53,9 @@
                             <tbody>
                             <c:forEach items="${listCategory}" var="c">
                                 <tr>
-                                    <form action="" id="frmAdminManager" method="post">
-                                    <td style="width: 172px;"><input type="text" name="id" value="${c.id}" style="width: 100%; border: none" disabled></td>
-                                    <td>${c.name}</td>
-
+                                    <form action="" id="frmCateManager" name="frmCateManager" method="post">
+                                    <td style="width: 172px;"><input type="text" id="id" name="id" value="${c.id}" style="width: 100%; border: none" disabled ></td>
+                                    <td><input type="text" name="name" value="${c.name}" id="nameCate" style="width: 100%; border: none" disabled></td>
                                     <td class="text-right">
                                         <button type="submit" class="btn btn-outline-danger" style="width: 80px" formaction="${pageContext.request.contextPath}/Admin/RemoveCate?id=${c.id} ">
                                             Xóa
