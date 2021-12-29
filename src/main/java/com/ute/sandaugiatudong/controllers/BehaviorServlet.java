@@ -113,7 +113,7 @@ public class BehaviorServlet extends HttpServlet {
                 List<Product> listProAuction = new ArrayList<>();
                 for (int i = 0; i < listProAndBidder.size(); i++) {
                     Product tmp = ProductModels.findById(listProAndBidder.get(i).getIdPro());
-                    if(ProductModels.ProductIsAution(tmp.getId())){
+                    if (ProductModels.ProductIsAution(tmp.getId())) {
                         listProAuction.add(tmp);
                     }
                 }
@@ -151,11 +151,11 @@ public class BehaviorServlet extends HttpServlet {
 
                 //thoi gian
 
-                request.setAttribute("listProAuction",listProAuction);
+                request.setAttribute("listProAuction", listProAuction);
                 ServletUtils.forward("/views/vwAuction/ProductBidderAuction.jsp", request, response);
                 break;
             case "/viewhistoryauction":
-                int producID= Integer.parseInt(request.getParameter("id"));
+                int producID = Integer.parseInt(request.getParameter("id"));
                 Product product1 = ProductModels.findById(producID);
 
                 List<HistoryAuction> historyAuction = HistoryAuctionModels.findByIdProduct(producID);
@@ -177,8 +177,18 @@ public class BehaviorServlet extends HttpServlet {
                 }
                 request.setAttribute("listUser", listUser1);
 
-                request.setAttribute("product",product1);
-                request.setAttribute("historyAuction",historyAuction);
+                List<User> listUserBidder = new ArrayList<>();
+                for (int i = 0; i < listUser1.size(); i++) {
+                    for (int j = 0; j < historyAuction.size(); j++) {
+                        if (listUser1.get(i).getId() == historyAuction.get(j).getIdBidder()) {
+                            listUserBidder.add(listUser1.get(i));
+                            break;
+                        }
+                    }
+                }
+                request.setAttribute("listUserBidder", listUserBidder);
+                request.setAttribute("product", product1);
+                request.setAttribute("historyAuction", historyAuction);
                 ServletUtils.forward("/views/vwAuction/HistoryAuctionProduct.jsp", request, response);
                 break;
             default:
@@ -213,20 +223,106 @@ public class BehaviorServlet extends HttpServlet {
 
                 HistoryAuctionModels.add(rowNew);
 
-                ProductModels.updatePrice(productx.getId(),rowNew.getPriceIn(), rowNew.getBidderCur(), productx.getCountAuction() + 1);
+                ProductModels.updatePrice(productx.getId(), rowNew.getPriceIn(), rowNew.getBidderCur(), productx.getCountAuction() + 1);
 
-                String notify = "Bạn da dau gia thanh cong san pham:"+ productx.getName()+ " muc gia toi da la:"+ Integer.toString(rowNew.getPriceMaxBidder());
+                String notify = "Bạn da dau gia thanh cong san pham:" + productx.getName() + " muc gia toi da la:" + Integer.toString(rowNew.getPriceMaxBidder());
 
                 try {
-                    sendMailNotifyBidder(request,response,notify);
+                    sendMailNotifyBidder(request, response, notify);
                 } catch (MessagingException e) {
                     e.printStackTrace();
                 }
-                ServletUtils.redirect("/Home",request,response);
+                ServletUtils.redirect("/Home", request, response);
+                break;
+            case "/viewhistoryauction":
+                /////////Gửi thông báo
+                String strIdBidderDel = request.getParameter("DeleteBidder");
+                int idBidderDel = Integer.parseInt(strIdBidderDel);
+                User BidderDel = UserModels.findById(idBidderDel);
+                int producID = Integer.parseInt(request.getParameter("id"));
+
+                Product prod = ProductModels.findById(producID);
+
+                String notyfyDel = "ban da bi seller kick khoi phien dau gia san pham: " + prod.getName();
+                try {
+                    sendMailNotifyDel(request, response, notyfyDel, BidderDel.getEmail().trim());
+                } catch (MessagingException e) {
+                    e.printStackTrace();
+                }
+                /////////Xóa biider
+
+                List<HistoryAuction> historyAuction = HistoryAuctionModels.findByIdProduct(producID);
+                List<HistoryAuction> historyAuctionNew = new ArrayList<>();
+                int maxPrice = 0;
+                int iduserMax = 0;
+                if (historyAuction.size() > 0) {
+                    for (int i = 0; i < historyAuction.size(); i++) {
+                        if (historyAuction.get(i).getIdBidder() != idBidderDel) {
+                            HistoryAuction rowTmp = historyAuction.get(i);
+                            if (rowTmp.getPriceMaxBidder() > maxPrice) {
+                                maxPrice = rowTmp.getPriceMaxBidder();
+                                iduserMax= rowTmp.getIdBidder();
+                                HistoryAuction rowToAdd= new HistoryAuction(rowTmp.getIdPro(),rowTmp.getIdBidder(),rowTmp.getPriceMaxBidder(),rowTmp.getPriceIn(),iduserMax,rowTmp.getTime());
+                                historyAuctionNew.add(rowToAdd);
+                            } else {
+                                HistoryAuction rowToAdd= new HistoryAuction(rowTmp.getIdPro(),rowTmp.getIdBidder(),rowTmp.getPriceMaxBidder(),rowTmp.getPriceIn(),iduserMax,rowTmp.getTime());
+                                historyAuctionNew.add(rowToAdd);
+                            }
+                        }
+                    }
+                    HistoryAuctionModels.deleteByIdPro(prod.getId());
+                    for(int i=0;i<historyAuctionNew.size();i++){
+                        HistoryAuctionModels.add(historyAuctionNew.get(i));
+                    }
+                    ProductModels.updatePrice(prod.getId(),historyAuctionNew.get(historyAuctionNew.size()-1).getPriceIn(),historyAuctionNew.get(historyAuctionNew.size()-1).getBidderCur(),prod.getCountAuction());
+                }
+                String url = request.getHeader("referer");
+                if (url == null) url = "/Home";
+                ServletUtils.redirect(url, request, response);
+
+                ////
                 break;
             default:
                 ServletUtils.forward("/views/404.jsp", request, response);
                 break;
+        }
+    }
+
+    private void sendMailNotifyDel(HttpServletRequest request, HttpServletResponse response, String notify, String reMail) throws ServletException, IOException, MessagingException {
+        request.setCharacterEncoding("UTF-8");
+
+        HttpSession session1 = request.getSession();
+        User user = (User) session1.getAttribute("authUser");
+
+//        String reMail= user.getEmail().trim();
+
+        final String sendMail = "atttsystem@gmail.com";
+        final String passSendMail = "ATTT19110306";
+
+        Properties prop = new Properties();
+        prop.put("mail.smtp.host", "smtp.gmail.com");
+        prop.put("mail.smtp.port", "587");
+        prop.put("mail.smtp.auth", "true");
+        prop.put("mail.smtp.starttls.enable", "true");
+        prop.put("mail.smtp.ssl.protocols", "TLSv1.2");
+        Session session = Session.getInstance(prop, new javax.mail.Authenticator() {
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication(sendMail, passSendMail);
+            }
+        });
+        // Đăng nhập được email
+        try {
+            Message message = new MimeMessage(session);
+            message.setFrom(new InternetAddress(sendMail));
+            message.setRecipients(
+                    Message.RecipientType.TO,
+                    InternetAddress.parse(reMail)
+            );
+            message.setSubject("Thông Báo:");
+            message.setText(notify);
+            Transport.send(message);
+        } catch (Exception e) {
+
         }
     }
 
@@ -241,24 +337,24 @@ public class BehaviorServlet extends HttpServlet {
         HttpSession session1 = request.getSession();
         User user = (User) session1.getAttribute("authUser");
 
-        String reMail= user.getEmail().trim();
+        String reMail = user.getEmail().trim();
 
         final String sendMail = "atttsystem@gmail.com";
         final String passSendMail = "ATTT19110306";
 
         Properties prop = new Properties();
-        prop.put("mail.smtp.host","smtp.gmail.com");
-        prop.put("mail.smtp.port","587");
-        prop.put("mail.smtp.auth","true");
-        prop.put("mail.smtp.starttls.enable","true");
+        prop.put("mail.smtp.host", "smtp.gmail.com");
+        prop.put("mail.smtp.port", "587");
+        prop.put("mail.smtp.auth", "true");
+        prop.put("mail.smtp.starttls.enable", "true");
         prop.put("mail.smtp.ssl.protocols", "TLSv1.2");
-        Session session = Session.getInstance(prop,new javax.mail.Authenticator(){
-            protected PasswordAuthentication getPasswordAuthentication(){
-                return new PasswordAuthentication(sendMail,passSendMail);
+        Session session = Session.getInstance(prop, new javax.mail.Authenticator() {
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication(sendMail, passSendMail);
             }
         });
         // Đăng nhập được email
-        try{
+        try {
             Message message = new MimeMessage(session);
             message.setFrom(new InternetAddress(sendMail));
             message.setRecipients(
@@ -268,7 +364,7 @@ public class BehaviorServlet extends HttpServlet {
             message.setSubject("Thông Báo:");
             message.setText(notify);
             Transport.send(message);
-        }catch (Exception e){
+        } catch (Exception e) {
 
         }
     }
@@ -305,9 +401,9 @@ public class BehaviorServlet extends HttpServlet {
 
             int priceNew = product.getPrice();
 
-            session.setAttribute("rowNew",rowNew);
-            session.setAttribute("product",product);
-            session.setAttribute("priceNew",maxUserPrice);
+            session.setAttribute("rowNew", rowNew);
+            session.setAttribute("product", product);
+            session.setAttribute("priceNew", maxUserPrice);
             ServletUtils.redirect("/Behavior/confirmauction", request, response);
         } else {
             int priceMaxBidder = 0;
@@ -346,9 +442,9 @@ public class BehaviorServlet extends HttpServlet {
 //                String url = request.getHeader("referer");
 //                if (url == null) url = "/Home";
                 int priceNew = priceMaxBidder + priceInPlush;
-                session.setAttribute("rowNew",rowNew);
-                session.setAttribute("product",product);
-                session.setAttribute("priceNew",maxUserPrice);
+                session.setAttribute("rowNew", rowNew);
+                session.setAttribute("product", product);
+                session.setAttribute("priceNew", maxUserPrice);
                 ServletUtils.redirect("/Behavior/confirmauction", request, response);
             } else {
                 // tìm hàng có giá vào max
@@ -362,9 +458,9 @@ public class BehaviorServlet extends HttpServlet {
 //                if (url == null) url = "/Home";
 
                 int priceNew1 = maxUserPrice;
-                session.setAttribute("rowNew",rowNew);
-                session.setAttribute("product",product);
-                session.setAttribute("priceNew",maxUserPrice);
+                session.setAttribute("rowNew", rowNew);
+                session.setAttribute("product", product);
+                session.setAttribute("priceNew", maxUserPrice);
 
                 ServletUtils.redirect("/Behavior/confirmauction", request, response);
             }

@@ -43,4 +43,13 @@ public class HistoryAuctionModels {
                     .executeAndFetch(ProductBidderAuction.class);
         }
     }
+    public static void deleteByIdPro(int idPro)
+    {
+        String insertSQL = "DELETE FROM historyauction WHERE idPro= :idPro";
+        try (Connection con = DbUtils.getConnection()){
+            con.createQuery(insertSQL)
+                    .addParameter("idPro",idPro)
+                    .executeUpdate();
+        }
+    }
 }
