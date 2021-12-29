@@ -252,6 +252,7 @@ public class BehaviorServlet extends HttpServlet {
                 /////////Xóa biider
 
                 List<HistoryAuction> historyAuction = HistoryAuctionModels.findByIdProduct(producID);
+                int priceNo1=historyAuction.get(0).getPriceIn();
                 List<HistoryAuction> historyAuctionNew = new ArrayList<>();
                 int maxPrice = 0;
                 int iduserMax = 0;
@@ -270,11 +271,17 @@ public class BehaviorServlet extends HttpServlet {
                             }
                         }
                     }
-                    HistoryAuctionModels.deleteByIdPro(prod.getId());
-                    for(int i=0;i<historyAuctionNew.size();i++){
-                        HistoryAuctionModels.add(historyAuctionNew.get(i));
+                    if(historyAuctionNew.size()==0){
+                        HistoryAuctionModels.deleteByIdPro(prod.getId());
+                        ProductModels.updatePrice(prod.getId(),priceNo1,0,0);
+                    }else{
+                        HistoryAuctionModels.deleteByIdPro(prod.getId());
+                        for(int i=0;i<historyAuctionNew.size();i++){
+                            HistoryAuctionModels.add(historyAuctionNew.get(i));
+                        }
+                        ProductModels.updatePrice(prod.getId(),historyAuctionNew.get(historyAuctionNew.size()-1).getPriceIn(),historyAuctionNew.get(historyAuctionNew.size()-1).getBidderCur(),prod.getCountAuction());
                     }
-                    ProductModels.updatePrice(prod.getId(),historyAuctionNew.get(historyAuctionNew.size()-1).getPriceIn(),historyAuctionNew.get(historyAuctionNew.size()-1).getBidderCur(),prod.getCountAuction());
+
                 }
                 String url = request.getHeader("referer");
                 if (url == null) url = "/Home";

@@ -301,7 +301,7 @@
                                     <i class="fa fa-cart-plus" aria-hidden="true"></i>
                                     Đấu giá
                                 </a>
-                                <a class="btn btn-outline-success" href="${pageContext.request.contextPath}/Behavior/watchlist?id=${c.id}"
+                                <a class="btn btn-outline-success" href="${pageContext.request.contextPath}/Behavior/watchlist?id=${product.id}"
                                    role="button">
                                     <i class="fa fa-plus" aria-hidden="true"></i>
                                     Add Watch list

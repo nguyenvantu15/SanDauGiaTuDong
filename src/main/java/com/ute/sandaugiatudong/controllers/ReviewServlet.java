@@ -86,9 +86,11 @@ public class ReviewServlet extends HttpServlet {
                     break;
                 }
                 int idSeller = product.getIdUserSell();
-
+                int idUserCur = product.getIdUserCur();
                 HttpSession session = request.getSession();
                 User u = (User) session.getAttribute("authUser");
+
+                String comment = request.getParameter("commentSeller");
 
                 String txtLike = request.getParameter("likeSeller");
                 int likefrm = Integer.parseInt(txtLike);
@@ -98,20 +100,32 @@ public class ReviewServlet extends HttpServlet {
                 } else {
                     like = -1;
                 }
-                String comment = request.getParameter("commentSeller");
-
 
                 LocalDateTime now = LocalDateTime.now();
                 String txtcomment = "<p>" + "#" + u.getId() + " " + now.getDayOfMonth() + "/" + now.getMonthValue() + "/" + now.getYear() + ":" + comment + "</p>";
-                Review review = new Review(u.getId(), idSeller, like, txtcomment);
+                Review review = new Review();
+                if(u.getPermission()==1){
+                    review = new Review(u.getId(), idSeller, like, txtcomment);
+
+                    User seller = UserModels.findById(idSeller);
+                    String sellerCmt = seller.getComment() + txtcomment;
+                    int sellerMark = seller.getMark() + like;
+                    User sellerNew = new User(seller.getId(), seller.getPermission(), sellerMark, seller.getUsername(), seller.getPassword(), seller.getEmail(), seller.getPhone(), seller.getName(), sellerCmt, seller.getDob());
+
+                    UserModels.update1(sellerNew);
+                }else{
+                    review = new Review(u.getId(), idUserCur, like, txtcomment);
+                    User UserCur = UserModels.findById(idUserCur);
+                    String BidderCmt = UserCur.getComment() + txtcomment;
+                    int sellerMark = UserCur.getMark() + like;
+                    User sellerNew = new User(UserCur.getId(), UserCur.getPermission(), sellerMark, UserCur.getUsername(), UserCur.getPassword(), UserCur.getEmail(), UserCur.getPhone(), UserCur.getName(), BidderCmt, UserCur.getDob());
+
+                    UserModels.update1(sellerNew);
+                }
+
                 ReviewModels.add(review);
 
-                User seller = UserModels.findById(idSeller);
-                String sellerCmt = seller.getComment() + txtcomment;
-                int sellerMark = seller.getMark() + like;
-                User sellerNew = new User(seller.getId(), seller.getPermission(), sellerMark, seller.getUsername(), seller.getPassword(), seller.getEmail(), seller.getPhone(), seller.getName(), sellerCmt, seller.getDob());
 
-                UserModels.update1(sellerNew);
 
                 String url = request.getHeader("referer");
                 if (url == null) url = "/Home";
