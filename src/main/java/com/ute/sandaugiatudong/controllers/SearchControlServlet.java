@@ -36,7 +36,6 @@ public class SearchControlServlet extends HttpServlet {
                 String p1 = request.getParameter("txtsearch").trim();
                 String textSearch = request.getParameter("txtsearch");
                 int typeSearch = Integer.parseInt(request.getParameter("searchType").trim());
-                System.out.println(typeSearch);
                 String str = "\'" + p1 + "\'";
 
                 //list userseller
@@ -60,7 +59,6 @@ public class SearchControlServlet extends HttpServlet {
                 List<Product> list = new ArrayList<>();
 
                 if(typeSearch == 1){
-                    System.out.println("name");
                     switch (a) {
                         case "1":
                             list = ProductModels.findAllSearchSortPriceUp(str);
@@ -85,7 +83,6 @@ public class SearchControlServlet extends HttpServlet {
                     }
                 }
                 else if (typeSearch == 2){
-                    System.out.println("tiny");
                     switch (a) {
                         case "1":
                             list = ProductModels.findAllSearchTinyDesPriceUp(str);

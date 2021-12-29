@@ -143,20 +143,13 @@
         .fa-home{
             color: #fcd001;
         }
-        #searchType{
-            background:#222838;
-            color:#28a745;
-            border-radius: 4px;
-            border-color:#28a745;
-            height: 36px;
-            outline: none;
-            margin-left: 12px;
-            font-size: 1.1rem;
+        .selectType{
+            height: 35px;
         }
-        select option{
-            display: block;
-            width: 100px;
+        .selectType select,button{
+            height: 100%;
         }
+
     </style>
 
 
@@ -181,12 +174,17 @@
             </ul>
             <form id="frmSearch" action="${pageContext.request.contextPath}/SearchControl/Search" method="get" class="form-inline my-2 my-lg-0">
                 <input class="form-control-sm mr-sm-2 " id="search" type="text" name="txtsearch" placeholder="Search" >
-                <button  type="submit" name="btnSearch" class="btn btn-outline-success btn_search btn-sm">Search</button>
 
-                <select  name="searchType" id="searchType" >
-                    <option  value="1" selected>Tìm kiếm theo tên</option>
-                    <option value="2" >Tìm kiếm theo tinyDes</option>
-                </select>
+                <div class="input-group selectType">
+                    <select class="custom-select" name="searchType" id="searchType">
+                        <option style="height: 50px" value="1" selected>Tìm kiếm theo tên</option>
+                        <option value="2" >Tìm kiếm theo tinyDes</option>
+                    </select>
+                    <div class="input-group-append">
+                        <button  type="submit" name="btnSearch" class="btn btn-outline-success btn_search btn-sm">Search</button>
+                    </div>
+                </div>
+
             </form>
 
         </div>
