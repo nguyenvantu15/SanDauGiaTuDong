@@ -35,6 +35,7 @@ public class SearchControlServlet extends HttpServlet {
                 request.setCharacterEncoding("UTF-8");
                 String p1 = request.getParameter("txtsearch").trim();
                 String textSearch = request.getParameter("txtsearch");
+                int typeSearch = Integer.parseInt(request.getParameter("searchType").trim());
                 String str = "\'" + p1 + "\'";
 
                 //list userseller
@@ -57,28 +58,59 @@ public class SearchControlServlet extends HttpServlet {
 
                 List<Product> list = new ArrayList<>();
 
-                switch (a) {
-                    case "1":
-                        list = ProductModels.findAllSearchSortPriceUp(str);
-                        a = "0";
-                        break;
-                    case "2":
-                        list = ProductModels.findAllSearchSortPriceDown(str);
-                        a = "0";
-                        break;
-                    case "3":
-                        list = ProductModels.findAllSearchSortTimeEndUp(str);
-                        a = "0";
-                        break;
-                    case "4":
-                        list = ProductModels.findAllSearchSortTimeEndDown(str);
-                        a = "0";
-                        break;
-                    default:
-                        list = ProductModels.findAllSearch(str);
-                        a = "0";
-                        break;
+                if(typeSearch == 1){
+                    switch (a) {
+                        case "1":
+                            list = ProductModels.findAllSearchSortPriceUp(str);
+                            a = "0";
+                            break;
+                        case "2":
+                            list = ProductModels.findAllSearchSortPriceDown(str);
+                            a = "0";
+                            break;
+                        case "3":
+                            list = ProductModels.findAllSearchSortTimeEndUp(str);
+                            a = "0";
+                            break;
+                        case "4":
+                            list = ProductModels.findAllSearchSortTimeEndDown(str);
+                            a = "0";
+                            break;
+                        default:
+                            list = ProductModels.findAllSearch(str);
+                            a = "0";
+                            break;
+                    }
                 }
+                else if (typeSearch == 2){
+                    switch (a) {
+                        case "1":
+                            list = ProductModels.findAllSearchTinyDesPriceUp(str);
+                            a = "0";
+                            break;
+                        case "2":
+                            list = ProductModels.findAllSearchTinyDesPriceDown(str);
+                            a = "0";
+                            break;
+                        case "3":
+                            list = ProductModels.findAllSearchTinyDesTimeEndUp(str);
+                            a = "0";
+                            break;
+                        case "4":
+                            list = ProductModels.findAllSearchTinyDesTimeEndDown(str);
+                            a = "0";
+                            break;
+                        default:
+                            list = ProductModels.findAllSearchTinyDes(str);
+                            a = "0";
+                            break;
+                    }
+                }
+                else {
+                    list = ProductModels.findAllSearchTinyDesTimeEndDown(str);
+                    a = "0";
+                }
+
                 /////////////
                 DateTimeFormatter df = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
                 LocalDateTime nowTmp = LocalDateTime.now();

@@ -143,6 +143,13 @@
         .fa-home{
             color: #fcd001;
         }
+        .selectType{
+            height: 35px;
+        }
+        .selectType select,button{
+            height: 100%;
+        }
+
     </style>
 
 
@@ -165,23 +172,19 @@
                 <li class="nav-item dropdown">
                 </li>
             </ul>
-            <form id="frmSearch" action="${pageContext.request.contextPath}/SearchControl/Search" method="get" class="form-inline my-2 my-lg-0" id="frmSearch">
+            <form id="frmSearch" action="${pageContext.request.contextPath}/SearchControl/Search" method="get" class="form-inline my-2 my-lg-0">
                 <input class="form-control-sm mr-sm-2 " id="search" type="text" name="txtsearch" placeholder="Search" >
-                <button  type="submit" name="btnSearch" class="btn btn-outline-success btn_search btn-sm">Search</button>
 
-<%--                <select multiple class="form-control" id="searchType">--%>
-<%--                    <option value="1">1</option>--%>
-<%--                    <option value="2" >2</option>--%>
-<%--                    <option>3</option>--%>
-<%--                    <option>4</option>--%>
-<%--                    <option>5</option>--%>
-<%--                </select>--%>
-<%--                <select name="sortPro">--%>
-<%--                    <option value="1">Sắp xếp giá tăng</option>--%>
-<%--                    <option value="2">Sắp xếp giá giảm</option>--%>
-<%--                    <option value="3">Thời gian kết thúc tăng</option>--%>
-<%--                    <option value="4">Thời gian kết thúc giảm</option>--%>
-<%--                </select>--%>
+                <div class="input-group selectType">
+                    <select class="custom-select" name="searchType" id="searchType">
+                        <option style="height: 50px" value="1" selected>Tìm kiếm theo tên</option>
+                        <option value="2" >Tìm kiếm theo tinyDes</option>
+                    </select>
+                    <div class="input-group-append">
+                        <button  type="submit" name="btnSearch" class="btn btn-outline-success btn_search btn-sm">Search</button>
+                    </div>
+                </div>
+
             </form>
 
         </div>
@@ -321,7 +324,14 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.min.js" integrity="sha384-VHvPCCyXqtD5DqJeNxl2dtTyhF78xXNXdkwX1CZeRusQfRKp+tA7hAShOK/B/fQ2" crossorigin="anonymous"></script>
-
+<script>
+    $('#frmSearch').on('submit', function(e){
+        e.preventDefault();
+        const txtS = $('#search').val();
+        if(txtS.length !== 0)
+            $('#frmSearch').off('submit').submit();
+    });
+</script>
 <%--Lỗ js--%>
 <jsp:invoke fragment="js"/>
 </body>

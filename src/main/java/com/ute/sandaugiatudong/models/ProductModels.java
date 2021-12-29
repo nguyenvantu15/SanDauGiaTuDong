@@ -347,4 +347,46 @@ public class ProductModels {
                     .executeAndFetch(Product.class);
         }
     }
+    /////////////////////////////////////////////////////////////
+    public static List<Product> findAllSearchTinyDes(String string) {
+        String query = "select * from sandaugia.product where match(product.tinyDes) against(" + string + ")" ;
+
+        try (Connection con = DbUtils.getConnection()) {
+            return con.createQuery(query)
+                    .executeAndFetch(Product.class);
+        }
+    }
+    public static List<Product> findAllSearchTinyDesPriceUp(String string) {
+        String query = "select * from sandaugia.product where match(product.tinyDes) against(" + string + ") ORDER BY price";
+
+        try (Connection con = DbUtils.getConnection()) {
+            return con.createQuery(query)
+                    .executeAndFetch(Product.class);
+        }
+    }
+    public static List<Product> findAllSearchTinyDesPriceDown(String string) {
+        String query = "select * from sandaugia.product where match(product.tinyDes) against(" + string + ") ORDER BY price DESC ";
+
+        try (Connection con = DbUtils.getConnection()) {
+            return con.createQuery(query)
+                    .executeAndFetch(Product.class);
+        }
+    }
+
+    public static List<Product> findAllSearchTinyDesTimeEndUp(String string) {
+        String query = "select * from sandaugia.product where match(product.tinyDes) against(" + string + ") ORDER BY timeEnd";
+
+        try (Connection con = DbUtils.getConnection()) {
+            return con.createQuery(query)
+                    .executeAndFetch(Product.class);
+        }
+    }
+    public static List<Product> findAllSearchTinyDesTimeEndDown(String string) {
+        String query = "select * from sandaugia.product where match(product.tinyDes) against(" + string + ") ORDER BY timeEnd DESC";
+
+        try (Connection con = DbUtils.getConnection()) {
+            return con.createQuery(query)
+                    .executeAndFetch(Product.class);
+        }
+    }
 }

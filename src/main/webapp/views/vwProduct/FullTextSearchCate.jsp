@@ -63,6 +63,12 @@
             .dateTimeText{
                 color : red;
             }
+            .selectT{
+                height: 40px;
+            }
+            .selectT select,button{
+                height: 100%;
+            }
         </style>
     </jsp:attribute>
 
@@ -184,21 +190,25 @@
                 </div>
             </c:when>
             <c:otherwise>
-                <div class="row rowHead">
+                <div class="row rowHead mb-5">
                     <div class="ml-3">
                         <h4>Kết quả tìm kiếm cho: ${textSearch}</h4>
                     </div>
                     <div class="mr-3 d-flex">
                         <form action="" method="post">
-                            <select name="sortPro">
-                                <option value="1">Sắp xếp giá tăng</option>
-                                <option value="2">Sắp xếp giá giảm</option>
-                                <option value="3">Thời gian kết thúc tăng</option>
-                                <option value="4">Thời gian kết thúc giảm</option>
-                            </select>
-                            <button type="submit" class="btn btn-secondary pt-1 pb-0 mb-1">
-                                Xem
-                            </button>
+                            <div class="input-group selectT">
+                                <select class="custom-select" name="sortPro">
+                                    <option value="1">Sắp xếp giá tăng</option>
+                                    <option value="2">Sắp xếp giá giảm</option>
+                                    <option value="3">Thời gian kết thúc tăng</option>
+                                    <option value="4">Thời gian kết thúc giảm</option>
+                                </select>
+                                <div class="input-group-append">
+                                    <button type="submit" class="btn btn-secondary pb-0 pt-0 mb-1">
+                                        Xem
+                                    </button>
+                                </div>
+                            </div>
                         </form>
 
                     </div>
