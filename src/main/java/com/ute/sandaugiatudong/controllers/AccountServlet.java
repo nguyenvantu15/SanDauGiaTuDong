@@ -164,7 +164,6 @@ public class AccountServlet extends HttpServlet {
         }
     }
 
-
     private void confirmOTP(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         request.setCharacterEncoding("UTF-8");
@@ -254,10 +253,19 @@ public class AccountServlet extends HttpServlet {
         String phone = request.getParameter("phone");
         int  permission = Integer.parseInt(request.getParameter("permission"));
 
-        User u = new User(id,permission,username,email,phone,name);
-        UserModels.addRegisterSeller(u);
+        User userRegistered = RegisterSellerModels.checkRequestUpdateSeller(id);
+        boolean isAvailableType = (userRegistered == null);
+        if(isAvailableType == true) {
+            User u = new User(id, permission, username, email, phone, name);
+            UserModels.addRegisterSeller(u);
+            ServletUtils.forward("/views/vwAccount/Profile.jsp",request,response);
+        }
+        else{
+            request.setAttribute("hasErrorRequestSeller", true);
+            request.setAttribute("errorMessageRequestSeller", "Bạn đã gửi yêu cầu năng cấp seller rồi !!!");
 
-        ServletUtils.forward("/views/vwAccount/Profile.jsp",request,response);
+            ServletUtils.forward("/views/vwAccount/Profile.jsp",request,response);
+        }
 
     }
 

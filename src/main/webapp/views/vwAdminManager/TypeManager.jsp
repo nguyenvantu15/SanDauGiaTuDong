@@ -18,6 +18,14 @@
                     Thêm
                 </a>
             </h4>
+            <c:if  test="${hasErrorType}">
+                <div  class="alert alert-warning alert-dismissible fade show" role="alert">
+                    <strong>Error! </strong> ${errorMessageType}
+                    <button  type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span  aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            </c:if>
             <c:choose>
                 <c:when test="${listType.size() == 0}">
                     <div class="card-body">

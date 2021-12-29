@@ -111,6 +111,14 @@
                     <form action="" method="post" id="frmRegisterSeller"class="card h-100">
                     <div class="card h-100">
                         <div class="card-body">
+                            <c:if  test="${hasErrorRequestSeller}">
+                                <div  class="alert alert-warning alert-dismissible fade show" role="alert">
+                                    <strong>Yêu cầu nâng cấp thất bại! </strong> ${errorMessageRequestSeller}
+                                    <button  type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span  aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                            </c:if>
                             <div class="row gutters">
 
                                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
