@@ -176,10 +176,6 @@
                 <input class="form-control-sm mr-sm-2 " id="search" type="text" name="txtsearch" placeholder="Search" >
 
                 <div class="input-group selectType">
-                    <select class="custom-select" name="searchType" id="searchType">
-                        <option style="height: 50px" value="1" selected>Tìm kiếm theo tên</option>
-                        <option value="2" >Tìm kiếm theo tinyDes</option>
-                    </select>
                     <div class="input-group-append">
                         <button  type="submit" name="btnSearch" class="btn btn-outline-success btn_search btn-sm">Search</button>
                     </div>

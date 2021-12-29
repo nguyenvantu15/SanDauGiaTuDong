@@ -35,7 +35,7 @@ public class SearchControlServlet extends HttpServlet {
                 request.setCharacterEncoding("UTF-8");
                 String p1 = request.getParameter("txtsearch").trim();
                 String textSearch = request.getParameter("txtsearch");
-                int typeSearch = Integer.parseInt(request.getParameter("searchType").trim());
+
                 String str = "\'" + p1 + "\'";
 
                 //list userseller
@@ -56,60 +56,48 @@ public class SearchControlServlet extends HttpServlet {
                 }
                 request.setAttribute("listUser", listUser);
 
-                List<Product> list = new ArrayList<>();
+                List<Product> list;
+                List<Product> list1 = new ArrayList<>();
+                List<Product> list2 = new ArrayList<>();
 
-                if(typeSearch == 1){
                     switch (a) {
                         case "1":
-                            list = ProductModels.findAllSearchSortPriceUp(str);
+                            list1 = ProductModels.findAllSearchSortPriceUp(str);
+                            list2 = ProductModels.findAllSearchTinyDesPriceUp(str);
+                            list = new ArrayList<Product>(list1);
+                            list.addAll(list2);
                             a = "0";
                             break;
                         case "2":
-                            list = ProductModels.findAllSearchSortPriceDown(str);
+                            list1 = ProductModels.findAllSearchSortPriceDown(str);
+                            list2 = ProductModels.findAllSearchTinyDesPriceDown(str);
+                            list = new ArrayList<Product>(list1);
+                            list.addAll(list2);
                             a = "0";
                             break;
                         case "3":
-                            list = ProductModels.findAllSearchSortTimeEndUp(str);
+                            list1 = ProductModels.findAllSearchSortTimeEndUp(str);
+                            list2 = ProductModels.findAllSearchTinyDesTimeEndUp(str);
+                            list = new ArrayList<Product>(list1);
+                            list.addAll(list2);
                             a = "0";
                             break;
                         case "4":
-                            list = ProductModels.findAllSearchSortTimeEndDown(str);
+                            list1 = ProductModels.findAllSearchSortTimeEndDown(str);
+                            list2 = ProductModels.findAllSearchTinyDesTimeEndDown(str);
+                            list = new ArrayList<Product>(list1);
+                            list.addAll(list2);
                             a = "0";
                             break;
                         default:
-                            list = ProductModels.findAllSearch(str);
+                            list1 = ProductModels.findAllSearch(str);
+                            list2 = ProductModels.findAllSearchTinyDes(str);
+                            list = new ArrayList<Product>(list1);
+                            list.addAll(list2);
+//                            list = ProductModels.findAllSearch(str);
                             a = "0";
                             break;
                     }
-                }
-                else if (typeSearch == 2){
-                    switch (a) {
-                        case "1":
-                            list = ProductModels.findAllSearchTinyDesPriceUp(str);
-                            a = "0";
-                            break;
-                        case "2":
-                            list = ProductModels.findAllSearchTinyDesPriceDown(str);
-                            a = "0";
-                            break;
-                        case "3":
-                            list = ProductModels.findAllSearchTinyDesTimeEndUp(str);
-                            a = "0";
-                            break;
-                        case "4":
-                            list = ProductModels.findAllSearchTinyDesTimeEndDown(str);
-                            a = "0";
-                            break;
-                        default:
-                            list = ProductModels.findAllSearchTinyDes(str);
-                            a = "0";
-                            break;
-                    }
-                }
-                else {
-                    list = ProductModels.findAllSearchTinyDesTimeEndDown(str);
-                    a = "0";
-                }
 
                 /////////////
                 DateTimeFormatter df = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
