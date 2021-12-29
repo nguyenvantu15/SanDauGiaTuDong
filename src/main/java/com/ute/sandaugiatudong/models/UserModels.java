@@ -120,6 +120,21 @@ public class UserModels {
         }
     }
 
+    public static User findByEmail(String email){
+        final String query = "select * from sandaugia.user where email = :email";
+        try (Connection con = DbUtils.getConnection()) {
+            List<User> list = con.createQuery(query)
+                    .addParameter("email", email)
+                    .executeAndFetch(User.class);
+
+            if (list.size() == 0) {
+                return null;
+            }
+
+            return list.get(0);
+        }
+    }
+
     public static void removeUserById(int id) {
         final String query = "delete from sandaugia.user where id =" + id;
         try (Connection con = DbUtils.getConnection()) {

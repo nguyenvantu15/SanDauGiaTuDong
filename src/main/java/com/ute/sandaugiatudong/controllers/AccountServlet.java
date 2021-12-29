@@ -77,7 +77,7 @@ public class AccountServlet extends HttpServlet {
                     break;
 
                 case "/IsAvailable":
-                    String username = request.getParameter("username");
+                    String username = request.getParameter("username").trim();
                     //truyen username vao ham tim
                     User user = UserModels.findByUserName(username);
                     boolean isAvailable = (user == null);// user = null thi tim k thay => true
@@ -90,6 +90,19 @@ public class AccountServlet extends HttpServlet {
                     out.flush();
                     break;
 
+                case "/checkEmail":
+                    String emailCheck = request.getParameter("email").trim();
+                    //truyen email vao ham tim
+                    User emailU = UserModels.findByEmail(emailCheck);
+                    boolean isAvailableEmail = (emailU == null);// user = null thi tim k thay => true
+
+                    PrintWriter outEmail = response.getWriter();
+                    response.setContentType("application/json");
+                    response.setCharacterEncoding("utf-8");
+
+                    outEmail.print(isAvailableEmail);
+                    outEmail.flush();
+                    break;
                 default:
                     ServletUtils.forward("/views/404.jsp",request,response);
                     break;
@@ -209,8 +222,9 @@ public class AccountServlet extends HttpServlet {
             message.setSubject("Code OTP");
             message.setText(String.valueOf(OTP));
             Transport.send(message);
+            System.out.println("Done " + OTP);
         }catch (Exception e){
-
+            System.out.println("Loi gui mail");
         }
 
 

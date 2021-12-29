@@ -75,13 +75,13 @@
                 <%--                kiem tra truoc khi submit--%>
                 $('#frmRegister').on('submit', function(e){
                     e.preventDefault();
-                    const userName = $('#txtUserName').val();
+                    const userName = $('#txtUserName').val().trim();
                     const passWord = $('#txtPassWord').val();
                     const rePass= $('#txtConfirm').val();
                     const name = $('#txtName').val();
                     const doB = $('#txtDoB').val();
                     const phone = $('#txtPhone').val();
-                    const email = $('#txtEmail').val();
+                    const email = $('#txtEmail').val().trim();
 
                     // const  checkRepass = checkRepass(passWord.trim(), rePass.trim());
                     if(userName.length === 0 || passWord.length === 0 || rePass.length === 0 || doB ==='__/__/____'
@@ -97,21 +97,42 @@
                         return;
                     }
 
+                    var checkEmail;
+                    $.getJSON('${pageContext.request.contextPath}/Account/checkEmail?email=' + email, function (dataEmail) {
 
-                    $.getJSON('${pageContext.request.contextPath}/Account/IsAvailable?user=' + userName, function (data) {
-
-                        if (data === true) {
-                            //kiem tra captcha
-                            typedData = document.getElementById('txtUserCap').value;
-                            if (typedData === cap) {
-                                $('#frmRegister').off('submit').submit();
-                            } else
-                                alert("Capcha không chính xác !!!");
-                                document.getElementById('txtUserCap').value = "";
-                                getCaptcha();
+                        if (dataEmail === true) {
+                            checkEmail = true;
                         }
                         else {
-                            alert('Tài khoản đã tồn tại !!!');
+                          checkEmail = false;
+                        }
+                    });
+
+                    $.getJSON('${pageContext.request.contextPath}/Account/IsAvailable?username=' + userName, function (data) {
+
+                        if (data === true) {
+                            if(checkEmail === true)
+                            {
+                                //kiem tra captcha
+                                typedData = document.getElementById('txtUserCap').value;
+                                if (typedData === cap) {
+                                    $('#frmRegister').off('submit').submit();
+                                } else {
+                                    alert("Capcha không chính xác !!!");
+                                    document.getElementById('txtUserCap').value = "";
+                                    getCaptcha()
+                                }
+                            }
+                            else {
+                                alert("Email đã được sử dụng !!!");
+                                document.getElementById('txtUserCap').value = "";
+                                getCaptcha()
+                            }
+                        }
+                        else {
+                            alert('Tên tài khoản đã tồn tại !!!');
+                            document.getElementById('txtUserCap').value = "";
+                            getCaptcha()
                         }
                     });
 
