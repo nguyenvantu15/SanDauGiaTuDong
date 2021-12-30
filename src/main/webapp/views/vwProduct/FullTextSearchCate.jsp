@@ -7,6 +7,7 @@
 <jsp:useBean id="listDateTimeStart" scope="request" type="java.util.List<com.ute.sandaugiatudong.beans.DateTimeNew>"/>
 <jsp:useBean id="timenow" scope="request" type="com.ute.sandaugiatudong.beans.DateTimeNew"/>
 <jsp:useBean id="listUser" scope="request" type="java.util.List<com.ute.sandaugiatudong.beans.User>"/>
+<jsp:useBean id="listTimeUp" scope="request" type="java.util.List<com.ute.sandaugiatudong.beans.timeUpNMinute>"/>
 <t:main>
     <jsp:attribute name="css">
         <style>
@@ -384,6 +385,11 @@
                                             <small>Giây</small>
                                         </div>
                                     </div>
+                                    <c:forEach items="${listTimeUp}" var="t">
+                                        <c:if test="${p.id == t.idPro}">
+                                            <small>Mới đăng : ${t.min} phút trước</small>
+                                        </c:if>
+                                    </c:forEach>
                                 </div>
                                 <div class="card-footer text-muted">
                                     <a class="btn btn-sm btn-outline-primary"
