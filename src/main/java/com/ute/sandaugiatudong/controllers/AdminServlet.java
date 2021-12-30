@@ -72,6 +72,9 @@ public class AdminServlet extends HttpServlet {
                 case "/TypeManager":
                     List <Type> listType = TypeModels.findAll();
                     request.setAttribute("listType", listType);
+
+                    List <Count> listPrOfType = ProductModels.countProductOfType();
+                    request.setAttribute("listPrOfType",listPrOfType);
                     ServletUtils.forward("/views/vwAdminManager/TypeManager.jsp", request, response);
                     break;
 
@@ -317,6 +320,9 @@ public class AdminServlet extends HttpServlet {
         }
         else
         {
+            List <Count> listPrOfType = ProductModels.countProductOfType();
+            request.setAttribute("listPrOfType",listPrOfType);
+
             List <Type> listType = TypeModels.findAll();
             request.setAttribute("listType", listType);
             request.setAttribute("hasErrorType", true);
