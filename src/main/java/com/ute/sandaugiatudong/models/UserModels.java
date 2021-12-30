@@ -10,7 +10,7 @@ import java.util.List;
 public class UserModels {
     public static void add(User u)
     {
-        String insertSQL = "INSERT INTO sandaugia.user (username, password, email, phone, permission, name, dob) VALUES (:username,:password,:email,:phone,:permission,:name,:dob)";
+        String insertSQL = "INSERT INTO user (username, password, email, phone, permission, name, dob) VALUES (:username,:password,:email,:phone,:permission,:name,:dob)";
         try (Connection con = DbUtils.getConnection()){
             con.createQuery(insertSQL)
                     .addParameter("username",u.getUsername())
@@ -26,7 +26,7 @@ public class UserModels {
 
     public static void addRegisterSeller(User u)
     {
-        String insertSQL = "INSERT INTO sandaugia.registerseller (id,username, email, phone,permission, name) VALUES (:id,:username,:email,:phone,:permission,:name)";
+        String insertSQL = "INSERT INTO registerseller (id,username, email, phone,permission, name) VALUES (:id,:username,:email,:phone,:permission,:name)";
         try (Connection con = DbUtils.getConnection()){
             con.createQuery(insertSQL)
                     .addParameter("id",u.getId())
@@ -40,7 +40,7 @@ public class UserModels {
     }
 
     public static void update(User u) {
-        String sql = "UPDATE sandaugia.user SET name = :name, email = :email, phone = :phone, dob = :dob , password = :password WHERE id = :id";
+        String sql = "UPDATE user SET name = :name, email = :email, phone = :phone, dob = :dob , password = :password WHERE id = :id";
         try (Connection con = DbUtils.getConnection()) {
             con.createQuery(sql)
                     .addParameter("id", u.getId())
@@ -54,7 +54,7 @@ public class UserModels {
     }
 
     public static void resetPass(int id,String password) {
-        String sql = "UPDATE sandaugia.user SET password = :password WHERE id = :id";
+        String sql = "UPDATE user SET password = :password WHERE id = :id";
         try (Connection con = DbUtils.getConnection()) {
             con.createQuery(sql)
                     .addParameter("id", id)
@@ -82,7 +82,7 @@ public class UserModels {
     }
 
     public static User findById(int id){
-        final String query = "select * from sandaugia.user where id = :id";
+        final String query = "select * from user where id = :id";
         try (Connection con = DbUtils.getConnection()) {
             List<User> list = con.createQuery(query)
                     .addParameter("id", id)
@@ -97,7 +97,7 @@ public class UserModels {
     }
 
     public static List<User> findAll(){
-        final String query = "select * from sandaugia.user ORDER BY permission";
+        final String query = "select * from user ORDER BY permission";
         try (Connection con = DbUtils.getConnection()) {
             return con.createQuery(query)
                     .executeAndFetch(User.class);
@@ -106,7 +106,7 @@ public class UserModels {
     }
 
     public static User findByUserName(String username){
-        final String query = "select * from sandaugia.user where username = :username";
+        final String query = "select * from user where username = :username";
         try (Connection con = DbUtils.getConnection()) {
             List<User> list = con.createQuery(query)
                     .addParameter("username", username)
@@ -121,7 +121,7 @@ public class UserModels {
     }
 
     public static User findByEmail(String email){
-        final String query = "select * from sandaugia.user where email = :email";
+        final String query = "select * from user where email = :email";
         try (Connection con = DbUtils.getConnection()) {
             List<User> list = con.createQuery(query)
                     .addParameter("email", email)
@@ -136,7 +136,7 @@ public class UserModels {
     }
 
     public static void removeUserById(int id) {
-        final String query = "delete from sandaugia.user where id =" + id;
+        final String query = "delete from user where id =" + id;
         try (Connection con = DbUtils.getConnection()) {
             con.createQuery(query)
                     .executeUpdate();

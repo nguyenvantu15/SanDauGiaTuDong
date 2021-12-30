@@ -42,7 +42,7 @@
         <h4>Thêm danh mục sản phẩm</h4>
         <form action="" method="post" id="frmAddCategory">
 
-            <div class="form-group">
+            <div class="form-group ">
                 <label for="txtCategory">Các danh mục hiện có:</label>
                 <select class="form-control" id="txtCategory" name="category">
                     <c:forEach items="${listCategory}" var="c">

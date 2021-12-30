@@ -106,7 +106,7 @@ public class ProductModels {
     }
 
     public static Product findById(int id) {
-        final String query = "select * from sandaugia.product where id= :id";
+        final String query = "select * from product where id= :id";
 
         try (Connection con = DbUtils.getConnection()) {
             List<Product> list = con.createQuery(query)
@@ -123,7 +123,7 @@ public class ProductModels {
     }
 
     public static void editProductById(Product p) {
-        String sql = "UPDATE sandaugia.product SET name = :name, price = :price, timeStart = :timeStart, timeEnd = :timeEnd , idType = :idType, idCat = :idCat, tinyDes = :tinyDes, fullDes = :fullDes WHERE id = :id";
+        String sql = "UPDATE product SET name = :name, price = :price, timeStart = :timeStart, timeEnd = :timeEnd , idType = :idType, idCat = :idCat, tinyDes = :tinyDes, fullDes = :fullDes WHERE id = :id";
         try (Connection con = DbUtils.getConnection()) {
             con.createQuery(sql)
                     .addParameter("id", p.getId())
@@ -151,7 +151,7 @@ public class ProductModels {
     }
 
     public static List<Product> findTop5Price() {
-        final String query = "SELECT * FROM sandaugia.product ORDER BY price DESC LIMIT 5";
+        final String query = "SELECT * FROM product ORDER BY price DESC LIMIT 5";
 
         try (Connection con = DbUtils.getConnection()) {
             return con.createQuery(query).executeAndFetch(Product.class);
@@ -159,7 +159,7 @@ public class ProductModels {
     }
 
     public static List<Product> findTop5CountAuction() {
-        final String query = "SELECT * FROM sandaugia.product ORDER BY countAuction DESC LIMIT 5";
+        final String query = "SELECT * FROM product ORDER BY countAuction DESC LIMIT 5";
 
         try (Connection con = DbUtils.getConnection()) {
             return con.createQuery(query).executeAndFetch(Product.class);

@@ -10,7 +10,7 @@ import java.util.List;
 
 public class TypeModels {
     public static List<Type> findAll() {
-        final String query = "select * from sandaugia.type ORDER BY idCat";
+        final String query = "select * from type ORDER BY idCat";
 
         try (Connection con = DbUtils.getConnection()) {
             return con.createQuery(query).executeAndFetch(Type.class);
@@ -18,7 +18,7 @@ public class TypeModels {
     }
 
     public static Type findByName(String name) {
-        final String query = "select * from sandaugia.type where name= :name";
+        final String query = "select * from type where name= :name";
 
         try (Connection con = DbUtils.getConnection()) {
             List<Type> list = con.createQuery(query)
@@ -36,7 +36,7 @@ public class TypeModels {
 
 
     public static Type findCatIdByTypeId(int id) {
-        final String query = "select * from sandaugia.type where id= :id";
+        final String query = "select * from type where id= :id";
 
         try (Connection con = DbUtils.getConnection()) {
             List<Type> list = con.createQuery(query)
@@ -53,7 +53,7 @@ public class TypeModels {
     }
 
     public static void addNewType(int idCat, String name) {
-        String insertSQL = "INSERT INTO sandaugia.type (name,idCat) VALUES (:name,:idCat)";
+        String insertSQL = "INSERT INTO type (name,idCat) VALUES (:name,:idCat)";
         try (Connection con = DbUtils.getConnection()){
             con.createQuery(insertSQL)
                     .addParameter("name",name)
@@ -63,7 +63,7 @@ public class TypeModels {
     }
 
     public static void removeProById(int id) {
-        final String query = "delete from sandaugia.type where id =" + id;
+        final String query = "delete from type where id =" + id;
         try (Connection con = DbUtils.getConnection()) {
              con.createQuery(query)
                     .executeUpdate();
@@ -72,7 +72,7 @@ public class TypeModels {
     }
 
     public static void updateTypeById(int id, String name, int idCat) {
-        String sql = "UPDATE sandaugia.type SET name = :name, idCat = :idCat WHERE id = :id";
+        String sql = "UPDATE type SET name = :name, idCat = :idCat WHERE id = :id";
         try (Connection con = DbUtils.getConnection()) {
             con.createQuery(sql)
                     .addParameter("id", id)
@@ -84,7 +84,7 @@ public class TypeModels {
 
     //Khi xoa Category kiem tra xem danh muc co chứa loại sản phảm nào không
     public static Type checkByIdCat(int idCat) {
-        final String query = "select * from sandaugia.type where idCat = :idCat";
+        final String query = "select * from type where idCat = :idCat";
         try (Connection con = DbUtils.getConnection()) {
             List<Type> list = con.createQuery(query)
                     .addParameter("idCat", idCat)
