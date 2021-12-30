@@ -26,11 +26,11 @@
             width: 80%;
             margin: auto;
             padding: 0;
-            height: 4rem !important;
+            height: 5rem ;
         }
         .nav-tren{
             background-color: #222838;
-            height: 4rem !important;
+            height: 5rem;
             align-items: center;
         }
 
@@ -160,7 +160,9 @@
 <div class="nav-tren">
     <nav class="navbar navbar-expand-sm">
         <a class="navbar-brand" href="${pageContext.request.contextPath}/Home/">
-            <i class="fa fa-home fa-2x" aria-hidden="true"></i>
+<%--            <i class="fa fa-home fa-2x" aria-hidden="true"></i>--%>
+    <div style="width: 50px ;margin-left: 3px"><img style="width: 50px" src = "${pageContext.request.contextPath}/public/imgs/logo/logo.png"></div>
+
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -184,7 +186,7 @@
             </form>
 
         </div>
-        <ul class="navbar-nav mr-0">
+        <ul class="navbar-nav mr-0 align-items-center">
             <c:choose>
                 <c:when test="${auth==0}">
                     <li class="nav-item ">
@@ -193,7 +195,6 @@
                     <li class="nav-item">
                         <a class="nav-link" href="${pageContext.request.contextPath}/Account/Login">Đăng Nhập</a>
                     </li>
-
                 </c:when>
                 <c:otherwise>
                     <form id="frmLogout" action="${pageContext.request.contextPath}/Account/Logout" method="post"></form>
