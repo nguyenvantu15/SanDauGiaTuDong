@@ -1,9 +1,6 @@
 package com.ute.sandaugiatudong.models;
 
-import com.ute.sandaugiatudong.beans.Category;
-import com.ute.sandaugiatudong.beans.Product;
-import com.ute.sandaugiatudong.beans.Type;
-import com.ute.sandaugiatudong.beans.User;
+import com.ute.sandaugiatudong.beans.*;
 import com.ute.sandaugiatudong.utils.DbUtils;
 import org.sql2o.Connection;
 
@@ -403,6 +400,13 @@ public class ProductModels {
             }
 
             return list.get(0);
+        }
+    }
+    ///////////////////////////////////////////////////////////////
+    public static List<Count> countProductOfType() {
+        final String query = "SELECT sandaugia.product.idType as id , COUNT(sandaugia.product.id) AS count FROM sandaugia.product GROUP BY idType";
+        try (Connection con = DbUtils.getConnection()) {
+            return con.createQuery(query).executeAndFetch(Count.class);
         }
     }
 

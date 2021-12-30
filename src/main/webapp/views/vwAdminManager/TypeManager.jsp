@@ -6,6 +6,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <jsp:useBean id="listType" scope="request" type="java.util.List<com.ute.sandaugiatudong.beans.Type>"/>
+<jsp:useBean id="listPrOfType" scope="request" type="java.util.List<com.ute.sandaugiatudong.beans.Count>"/>
 
 
 <t:main>
@@ -39,7 +40,8 @@
                             <tr>
                                 <th >ID Category</th>
                                 <th>ID</th>
-                                <th>Name</th>
+                                <th>Tên</th>
+                                <th>Số lượng sản phẩm có trong thể loại</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -49,7 +51,13 @@
                                     <td style="width: 172px;">${t.idCat}</td>
                                     <td style="width: 172px;"><input type="text" name="id" value="${t.id}" style="width: 100%; border: none" disabled></td>
                                     <td>${t.name}</td>
-
+                                        <td>
+                                            <c:forEach items="${listPrOfType}" var="p">
+                                                <c:if test="${t.id == p.id}">
+                                                    ${p.count}
+                                                </c:if>
+                                            </c:forEach>
+                                        </td>
                                     <td class="text-right">
                                         <button type="submit" class="btn btn-outline-danger" style="width: 80px" formaction="${pageContext.request.contextPath}/Admin/RemoveType?id=${t.id} ">
                                             Xóa

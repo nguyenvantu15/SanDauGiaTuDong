@@ -1,10 +1,7 @@
 package com.ute.sandaugiatudong.controllers;
 
 import at.favre.lib.crypto.bcrypt.BCrypt;
-import com.ute.sandaugiatudong.beans.Category;
-import com.ute.sandaugiatudong.beans.Product;
-import com.ute.sandaugiatudong.beans.Type;
-import com.ute.sandaugiatudong.beans.User;
+import com.ute.sandaugiatudong.beans.*;
 import com.ute.sandaugiatudong.models.*;
 import com.ute.sandaugiatudong.utils.ServletUtils;
 
@@ -52,6 +49,9 @@ public class AdminServlet extends HttpServlet {
                 case "/CategoryManager":
                     List <Category> listCategory = CategoryModels.findAll();
                     request.setAttribute("listCategory", listCategory);
+
+                    List <Count> listTypeCa = TypeModels.countTypeofCate();
+                    request.setAttribute("listTypeCa",listTypeCa);
                     ServletUtils.forward("/views/vwAdminManager/CategoryManager.jsp", request, response);
                     break;
 
@@ -72,6 +72,9 @@ public class AdminServlet extends HttpServlet {
                 case "/TypeManager":
                     List <Type> listType = TypeModels.findAll();
                     request.setAttribute("listType", listType);
+
+                    List <Count> listPrOfType = ProductModels.countProductOfType();
+                    request.setAttribute("listPrOfType",listPrOfType);
                     ServletUtils.forward("/views/vwAdminManager/TypeManager.jsp", request, response);
                     break;
 
@@ -292,6 +295,9 @@ public class AdminServlet extends HttpServlet {
         }
         else
         {
+            List <Count> listTypeCa = TypeModels.countTypeofCate();
+            request.setAttribute("listTypeCa",listTypeCa);
+
             List <Category> listCategory = CategoryModels.findAll();
             request.setAttribute("listCategory", listCategory);
             request.setAttribute("hasErrorCate", true);
@@ -314,6 +320,9 @@ public class AdminServlet extends HttpServlet {
         }
         else
         {
+            List <Count> listPrOfType = ProductModels.countProductOfType();
+            request.setAttribute("listPrOfType",listPrOfType);
+
             List <Type> listType = TypeModels.findAll();
             request.setAttribute("listType", listType);
             request.setAttribute("hasErrorType", true);

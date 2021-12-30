@@ -152,7 +152,7 @@
                                         <input type="text" class="form-control" id="permission" name="permission" value="${AccountUser.permission}" style="background: #1A233A" disabled  >
                                     </div>
                                 </div>
-                                <c:if  test="${AccountUser.permission == 2}">
+                                <c:if  test="${AccountUser.permission != 3}">
                                     <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                                         <div class="form-group">
                                             <label for="Mark">Mark</label>
@@ -160,7 +160,7 @@
                                         </div>
                                     </div>
                                     <div class="row gutters" style="padding-left: 32px; width: 100%;">
-                                        <div>Comment của khách hàng</div>
+                                        <div>Evaluate </div>
                                         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 mt-3 mb-3" style="padding: 0; padding: 0;
                                                                                                           border: 1px solid #596280; border-radius: 2px; background: #1a233a">
                                             <div>${AccountUser.comment}</div>

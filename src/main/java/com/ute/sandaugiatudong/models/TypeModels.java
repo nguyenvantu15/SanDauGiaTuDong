@@ -1,5 +1,6 @@
 package com.ute.sandaugiatudong.models;
 
+import com.ute.sandaugiatudong.beans.Count;
 import com.ute.sandaugiatudong.beans.Product;
 import com.ute.sandaugiatudong.beans.Type;
 import com.ute.sandaugiatudong.beans.User;
@@ -97,5 +98,11 @@ public class TypeModels {
             return list.get(0);
         }
     }
-
+///////////////////////////////////////////
+    public static List<Count> countTypeofCate() {
+        final String query = "SELECT sandaugia.type.idCat as id , COUNT(sandaugia.type.id) AS count FROM sandaugia.type GROUP BY idCat";
+        try (Connection con = DbUtils.getConnection()) {
+            return con.createQuery(query).executeAndFetch(Count.class);
+        }
+    }
 }
