@@ -26,11 +26,11 @@
             width: 80%;
             margin: auto;
             padding: 0;
-            height: 5rem ;
+            height: 6rem ;
         }
         .nav-tren{
             background-color: #222838;
-            height: 5rem;
+            height: 6rem;
             align-items: center;
         }
 
@@ -159,9 +159,9 @@
 <body>
 <div class="nav-tren">
     <nav class="navbar navbar-expand-sm">
-        <a class="navbar-brand" href="${pageContext.request.contextPath}/Home/">
+        <a class="navbar-brand h-100" href="${pageContext.request.contextPath}/Home/">
 <%--            <i class="fa fa-home fa-2x" aria-hidden="true"></i>--%>
-    <div style="width: 50px ;margin-left: 3px"><img style="width: 50px" src = "${pageContext.request.contextPath}/public/imgs/logo/logo.png"></div>
+    <div style="width: 6rem ;margin-left: 3px"> <img style="width: 100%" src = "${pageContext.request.contextPath}/public/imgs/logo/1.png "></div>
 
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"

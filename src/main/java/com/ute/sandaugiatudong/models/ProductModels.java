@@ -164,7 +164,7 @@ public class ProductModels {
     }
 
     public static List<Product> findTopAuctionEnd() {
-        final String query = "SELECT * FROM  product WHERE CURRENT_TIMESTAMP()<timeEnd ORDER BY timeEnd LIMIT 5";
+        final String query = "SELECT * FROM product WHERE CURRENT_TIMESTAMP()<timeEnd AND CURRENT_TIMESTAMP()>timeStart  ORDER BY price DESC LIMIT 5";
 
 
 
