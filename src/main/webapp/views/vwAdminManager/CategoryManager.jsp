@@ -5,8 +5,8 @@
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
-<jsp:useBean id="listCategory" scope="request" type="java.util.List<com.ute.sandaugiatudong.beans.Type>"/>
-
+<jsp:useBean id="listCategory" scope="request" type="java.util.List<com.ute.sandaugiatudong.beans.Category>"/>
+<jsp:useBean id="listTypeCa" scope="request" type="java.util.List<com.ute.sandaugiatudong.beans.Count>"/>
 
 <t:main>
     <jsp:attribute name="js">
@@ -47,7 +47,9 @@
                             <thead>
                             <tr>
                                 <th >ID</th>
-                                <th>Name</th>
+                                <th>Tên</th>
+<%--                                ////////--%>
+                                <th>Số lượng thể loại</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -56,6 +58,15 @@
                                     <form action="" id="frmCateManager" name="frmCateManager" method="post">
                                     <td style="width: 172px;"><input type="text" id="id" name="id" value="${c.id}" style="width: 100%; border: none" disabled ></td>
                                     <td><input type="text" name="name" value="${c.name}" id="nameCate" style="width: 100%; border: none" disabled></td>
+
+                                        <td>
+                                            <c:forEach items="${listTypeCa}" var="t">
+                                                <c:if test="${c.id == t.id}">
+                                                    ${t.count}
+                                                </c:if>
+                                            </c:forEach>
+                                        </td>
+
                                     <td class="text-right">
                                         <button type="submit" class="btn btn-outline-danger" style="width: 80px" formaction="${pageContext.request.contextPath}/Admin/RemoveCate?id=${c.id} ">
                                             Xóa
