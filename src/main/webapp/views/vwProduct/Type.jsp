@@ -187,8 +187,8 @@
                             <option value="3">Thời gian kết thúc tăng</option>
                             <option value="4">Thời gian kết thúc giảm</option>
                         </select>
-                        <div class="input-group-append">
-                            <button type="submit" class="btn btn-secondary pb-0 pt-0 mb-1">
+                        <div >
+                            <button style="border-bottom-left-radius: 0px; border-top-left-radius: 0px" type="submit" class="btn btn-secondary pb-0 pt-0 mb-1">
                                 Xem
                             </button>
                         </div>
