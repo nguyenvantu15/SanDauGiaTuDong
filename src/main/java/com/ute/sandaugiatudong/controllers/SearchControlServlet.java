@@ -3,6 +3,7 @@ package com.ute.sandaugiatudong.controllers;
 import com.ute.sandaugiatudong.beans.DateTimeNew;
 import com.ute.sandaugiatudong.beans.Product;
 import com.ute.sandaugiatudong.beans.User;
+import com.ute.sandaugiatudong.beans.timeUpNMinute;
 import com.ute.sandaugiatudong.models.ProductModels;
 import com.ute.sandaugiatudong.models.UserModels;
 import com.ute.sandaugiatudong.utils.ServletUtils;
@@ -16,6 +17,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -60,44 +62,44 @@ public class SearchControlServlet extends HttpServlet {
                 List<Product> list1 = new ArrayList<>();
                 List<Product> list2 = new ArrayList<>();
 
-                    switch (a) {
-                        case "1":
-                            list1 = ProductModels.findAllSearchSortPriceUp(str);
-                            list2 = ProductModels.findAllSearchTinyDesPriceUp(str);
-                            list = new ArrayList<Product>(list1);
-                            list.addAll(list2);
-                            a = "0";
-                            break;
-                        case "2":
-                            list1 = ProductModels.findAllSearchSortPriceDown(str);
-                            list2 = ProductModels.findAllSearchTinyDesPriceDown(str);
-                            list = new ArrayList<Product>(list1);
-                            list.addAll(list2);
-                            a = "0";
-                            break;
-                        case "3":
-                            list1 = ProductModels.findAllSearchSortTimeEndUp(str);
-                            list2 = ProductModels.findAllSearchTinyDesTimeEndUp(str);
-                            list = new ArrayList<Product>(list1);
-                            list.addAll(list2);
-                            a = "0";
-                            break;
-                        case "4":
-                            list1 = ProductModels.findAllSearchSortTimeEndDown(str);
-                            list2 = ProductModels.findAllSearchTinyDesTimeEndDown(str);
-                            list = new ArrayList<Product>(list1);
-                            list.addAll(list2);
-                            a = "0";
-                            break;
-                        default:
-                            list1 = ProductModels.findAllSearch(str);
-                            list2 = ProductModels.findAllSearchTinyDes(str);
-                            list = new ArrayList<Product>(list1);
-                            list.addAll(list2);
+                switch (a) {
+                    case "1":
+                        list1 = ProductModels.findAllSearchSortPriceUp(str);
+                        list2 = ProductModels.findAllSearchTinyDesPriceUp(str);
+                        list = new ArrayList<Product>(list1);
+                        list.addAll(list2);
+                        a = "0";
+                        break;
+                    case "2":
+                        list1 = ProductModels.findAllSearchSortPriceDown(str);
+                        list2 = ProductModels.findAllSearchTinyDesPriceDown(str);
+                        list = new ArrayList<Product>(list1);
+                        list.addAll(list2);
+                        a = "0";
+                        break;
+                    case "3":
+                        list1 = ProductModels.findAllSearchSortTimeEndUp(str);
+                        list2 = ProductModels.findAllSearchTinyDesTimeEndUp(str);
+                        list = new ArrayList<Product>(list1);
+                        list.addAll(list2);
+                        a = "0";
+                        break;
+                    case "4":
+                        list1 = ProductModels.findAllSearchSortTimeEndDown(str);
+                        list2 = ProductModels.findAllSearchTinyDesTimeEndDown(str);
+                        list = new ArrayList<Product>(list1);
+                        list.addAll(list2);
+                        a = "0";
+                        break;
+                    default:
+                        list1 = ProductModels.findAllSearch(str);
+                        list2 = ProductModels.findAllSearchTinyDes(str);
+                        list = new ArrayList<Product>(list1);
+                        list.addAll(list2);
 //                            list = ProductModels.findAllSearch(str);
-                            a = "0";
-                            break;
-                    }
+                        a = "0";
+                        break;
+                }
 
                 /////////////
                 DateTimeFormatter df = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
@@ -133,6 +135,31 @@ public class SearchControlServlet extends HttpServlet {
                 HttpSession session = request.getSession();
                 session.setAttribute("listProductSearch", list);
                 session.setAttribute("textSearch", textSearch);
+
+
+                /////////////////////// mới đăng n phút < 10
+                List<timeUpNMinute> listTimeUp = new ArrayList<>();
+                for (int i = 0; i < list.size(); i++) {
+                    LocalDateTime tmpE = list.get(i).getTimeEnd();
+                    LocalDateTime tmpS = list.get(i).getTimeStart();
+                    DateTimeNew TiE = new DateTimeNew(tmpE.getYear(), tmpE.getMonthValue(), tmpE.getDayOfMonth(), tmpE.getHour(), tmpE.getMinute(), tmpE.getSecond());
+                    DateTimeNew TiS = new DateTimeNew(tmpS.getYear(), tmpS.getMonthValue(), tmpS.getDayOfMonth(), tmpS.getHour(), tmpS.getMinute(), tmpS.getSecond());
+
+                    boolean kt = nowTmp.isBefore(tmpE);
+                    if (kt) {
+                        if (tmpS.isBefore(nowTmp)){
+                            long dif = ChronoUnit.MINUTES.between(tmpS,nowTmp);
+                            if(dif <=10){
+                                timeUpNMinute newUp = new timeUpNMinute(list.get(0).getId(),dif);
+                                listTimeUp.add(newUp);
+                            }
+                        }
+                    }
+                }
+                request.setAttribute("listTimeUp", listTimeUp);
+
+                //////////////////////////////////////////////////////////////
+
 
                 ServletUtils.forward("/views/vwProduct/FullTextSearchCate.jsp", request, response);
                 break;
